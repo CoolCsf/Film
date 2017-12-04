@@ -1,0 +1,251 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#44c660</item> <!--主题色，绿色-->
+        <item name="colorPrimaryDark">#06A022</item> <!--深蓝色-->
+    </style>
+    <!-- EditText 颜色 theme. -->
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#44c660</item>
+        <item name="colorControlActivated">#44c660</item>
+    </style>
+    <!--一个按钮，一般是位于页面下方的长按钮，一个layout的style-->
+    <style name="btn_Long_onBottom">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/dp_29</item>
+        <item name="android:layout_marginEnd">@dimen/dp_29</item>
+        <item name="android:layout_marginTop">@dimen/dp_20</item>
+        <item name="android:layout_marginBottom">@dimen/dp_20</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">@dimen/dp_12</item>
+        <item name="android:paddingTop">@dimen/dp_12</item>
+    </style>
+    <!--&lt;!&ndash; 闪屏页样式 &ndash;&gt;-->
+    <!--<style name="splash_style" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <!--<item name="android:windowContentOverlay">@null</item>-->
+    <!--<item name="android:background">@drawable/splash</item>-->
+    <!--<item name="android:windowFullscreen">true</item>-->
+    <!--</style>-->
+    <!-- 底部导航按钮样式 -->
+    <!--<style name="tab_bottom">-->
+    <!--<item name="android:textColor">@drawable/tab_bottom_textcolor</item>-->
+    <!--<item name="android:gravity">center</item>-->
+    <!--<item name="android:paddingTop">5dp</item>-->
+    <!--<item name="android:drawablePadding">5dp</item>-->
+    <!--<item name="android:layout_width">0dp</item>-->
+    <!--<item name="android:layout_height">match_parent</item>-->
+    <!--<item name="android:button">@null</item>-->
+    <!--<item name="android:layout_weight">1.0</item>-->
+    <!--<item name="android:textSize">10sp</item>-->
+    <!--</style>-->
+
+    <style name="customDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!--&lt;!&ndash;电池样式&ndash;&gt;-->
+    <!--<style name="StyleBatteryProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">-->
+    <!--<item name="android:maxHeight">50dip</item>-->
+    <!--<item name="android:minHeight">10dip</item>-->
+    <!--<item name="android:indeterminateOnly">false</item>-->
+    <!--<item name="android:indeterminateDrawable">-->
+    <!--@android:drawable/progress_indeterminate_horizontal-->
+    <!--</item>-->
+    <!--<item name="android:progressDrawable">@drawable/shape_battery_progressbar</item>-->
+    <!--</style>-->
+
+    <style name="dialog" parent="@android:style/Theme.Dialog"><!--name是我们在使用时要用到的资源的标志，parent是指当前的样式所继承的父类样式-->
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item><!--隐藏标题栏-->
+        <item name="android:background">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!--<style name="popup_window_anim" parent="android:Animation">-->
+    <!--<item name="android:windowEnterAnimation">@anim/popup_enter</item>-->
+    <!--<item name="android:windowExitAnimation">@anim/popup_exit</item>-->
+    <!--</style>-->
+
+    <!-- 机构列表选择标题的样式-->
+
+    <!-- 服务机构列表选择标题的样式-->
+    <!--<style name="service_agency_list_bar" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">-->
+    <!--<item name="android:textColor">@drawable/selector_popup_win_arrows_color</item>-->
+    <!--<item name="android:drawablePadding">10dp</item>-->
+    <!--<item name="android:button">@null</item>-->
+    <!--<item name="android:textSize">14sp</item>-->
+    <!--<item name="android:checked">false</item>-->
+    <!--<item name="android:layout_width">wrap_content</item>-->
+    <!--<item name="android:layout_height">wrap_content</item>-->
+    <!--<item name="android:gravity">center_horizontal</item>-->
+    <!--<item name="android:layout_marginBottom">10dp</item>-->
+    <!--<item name="android:layout_marginTop">10dp</item>-->
+    <!--&lt;!&ndash; <item name="android:layout_marginTop">2.5dp</item>-->
+    <!--<item name="android:layout_weight">1.0</item>-->
+    <!--<item name="android:layout_width">0dp</item>-->
+    <!--<item name="android:layout_height">wrap_content</item>-->
+    <!--<item name="android:layout_gravity">center_vertical</item>-->
+    <!--<item name="android:gravity">center</item>-->
+    <!--<item name="android:background">@null</item>-->
+    <!--<item name="android:button">@null</item>-->
+    <!--<item name="android:drawablePadding">2dp</item>-->
+    <!--<item name="android:textSize">14sp</item>-->
+    <!--<item name="android:checked">false</item>&ndash;&gt;-->
+    <!--</style>-->
+
+    <!--<style name="popup_window_pay_anim">-->
+    <!--<item name="android:windowEnterAnimation">@anim/pop_enter_anim</item>-->
+    <!--<item name="android:windowExitAnimation">@anim/pop_exit_anim</item>-->
+    <!--</style>-->
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!--标准分割线-->
+    <style name="line_standard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">#d7d7d7</item>
+    </style>
+
+    <style name="contentItem_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_margin">@dimen/dp_15</item>
+        <item name="android:textColor">@color/text_color_important</item>
+        <item name="android:textSize">@dimen/sp_15</item>
+    </style>
+
+    <style name="contentItem_content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_margin">@dimen/dp_12</item>
+        <item name="android:textColor">@color/text_color_help</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <!--<style name="ecg_sign">-->
+    <!--<item name="android:background">@drawable/selector_bg_ecg_sign</item>-->
+    <!--<item name="android:textSize">@dimen/tv_style_mid_size</item>-->
+    <!--<item name="android:textColor">@drawable/selector_text_color_ecg_sign</item>-->
+    <!--<item name="android:paddingStart">@dimen/dp_15</item>-->
+    <!--<item name="android:paddingEnd">@dimen/dp_15</item>-->
+    <!--<item name="android:paddingTop">@dimen/dp_5</item>-->
+    <!--<item name="android:paddingBottom">@dimen/dp_5</item>-->
+    <!--</style>-->
+    <!--历史记录按钮-->
+    <!--<style name="button_history">-->
+    <!--<item name="android:layout_weight">1</item>-->
+    <!--<item name="android:paddingTop">@dimen/dp_5</item>-->
+    <!--<item name="android:paddingBottom">@dimen/dp_5</item>-->
+    <!--<item name="android:layout_width">wrap_content</item>-->
+    <!--<item name="android:layout_height">wrap_content</item>-->
+    <!--<item name="android:background">@drawable/selector_bg_main_color_or_gray</item>-->
+    <!--<item name="android:textSize">@dimen/sp_16</item>-->
+    <!--<item name="android:layout_marginStart">@dimen/dp_25</item>-->
+    <!--<item name="android:layout_marginEnd">@dimen/dp_25</item>-->
+    <!--<item name="android:textColor">@color/main_content_color</item>-->
+    <!--<item name="android:button">@null</item>-->
+    <!--<item name="android:gravity">center</item>-->
+    <!--</style>-->
+
+    <style name="order_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dp_10</item>
+        <item name="android:textColor">@color/text_color_common</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+    </style>
+
+    <style name="order_detail_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">@dimen/dp_15</item>
+        <item name="android:paddingBottom">@dimen/dp_15</item>
+    </style>
+
+    <style name="order_detail_tv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_color_important</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="order_detail_tv_content" parent="order_detail_tv">
+        <item name="android:layout_marginStart">@dimen/dp_140</item>
+        <item name="android:lines">1</item>
+    </style>
+
+    <style name="order_detail_title">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingBottom">@dimen/dp_15</item>
+        <item name="android:textColor">@color/text_color_help</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+    </style>
+    <!--<style name="rating_start" parent="@android:style/Widget.RatingBar">-->
+    <!--<item name="android:progressDrawable">@drawable/yellow_rating_start</item>-->
+    <!--<item name="android:minHeight">@dimen/dp_32</item>-->
+    <!--<item name="android:maxHeight">@dimen/dp_32</item>-->
+    <!--</style>-->
+
+    <!--我的-->
+    <style name="mine_personInfo">
+        <item name="android:textColor">@color/text_color_important</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+    <!--完善资料页-->
+
+    <style name="editText_style_bwh">
+        <item name="android:layout_width">@dimen/dp_65</item>
+        <item name="android:layout_height">@dimen/dp_25</item>
+        <item name="android:textColor">@color/sh_history</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/dp_10</item>
+
+    </style>
+    <!--  <TextView
+            android:id="@+id/tv_mine_listTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/white"
+            android:drawableEnd="@drawable/arrows_gray_right"
+            android:drawablePadding="@dimen/dp_20"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="@dimen/dp_10"
+            android:text="我的申请列表"
+            android:textColor="@color/text_color_important"
+            android:textSize="@dimen/sp_14" />-->
+    <style name="mine_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dp_10</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:drawableEnd">@drawable/arrows_gray_right</item>
+        <item name="android:drawablePadding">@dimen/dp_20</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingBottom">@dimen/dp_10</item>
+        <item name="android:paddingLeft">@dimen/dp_15</item>
+        <item name="android:paddingRight">@dimen/dp_15</item>
+        <item name="android:paddingTop">@dimen/dp_10</item>
+        <item name="android:textColor">@color/text_color_important</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+</resources>

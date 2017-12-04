@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--loading的背景颜色-->
+    <color name="color_light_loading_gary">#444444</color>
+    <!--主题背景（灰色）-->
+    <color name="color_bg">#EFF0F4</color>
+    <color name="orange">#ff5000</color>
+    <color name="gray">#b3b3b3</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="sh_history">#333333</color>
+    <color name="color_aa333333">#AA333333</color>
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="log_list">#1eb300</color>
+    <color name="red">#d30404</color>
+    <!-- 上传图片添加的颜色 -->
+    <color name="none_color">#00000000</color>
+    <color name="albumback">#eeeeee</color>
+    <color name="nonormal_red">#f13e3e</color>
+    <color name="style_divider_color">#C9C7CD</color>
+    <color name="green">#00FF00</color>
+    <color name="bg_glay_shallow">#f5f5f5</color>
+    <color name="color_e1e1e1">#e1e1e1</color>
+    <!-- 血氧仪主颜色 -->
+    <color name="wristband_heartRate_color">#e88765</color>
+    <!-- 血糖仪圆环圈颜色 -->
+    <!-- C3 -->
+
+    <!--手环左右选择中心的背景颜色-->
+    <color name="band_select_backgroud">#379E4D</color>
+    <!-- 字体颜色 -->
+    <color name="tv_style_big_color">#000000</color>
+    <color name="tv_style_mid_color">#666666</color>
+    <color name="tv_style_small_color">#898989</color>
+    <!--淡黑色字体-->
+    <color name="lightBlack">#333333</color>
+    <color name="black_title">#252525</color>
+    <!--深灰色字体-->
+    <color name="deepGray_word">#6A6A6A</color>
+    <!--浅灰色字体-->
+    <color name="lightGray_word">#999999</color>
+    <!--更浅灰色字体-->
+    <color name="lesslightGray_word">#B9B9B9</color>
+    <!--红色字体-->
+    <color name="red_word">#FF645A</color>
+    <color name="color_99db4b">#99db4b</color>
+    <!-- 新版主体颜色 -->
+    <color name="rating_start">#FFAB0A</color>
+    <color name="rating">#DDDDDD</color>
+    <color name="main_color">#44c660</color>
+    <color name="main_background_color">#f5f5f5</color>
+    <color name="main_content_color">#ffffff</color>
+    <color name="color_ff3333">#ff3333</color>
+    <!-- 字体颜色 -->
+    <color name="dividing_line_color_rcy">#eeeeee</color>
+
+    <color name="color_ffab27">#ffab27</color>
+    <!-- 标题颜色 -->
+    <color name="tv_title_color">#ffffff</color>
+    <color name="tv_big_color">#494949</color>
+    <color name="tv_mid_color">#c5d2d8</color>
+    <!-- 分割线颜色 -->
+    <color name="tv_line_color">#eeeeee</color>
+    <!-- 按钮边框颜色 -->
+    <color name="tv_button_color">#34b14f</color>
+
+    <!-- 侧滑菜单背景颜色 -->
+
+    <!-- 侧滑菜单选中背景颜色 -->
+
+    <!-- 性别男颜色(天蓝色) -->
+
+    <!-- 灰色按钮背景 -->
+    <color name="btn_gray">#B9C8D0</color>
+
+    <!-- 测量时间颜色 -->
+    <color name="test_time">#EEF1F6</color>
+    <!-- 测量时间字体颜色 -->
+    <color name="text_test_time">#909FA3</color>
+    <!-- 温度计转圈文字颜色 -->
+    <color name="temperature_color">#7D8F97</color>
+    <color name="temperature_ringcolor">#BDEBC6</color>
+    <!-- 进度条红点 -->
+    <!-- 肺活仪主要颜色 -->
+    <color name="vitalcapacity_main_color">#06a3fc</color>
+    <!-- 手环中心框背景颜色 -->
+    <color name="wristband_sleep_color">#772AAC</color>
+    <color name="sleep_bottom_color">#9354BD</color>
+    <color name="temperature_bottom_color">#91DCA1</color>
+    <color name="circle_main_color">#20ffffff</color>
+    <!-- 折线图线的颜色 -->
+    <color name="line">#CDD1D2</color>
+    <color name="shouhuan_jibu_circle">#2FA348</color>
+    <!-- 体脂秤颜色 -->
+    <!-- 扫描-->
+    <color name="scan_frist">#8EDC9E</color>
+    <color name="scan_big">#88DA9A</color>
+    <!-- 家庭组 -->
+    <color name="person_color">#79868C</color>
+    <!-- 服务 -->
+    <!--  历史记录UI字体颜色  -->
+    <color name="miaoshu_danwei_text">#7C939F</color>
+    <color name="shuju_text">#50646f</color>
+    <color name="darker_gray">#aaa</color>
+    <!--预警和联系人-->
+    <color name="c3shouhuan">#72E2E7</color>
+    <color name="hearthPackage">#6AD181</color>
+    <color name="rcy_gray">#E8EDF0</color>
+
+    <color name="bar">#FFA401</color>
+    <!--深橘黄色-->
+    <color name="dark_orange">#fb7000</color>
+    <color name="text_color_important">#333333</color><!--重要类型的文字-->
+    <color name="text_color_common">#666666</color><!--普通类型的文字-->
+    <color name="text_color_help">#999999</color><!--辅助类型的文字-->
+    <!--心电测量也主题颜色-->
+    <color name="ecgTheme">#44C6BC</color>
+
+    <!--分割线颜色-->
+    <color name="line_standard">#d7d7d7</color>
+    <color name="green_">#3dff05</color>
+    <!--按钮灰-->
+    <color name="btn_stroke_gray">#E8E8E8</color>
+    <!--按钮绿-->
+    <color name="btn_stroke_green">#42C663</color>
+    <color name="btn_solid_green">#CAF1D3</color>
+    <color name="btn_next_green">#41C562</color>
+    <!--完善资料页-黑色 -->
+
+
+</resources>

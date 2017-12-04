@@ -1,0 +1,57 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.versions.compileSdkVersion
+
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.versions.minSdkVersion
+        targetSdkVersion rootProject.ext.versions.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+//    implementation fileTree(include: ['*.jar'], dir: 'libs')
+//    testImplementation rootProject.ext.libs.junit
+//    //gson
+//    implementation rootProject.ext.libs.gson
+//    //glide图片加载
+    api rootProject.ext.libs.glide
+//    //banner
+//    implementation 'com.bigkoo:convenientbanner:2.0.5'
+//    //recyclerView
+    api rootProject.ext.libs.supportRecyclerView
+//    //recyclerView分割线
+    implementation 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+//    //recyclerViewAdapter
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28'
+//    implementation rootProject.ext.libs.supportGridlayout
+//    //eventbus
+//    implementation 'org.greenrobot:eventbus:3.0.0'
+    api rootProject.ext.libs.supportDesign
+//    //MPAndroidChart
+//    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+//    //banner轮播插件
+//    implementation 'com.bigkoo:convenientbanner:2.0.5'
+//    //Loading animation
+//    implementation 'com.wang.avi:library:2.1.3'
+//    //BadgeView
+//    implementation 'q.rorbin:badgeview:1.1.0'
+//    //glide-transformations:glide样式转换器 https://github.com/wasabeef/glide-transformations
+    api 'jp.wasabeef:glide-transformations:2.0.2'
+//    //图片查看
+//    implementation 'com.commit451:PhotoView:1.2.4'
+    api project(':galleryfinal')
+    api 'cn.bmob.android:bmob-sdk:3.5.7'
+    //Bmob的消息推送SDK
+    api 'cn.bmob.android:bmob-push:1.0.1'
+    api 'com.wang.avi:library:2.1.3'
+}
