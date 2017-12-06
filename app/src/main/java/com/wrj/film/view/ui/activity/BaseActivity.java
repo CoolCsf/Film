@@ -1,4 +1,4 @@
-package com.wrj.film.view.ui;
+package com.wrj.film.view.ui.activity;
 
 import android.databinding.ViewDataBinding;
 

@@ -1,4 +1,4 @@
-package com.wrj.film.view.ui;
+package com.wrj.film.view.ui.activity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -17,9 +17,8 @@ import com.wrj.film.AppContext;
 
 public abstract class AbsActivity<BD extends ViewDataBinding> extends AppCompatActivity implements IBaseActivity {
     protected BD binding;
-    private String TAG = this.getClass().getSimpleName();
+    protected String TAG = this.getClass().getSimpleName();
     private DialogHelper helper;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

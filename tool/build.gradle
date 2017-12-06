@@ -26,7 +26,7 @@ dependencies {
 //    //glide图片加载
     api rootProject.ext.libs.glide
 //    //banner
-//    implementation 'com.bigkoo:convenientbanner:2.0.5'
+    api 'com.bigkoo:convenientbanner:2.0.5'
 //    //recyclerView
     api rootProject.ext.libs.supportRecyclerView
 //    //recyclerView分割线

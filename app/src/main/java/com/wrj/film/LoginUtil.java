@@ -1,7 +1,8 @@
 package com.wrj.film;
 
 import com.tool.util.ToastHelp;
-import com.wrj.film.view.ui.AbsActivity;
+import com.wrj.film.view.ui.activity.AbsActivity;
+import com.wrj.film.view.ui.activity.MainActivity;
 import com.wrj.film.viewmodel.UserViewModel;
 
 import cn.bmob.v3.BmobUser;
@@ -19,7 +20,7 @@ public class LoginUtil {
             @Override
             public void done(UserViewModel userViewModel, BmobException e) {
                 if (userViewModel != null) {
-//                    modifyInstallation(userViewModel.isRoot, activity);
+                    activity.goActivity(MainActivity.class, null);
                 } else {
                     ToastHelp.showToast("登录失败" + e.toString());
                     activity.closeLoading();

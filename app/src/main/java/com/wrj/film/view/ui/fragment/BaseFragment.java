@@ -1,4 +1,4 @@
-package com.wrj.film.view.ui;
+package com.wrj.film.view.ui.fragment;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.wrj.film.view.ui.activity.IBaseActivity;
 
 /**
  * Created by Administrator on 2017/11/16.

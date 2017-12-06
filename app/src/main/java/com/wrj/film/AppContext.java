@@ -29,7 +29,7 @@ public class AppContext extends Application {
         instance = this;
         ToastHelp.init(this);
         //第一：默认初始化
-        Bmob.initialize(this, "1cbadab6af8477e06659d7db77716363");
+        Bmob.initialize(this, "55eae73640d3428a4c15a344ad50daa3");
         // 使用推送服务时的初始化操作
         BmobInstallationManager.getInstance().initialize(new InstallationListener<BmobInstallation>() {
             @Override
