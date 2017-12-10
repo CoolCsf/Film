@@ -33,7 +33,7 @@ dependencies {
 //    //recyclerView
     api rootProject.ext.libs.supportRecyclerView
 //    //recyclerView分割线
-    implementation 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    api 'com.yqritc:recyclerview-flexibledivider:1.4.0'
 //    //recyclerViewAdapter
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28'
 //    implementation rootProject.ext.libs.supportGridlayout
@@ -53,8 +53,7 @@ dependencies {
 //    //图片查看
 //    implementation 'com.commit451:PhotoView:1.2.4'
     api project(':galleryfinal')
+    api project(':SeatTable')
     api 'cn.bmob.android:bmob-sdk:3.5.7'
-    //Bmob的消息推送SDK
-    api 'cn.bmob.android:bmob-push:1.0.1'
     api 'com.wang.avi:library:2.1.3'
 }

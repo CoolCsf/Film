@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_background_color"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/titleBar"
+            layout="@layout/layout_toolbar" />
+
+        <TextView
+            android:id="@+id/tv_order_unPay"
+            style="@style/mine_item"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/white"
+            android:text="待支付订单" />
+
+        <include layout="@layout/line_horizontal_match_parent" />
+
+        <TextView
+            android:id="@+id/tv_order_payed"
+            style="@style/mine_item"
+            android:background="@color/white"
+            android:text="已支付订单" />
+
+        <include layout="@layout/line_horizontal_match_parent" />
+
+        <TextView
+            android:id="@+id/tv_order_finish"
+            style="@style/mine_item"
+            android:background="@color/white"
+            android:text="已完成订单" />
+    </LinearLayout>
+</layout>

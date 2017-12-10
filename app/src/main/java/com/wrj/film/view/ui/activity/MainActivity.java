@@ -6,6 +6,9 @@ import com.wrj.film.R;
 import com.wrj.film.adapter.ViewPagerFragmentAdapter;
 import com.wrj.film.databinding.ActivityMainBinding;
 import com.wrj.film.view.ui.fragment.MainFragment;
+import com.wrj.film.view.ui.fragment.MineFragment;
+import com.wrj.film.view.ui.fragment.RankingFragment;
+import com.wrj.film.view.ui.fragment.SortFragment;
 
 import java.util.ArrayList;
 
@@ -13,14 +16,14 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> {
 
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> list = new ArrayList<>();
-        MainFragment fragment = new MainFragment();
-        list.add(fragment);
         MainFragment fragment1 = new MainFragment();
         list.add(fragment1);
-        MainFragment fragment2 = new MainFragment();
-        list.add(fragment2);
-        MainFragment fragment3 = new MainFragment();
+        SortFragment fragment3 = new SortFragment();
         list.add(fragment3);
+        RankingFragment fragment2 = new RankingFragment();
+        list.add(fragment2);
+        MineFragment fragment = new MineFragment();
+        list.add(fragment);
         return list;
     }
 
@@ -42,54 +45,4 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> {
     protected void initData() {
 
     }
-//    private void setBanner(final IndexDataBean dataBean) {
-//        //设置banner图
-//        List<String> listsImg = new ArrayList<>();
-//        int height = (ScreenUtils.getScreenHeight(getActivity()) - ScreenUtils.getStatusHeight(getActivity())) / 4;//高度为去除状态栏后的屏幕的1/4
-//        convenientBanner.getLayoutParams().height = height;
-//        convenientBanner.getLayoutParams().width = ScreenUtils.getScreenWidth(getActivity());
-//        convenientBanner.requestLayout();
-//        for (int i = 0; i < dataBean.getData().get(0).getBanner().size(); i++) {
-//            listsImg.add(dataBean.getData().get(0).getBanner().get(i).getImage());
-//        }
-//        convenientBanner.setPages(new CBViewHolderCreator() {
-//            @Override
-//            public Object createHolder() {
-//                return new WebImageHolderView();
-//            }
-//        }, listsImg)
-//                .setPointViewVisible(true)
-//                //设置指示器的位置
-//                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
-//                .setOnItemClickListener(new OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(int position) {
-//                        String custom = dataBean.getData().get(0).getBanner().get(position).getCustom();
-//                        switch (custom) {
-//                            case "serveHealthUI":
-//                                Bundle bundleP = new Bundle();
-//                                bundleP.putString("code", OrderCodeUtil.getServiceHealth());
-//                                goActivity(HealthPreserveFragment.class.getName(), ServiceMainActivity.class, bundleP);
-//                                break;
-//                            case "serveConsultUI":
-//                                goActivity(HealthConsultFragment.class.getName(), ServiceMainActivity.class, null);
-//                                break;
-//                            case "serveLessonUI":
-//                                goActivity(HealthLessonMainFragment.class.getName(), ServiceMainActivity.class, null);
-//                                break;
-//                            case "serveHomeBasedCareUI":
-//                                Bundle bundlePension = new Bundle();
-//                                bundlePension.putString("code", OrderCodeUtil.getServicePersion());
-//                                goActivity(HealthPreserveFragment.class.getName(), ServiceMainActivity.class, bundlePension);
-//                                break;
-//                            case "measureSiteUI":
-//                                goActivity(FreeMeasureFragment.class.getName(), FreeMeasureActivity.class, null);
-//                                break;
-//                        }
-//                    }
-//                })
-//                .startTurning(4000)
-//                //设置手动影响
-//                .setManualPageable(true);
-//    }
 }

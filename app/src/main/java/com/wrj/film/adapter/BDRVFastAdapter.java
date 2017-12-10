@@ -18,15 +18,27 @@ import java.util.List;
  */
 
 public class BDRVFastAdapter<VM, BD extends ViewDataBinding> extends BaseQuickAdapter<VM, BDRVFastAdapter.BDBaseViewHolder> {
+    private int[] childId;
 
     public BDRVFastAdapter(int layoutResId, @Nullable List<VM> data) {
         super(layoutResId, data);
 
     }
 
+    public BDRVFastAdapter(int layoutResId, @Nullable List<VM> data, int... chidClickId) {
+        super(layoutResId, data);
+        childId = chidClickId;
+    }
+
     @Override
     protected void convert(BDRVFastAdapter.BDBaseViewHolder helper, VM item) {
         helper.getBinding().setVariable(BR.data, item);
+        if (childId != null && childId.length > 0) {
+            for (Integer id : childId) {
+                if (id != 0)
+                    helper.addOnClickListener(id);
+            }
+        }
     }
 
     @Override

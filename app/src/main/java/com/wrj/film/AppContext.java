@@ -8,12 +8,7 @@ import com.tool.util.ToastHelp;
 
 import java.util.Stack;
 
-import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobInstallation;
-import cn.bmob.v3.BmobInstallationManager;
-import cn.bmob.v3.InstallationListener;
-import cn.bmob.v3.exception.BmobException;
 
 /**
  * Created by Administrator on 2017/11/10.
@@ -30,21 +25,21 @@ public class AppContext extends Application {
         ToastHelp.init(this);
         //第一：默认初始化
         Bmob.initialize(this, "55eae73640d3428a4c15a344ad50daa3");
-        // 使用推送服务时的初始化操作
-        BmobInstallationManager.getInstance().initialize(new InstallationListener<BmobInstallation>() {
-            @Override
-            public void done(BmobInstallation bmobInstallation, BmobException e) {
-                if (e == null) {
-                    Log.d("", "获取设备数据成功" + bmobInstallation.getObjectId() + "-" + bmobInstallation.getInstallationId());
-//                    Log.i(bmobInstallation.getObjectId() + "-" + bmobInstallation.getInstallationId());
-                } else {
-                    Log.d("", "获取设备数据失败");
-//                    Logger.e(e.getMessage());
-                }
-            }
-        });
-// 启动推送服务
-        BmobPush.startWork(this);
+//        // 使用推送服务时的初始化操作
+//        BmobInstallationManager.getInstance().initialize(new InstallationListener<BmobInstallation>() {
+//            @Override
+//            public void done(BmobInstallation bmobInstallation, BmobException e) {
+//                if (e == null) {
+//                    Log.d("", "获取设备数据成功" + bmobInstallation.getObjectId() + "-" + bmobInstallation.getInstallationId());
+////                    Log.i(bmobInstallation.getObjectId() + "-" + bmobInstallation.getInstallationId());
+//                } else {
+//                    Log.d("", "获取设备数据失败");
+////                    Logger.e(e.getMessage());
+//                }
+//            }
+//        });
+//// 启动推送服务
+//        BmobPush.startWork(this);
     }
 
     //完全关闭app

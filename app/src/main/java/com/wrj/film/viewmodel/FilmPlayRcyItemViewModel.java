@@ -4,7 +4,7 @@ package com.wrj.film.viewmodel;
  * Created by Administrator on 2017/12/7.
  */
 
-public class FilmPlayRcyViewModel {
+public class FilmPlayRcyItemViewModel {
     private String photoUrl;
 
     public String getPhotoUrl() {
