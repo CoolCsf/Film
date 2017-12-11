@@ -28,35 +28,4 @@ public class LoginUtil {
             }
         });
     }
-//
-//    private static void modifyInstallation(final Boolean isRoot, final AbsActivity absActivity) {
-//        BmobQuery<Installation> bmobQuery = new BmobQuery<>();
-//        final String id = BmobInstallationManager.getInstallationId();
-//        bmobQuery.addWhereEqualTo("installationId", id);
-//        bmobQuery.findObjects(new FindListener<Installation>() {
-//            @Override
-//            public void done(List<Installation> list, BmobException e) {
-//                if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
-//                    Installation installation = list.get(0);
-//                    installation.setRoot(isRoot);
-//                    installation.update(new UpdateListener() {
-//                        @Override
-//                        public void done(BmobException e) {
-//                            if (e == null) {
-//                                Log.d("LoginActivity", "更新设备成功");
-//                                if (isRoot) {
-//                                    absActivity.goActivity(RootMainActivity.class, null);
-//                                } else {
-//                                    absActivity.goActivity(MainActivity.class, null);
-//                                }
-//                            } else {
-//                                ToastHelp.showToast(e.getMessage());
-//                            }
-//                            absActivity.closeLoading();
-//                        }
-//                    });
-//                }
-//            }
-//        });
-//    }
 }

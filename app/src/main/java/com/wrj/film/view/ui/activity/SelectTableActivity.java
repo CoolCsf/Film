@@ -1,6 +1,7 @@
 package com.wrj.film.view.ui.activity;
 
 import com.qfdqc.views.seattable.SeatTable;
+import com.tool.util.ToastHelp;
 import com.wrj.film.R;
 import com.wrj.film.databinding.ActivitySelectTableBinding;
 
@@ -20,15 +21,12 @@ public class SelectTableActivity extends AbsActivity<ActivitySelectTableBinding>
 
             @Override
             public boolean isValidSeat(int row, int column) {
-                if(column==2) {
-                    return false;
-                }
-                return true;
+                return column != 2;
             }
 
             @Override
             public boolean isSold(int row, int column) {
-                if(row==6&&column==6){
+                if (row == 6 && column == 6) {
                     return true;
                 }
                 return false;
@@ -36,12 +34,12 @@ public class SelectTableActivity extends AbsActivity<ActivitySelectTableBinding>
 
             @Override
             public void checked(int row, int column) {
-
+                ToastHelp.showToast("选择了第" + row + "行,第" + column + "列");
             }
 
             @Override
             public void unCheck(int row, int column) {
-
+                ToastHelp.showToast("取消选择了第" + row + "行,第" + column + "列");
             }
 
             @Override
@@ -50,7 +48,7 @@ public class SelectTableActivity extends AbsActivity<ActivitySelectTableBinding>
             }
 
         });
-        binding.seatView.setData(10,15);
+        binding.seatView.setData(10, 15);
     }
 
     @Override
