@@ -36,6 +36,14 @@ public abstract class BaseFragment<BD extends ViewDataBinding> extends Fragment 
 
     }
 
+    protected void closeLoading() {
+        ((IBaseActivity) getActivity()).closeLoading();
+    }
+
+    protected void showLoading() {
+        ((IBaseActivity) getActivity()).showLoading();
+    }
+
     protected abstract void initData();
 
     protected abstract int getLayoutId();

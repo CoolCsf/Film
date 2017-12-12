@@ -6,10 +6,15 @@ import com.tool.util.glide.GlideImageLoader;
 import com.wrj.film.AppContext;
 import com.wrj.film.R;
 import com.wrj.film.databinding.ActivityFilmDetailBinding;
+import com.wrj.film.model.FilmModel;
+import com.wrj.film.model.FilmModelUtil;
 import com.wrj.film.view.ui.ViewUtil;
 import com.wrj.film.viewmodel.FilmRcyItemViewModel;
 
+import java.util.List;
+
 public class FilmDetailActivity extends BaseActivity<ActivityFilmDetailBinding, FilmRcyItemViewModel> {
+    public static final String FILM_INTENT_KEY = "film_intent_key";
 
     @Override
     protected int getLayoutId() {
@@ -19,35 +24,31 @@ public class FilmDetailActivity extends BaseActivity<ActivityFilmDetailBinding, 
     @Override
     protected void initData() {
         super.initData();
-        ViewUtil.initTitleBar(binding.titleBar, "电影详情");
-        binding.setData(viewModel);
-        GlideImageLoader.getInstance().displayBlurImage(this,
-                binding.ivBig,
-                viewModel.getPhotoUrl(),
-                ContextCompat.getDrawable(AppContext.instance, R.drawable.home_banner_default)
-                , 720, 300);
-        GlideImageLoader.getInstance().displayImage(this,
-                binding.ivSmall,
-                viewModel.getPhotoUrl(),
-                ContextCompat.getDrawable(AppContext.instance, R.drawable.error_default_big)
-                , 270, 255);
+        String id = getIntent().getExtras().getString(FILM_INTENT_KEY);
+        showLoading();
+        FilmModelUtil.getFilmModelFromId(id, new FilmModelUtil.FilmModelCallBack() {
+            @Override
+            public void getModel(List<FilmModel> model) {
+                closeLoading();
+                FilmModel film = model.get(0);
+                viewModel.setDetail(film.getIntroduction());
+                viewModel.setTitle(film.getTitle());
+                viewModel.setType(film.getType());
+                viewModel.setTime(film.getTime());
+                viewModel.setPhotoUrl(film.getPhotoUrl());
+                viewModel.setNum(film.getScore());
+                binding.setData(viewModel);
+            }
+        });
     }
 
     @Override
     protected void initView() {
-
+        ViewUtil.initTitleBar(binding.titleBar, "电影详情");
     }
 
     @Override
     protected FilmRcyItemViewModel getViewModel() {
-        FilmRcyItemViewModel model = new FilmRcyItemViewModel();
-        model.setNum("50");
-        model.setPhotoUrl("http://img3.imgtn.bdimg.com/it/u=3214507998,4284254551&fm=27&gp=0.jpg");
-        model.setTime("2016-20-20");
-        model.setType("惊悚");
-        model.setTitle("不知道什么电影");
-        model.setDetail("不知道什么电影不知道什么电影不知道什么电影不知道什么电影不知道什么电影不知道什么电影不知道什么电影不知道什么电影不知道什么电影不知道什么电影不知道什么电影不知道什么电影不知道什么电" +
-                "影不知道什么电影不知道什么电影不知道什么电影不知道什么电影不知道什么电影");
-        return model;
+        return new FilmRcyItemViewModel();
     }
 }

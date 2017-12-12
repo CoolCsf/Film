@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -27,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_200"
                 android:scaleType="fitXY"
+                app:imageBlur="@{data.photoUrl}"
                 tools:src="@drawable/home_banner_default" />
 
             <LinearLayout
@@ -40,6 +42,7 @@
                     android:id="@+id/iv_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:imageBig="@{data.photoUrl}"
                     tools:src="@drawable/error_default_big" />
 
                 <LinearLayout
@@ -79,6 +82,8 @@
                         tools:text="2017-11-24" />
                 </LinearLayout>
             </LinearLayout>
+
+
         </FrameLayout>
 
         <TextView

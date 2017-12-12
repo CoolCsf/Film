@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="data"
-            type="com.wrj.film.viewmodel.FilmRcyItemViewModel" />
+            type="com.wrj.film.model.FilmModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/error_default_big" />
+            android:src="@drawable/error_default_big"
+            app:imgFromFilmModel="@{data.photoUrl}" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -64,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@{data.num}"
+                android:text="@{data.score}"
                 android:textColor="@color/red_word"
                 android:textSize="@dimen/sp_20"
                 tools:text="8.3分" />

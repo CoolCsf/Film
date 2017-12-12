@@ -19,6 +19,7 @@ public abstract class AbsActivity<BD extends ViewDataBinding> extends AppCompatA
     protected BD binding;
     protected String TAG = this.getClass().getSimpleName();
     private DialogHelper helper;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,20 +31,28 @@ public abstract class AbsActivity<BD extends ViewDataBinding> extends AppCompatA
         initData();
     }
 
+    @Override
     public void showLoading() {
         if (helper == null)
             helper = new DialogHelper();
         helper.showLoading(this);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        closeLoading();
+    }
+
+    @Override
     public void closeLoading() {
-        helper.hideLoading();
+        if (helper != null)
+            helper.hideLoading();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        closeLoading();
         AppContext.instance.removeActivity(TAG);
     }
 

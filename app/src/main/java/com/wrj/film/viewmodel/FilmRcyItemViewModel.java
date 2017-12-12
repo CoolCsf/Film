@@ -1,5 +1,13 @@
 package com.wrj.film.viewmodel;
 
+import android.databinding.BindingAdapter;
+import android.support.v4.content.ContextCompat;
+import android.widget.ImageView;
+
+import com.tool.util.glide.GlideImageLoader;
+import com.wrj.film.AppContext;
+import com.wrj.film.R;
+
 /**
  * Created by Administrator on 2017/12/9.
  */
@@ -58,5 +66,19 @@ public class FilmRcyItemViewModel {
 
     public void setNum(String num) {
         this.num = num;
+    }
+
+    @BindingAdapter("imageBig")
+    public static void imageBig(ImageView view, String imageId) {
+        GlideImageLoader.getInstance().displayImage(AppContext.instance, view,
+                imageId, ContextCompat.getDrawable(AppContext.instance, R.drawable.error_default_big),
+                270, 255);
+    }
+
+    @BindingAdapter("imageBlur")
+    public static void imageBlur(ImageView view, String imageId) {
+        GlideImageLoader.getInstance().displayBlurImage(AppContext.instance, view,
+                imageId, ContextCompat.getDrawable(AppContext.instance, R.drawable.home_banner_default),
+                720, 300);
     }
 }

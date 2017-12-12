@@ -10,4 +10,8 @@ public interface IBaseActivity {
     void goActivity(Class act, Bundle bundle);
 
     void startActForResult(Class actClass, Bundle bundle, int requestCode);
+
+    void showLoading();
+
+    void closeLoading();
 }

@@ -22,6 +22,7 @@ import java.util.Date;
  */
 
 public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
+    public static final String FILM_BUY_INTENT_KEY = "film_buy_intent_key";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_film_buy;

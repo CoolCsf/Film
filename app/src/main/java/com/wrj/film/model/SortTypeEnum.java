@@ -36,38 +36,38 @@ public enum SortTypeEnum {
      * 推理
      */
     REASONING(6, "推理");
-    private int status;
-    private String state;
+    private int index;
+    private String type;
     private static List<String> allType;
 
     SortTypeEnum(int status, String state) {
-        this.state = state;
-        this.status = status;
+        this.type = state;
+        this.index = status;
     }
 
-    public static String getState(int status) {
+    public static String getState(int index) {
         String s;
-        switch (status) {
+        switch (index) {
             case 0:
-                s = ALL.state;
+                s = ALL.type;
                 break;
             case 1:
-                s = LOVE.state;
+                s = LOVE.type;
                 break;
             case 2:
-                s = COMEDY.state;
+                s = COMEDY.type;
                 break;
             case 3:
-                s = ANIMATION.state;
+                s = ANIMATION.type;
                 break;
             case 4:
-                s = SCIENCE.state;
+                s = SCIENCE.type;
                 break;
             case 5:
-                s = TERROR.state;
+                s = TERROR.type;
                 break;
             case 6:
-                s = REASONING.state;
+                s = REASONING.type;
                 break;
             default:
                 s = "";
@@ -79,13 +79,17 @@ public enum SortTypeEnum {
         if (allType == null) {
             allType = new ArrayList<>();
             for (SortTypeEnum e : SortTypeEnum.values()) {
-                allType.add(e.state);
+                allType.add(e.type);
             }
         }
         return allType;
     }
 
-//    public int getStatus() {
-//        return status;
-//    }
+    public int getIndex() {
+        return index;
+    }
+
+    public String getType() {
+        return type;
+    }
 }

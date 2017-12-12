@@ -1,5 +1,13 @@
 package com.wrj.film.model;
 
+import android.databinding.BindingAdapter;
+import android.support.v4.content.ContextCompat;
+import android.widget.ImageView;
+
+import com.tool.util.glide.GlideImageLoader;
+import com.wrj.film.AppContext;
+import com.wrj.film.R;
+
 import cn.bmob.v3.BmobObject;
 
 /**
@@ -18,14 +26,14 @@ public class FilmModel extends BmobObject {
     private String photoUrl;
     private String introduction;
     private String duration;
-    private boolean isNowShowing;
+    private boolean isNowShowing;//是否热映
 
     public boolean isNowShowing() {
         return isNowShowing;
     }
 
-    public void setNowShowing(boolean nowShowing) {
-        isNowShowing = nowShowing;
+    public void setNowShowing(boolean isNowShowing) {
+        this.isNowShowing = isNowShowing;
     }
 
     public String getTitle() {
@@ -98,5 +106,12 @@ public class FilmModel extends BmobObject {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    @BindingAdapter("imgFromFilmModel")
+    public static void imgFromFilmModel(ImageView view, String imageId) {
+        GlideImageLoader.getInstance().displayImage(AppContext.instance, view,
+                imageId, ContextCompat.getDrawable(AppContext.instance, R.drawable.error_default_big),
+                270, 255);
     }
 }
