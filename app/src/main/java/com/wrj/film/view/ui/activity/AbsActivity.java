@@ -43,6 +43,7 @@ public abstract class AbsActivity<BD extends ViewDataBinding> extends AppCompatA
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        closeLoading();
         AppContext.instance.removeActivity(TAG);
     }
 

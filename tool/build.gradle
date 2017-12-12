@@ -54,6 +54,6 @@ dependencies {
 //    implementation 'com.commit451:PhotoView:1.2.4'
     api project(':galleryfinal')
     api project(':SeatTable')
-    api 'cn.bmob.android:bmob-sdk:3.5.5'
+    api 'cn.bmob.android:bmob-sdk:3.5.8'
     api 'com.wang.avi:library:2.1.3'
 }

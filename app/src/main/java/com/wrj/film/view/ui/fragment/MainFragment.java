@@ -17,6 +17,7 @@ import com.wrj.film.R;
 import com.wrj.film.adapter.BDRVFastAdapter;
 import com.wrj.film.databinding.FragmentMainBinding;
 import com.wrj.film.databinding.ItemPlayRcyBinding;
+import com.wrj.film.model.FilmModel;
 import com.wrj.film.viewmodel.FilmPlayRcyItemViewModel;
 
 import java.util.ArrayList;
@@ -37,36 +38,12 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
         super.initView();
         setRcyParam(binding.rvHotPlay);
         setRcyParam(binding.rvToBePlay);
-        ArrayList<FilmPlayRcyItemViewModel> list = new ArrayList<>();
-        FilmPlayRcyItemViewModel model = new FilmPlayRcyItemViewModel();
-        model.setPhotoUrl("http://img4.imgtn.bdimg.com/it/u=2580957746,3642550698&fm=27&gp=0.jpg");
-        list.add(model);
-        FilmPlayRcyItemViewModel model1 = new FilmPlayRcyItemViewModel();
-        model1.setPhotoUrl("http://img4.imgtn.bdimg.com/it/u=2580957746,3642550698&fm=27&gp=0.jpg");
-        list.add(model1);
-        FilmPlayRcyItemViewModel model2 = new FilmPlayRcyItemViewModel();
-        model2.setPhotoUrl("http://img4.imgtn.bdimg.com/it/u=2580957746,3642550698&fm=27&gp=0.jpg");
-        list.add(model2);
-        FilmPlayRcyItemViewModel model3 = new FilmPlayRcyItemViewModel();
-        model2.setPhotoUrl("http://img4.imgtn.bdimg.com/it/u=2580957746,3642550698&fm=27&gp=0.jpg");
-        list.add(model3);
-        FilmPlayRcyItemViewModel model4 = new FilmPlayRcyItemViewModel();
-        model2.setPhotoUrl("http://img4.imgtn.bdimg.com/it/u=2580957746,3642550698&fm=27&gp=0.jpg");
-        list.add(model4);
-        FilmPlayRcyItemViewModel model5 = new FilmPlayRcyItemViewModel();
-        model2.setPhotoUrl("http://img4.imgtn.bdimg.com/it/u=2580957746,3642550698&fm=27&gp=0.jpg");
-        list.add(model5);
-        FilmPlayRcyItemViewModel model6 = new FilmPlayRcyItemViewModel();
-        model2.setPhotoUrl("http://img4.imgtn.bdimg.com/it/u=2580957746,3642550698&fm=27&gp=0.jpg");
-        list.add(model6);
         BDRVFastAdapter<FilmPlayRcyItemViewModel, ItemPlayRcyBinding> adapter = new BDRVFastAdapter<>
                 (R.layout.item_play_rcy, new ArrayList<FilmPlayRcyItemViewModel>());
         binding.rvToBePlay.setAdapter(adapter);
         BDRVFastAdapter<FilmPlayRcyItemViewModel, ItemPlayRcyBinding> adapter1 = new BDRVFastAdapter<>
                 (R.layout.item_play_rcy, new ArrayList<FilmPlayRcyItemViewModel>());
         binding.rvHotPlay.setAdapter(adapter1);
-        adapter.setNewData(list);
-        adapter1.setNewData(list);
         initBananer();
     }
 
