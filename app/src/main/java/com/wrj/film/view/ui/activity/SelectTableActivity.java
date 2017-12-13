@@ -26,20 +26,17 @@ public class SelectTableActivity extends AbsActivity<ActivitySelectTableBinding>
 
             @Override
             public boolean isSold(int row, int column) {
-                if (row == 6 && column == 6) {
-                    return true;
-                }
-                return false;
+                return row == 6 && column == 6;
             }
 
             @Override
             public void checked(int row, int column) {
-                ToastHelp.showToast("选择了第" + row + "行,第" + column + "列");
+                ToastHelp.showToast("选择了第" + row + "排 ,第" + column + "座");
             }
 
             @Override
             public void unCheck(int row, int column) {
-                ToastHelp.showToast("取消选择了第" + row + "行,第" + column + "列");
+                ToastHelp.showToast("取消选择了第" + row + "排 ,第" + column + "座");
             }
 
             @Override

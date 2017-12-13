@@ -39,15 +39,15 @@ public abstract class AbsActivity<BD extends ViewDataBinding> extends AppCompatA
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        closeLoading();
-    }
-
-    @Override
     public void closeLoading() {
         if (helper != null)
             helper.hideLoading();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        closeLoading();
     }
 
     @Override

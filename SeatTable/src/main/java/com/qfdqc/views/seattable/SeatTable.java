@@ -1089,7 +1089,7 @@ public class SeatTable extends View {
                             if (index >= 0) {
                                 remove(index);
                                 if (seatChecker != null) {
-                                    seatChecker.unCheck(i, j);
+                                    seatChecker.unCheck(i+1, j+1);
                                 }
                             } else {
                                 if (selects.size() >= maxSelected) {
@@ -1098,7 +1098,7 @@ public class SeatTable extends View {
                                 } else {
                                     addChooseSeat(i, j);
                                     if (seatChecker != null) {
-                                        seatChecker.checked(i, j);
+                                        seatChecker.checked(i+1, j+1);
                                     }
                                 }
                             }

@@ -80,7 +80,8 @@
     <dimen name="dp_250">250dp</dimen>
     <dimen name="dp_300">300dp</dimen>
     <dimen name="dp_320">320dp</dimen>
-
+    <dimen name="dp_400">400dp</dimen>
+    <dimen name="dp_500">500dp</dimen>
     <!--以下是sp转换-->
     <dimen name="sp_6">6sp</dimen>
     <dimen name="sp_10">10sp</dimen>

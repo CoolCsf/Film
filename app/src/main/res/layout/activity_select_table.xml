@@ -1,9 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.qfdqc.views.seattable.SeatTable
-        android:id="@+id/seatView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#ffffff" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/titleBar"
+            layout="@layout/layout_toolbar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_14"
+            android:layout_marginTop="@dimen/dp_12"
+            android:textColor="@color/text_color_important"
+            android:textSize="@dimen/sp_16"
+            tools:text="xxx电影城" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_14"
+            android:layout_marginTop="@dimen/dp_3"
+            android:textSize="@dimen/sp_12"
+            tools:text="今天12月12日 14:20 英语3D " />
+
+        <include layout="@layout/line_horizontal_match_parent_3px" />
+
+        <com.qfdqc.views.seattable.SeatTable
+            android:id="@+id/seatView"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_400"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/main_background_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            style="@style/btn_Long_onBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_color"
+            android:text="购票" />
+    </LinearLayout>
+
 </layout>
