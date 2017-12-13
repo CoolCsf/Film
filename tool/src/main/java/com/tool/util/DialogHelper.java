@@ -1,7 +1,10 @@
 package com.tool.util;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.widget.EditText;
 
 import com.tool.R;
 
@@ -10,25 +13,33 @@ import com.tool.R;
  */
 
 public class DialogHelper {
-    private Dialog dialog;
+    private AlertDialog mDialog;
 
     public void showLoading(Context context) {
-        if (dialog != null && dialog.isShowing())
+        if (mDialog != null && mDialog.isShowing())
             return;
-        if (dialog == null) {
-            dialog = new Dialog(context);
-            dialog.setContentView(R.layout.layout_loading);
+        if (mDialog == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setView(R.layout.layout_loading);
+            mDialog = builder.create();
         }
-        dialog.show();
+        mDialog.show();
     }
 
     public void hideLoading() {
-        if (dialog != null) {
-            if (dialog.isShowing())
-                dialog.dismiss();
-            dialog = null;
+        if (mDialog != null) {
+            if (mDialog.isShowing())
+                mDialog.dismiss();
+            mDialog = null;
         }
 
     }
 
+    public void showInputDialog(Context context, DialogInterface.OnClickListener listener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(new EditText(context))
+                .setPositiveButton("确定", listener)
+                .setNegativeButton("取消", null)
+                .show();
+    }
 }

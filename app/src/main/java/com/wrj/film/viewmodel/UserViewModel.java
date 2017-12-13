@@ -8,8 +8,18 @@ import cn.bmob.v3.BmobUser;
  */
 
 public class UserViewModel extends BmobUser {
-    public String userName;
-    public String pwd;
+    private String userName;
+    private String pwd;
+    private Boolean isRoot;
+    private String balance;
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
 
     public Boolean isRoot() {
         return isRoot;
@@ -18,9 +28,6 @@ public class UserViewModel extends BmobUser {
     public void setRoot(Boolean root) {
         isRoot = root;
     }
-
-    public Boolean isRoot;
-    public String name;
 
     public String getUserName() {
         return userName;

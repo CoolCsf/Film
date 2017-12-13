@@ -38,7 +38,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, UserViewMo
 
 
     private void loginToBmob() {
-        LoginUtil.login(viewModel.userName, viewModel.pwd, this);
+        LoginUtil.login(viewModel.getUserName(), viewModel.getPwd(), this);
     }
 
 

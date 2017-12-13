@@ -1,9 +1,9 @@
 package com.wrj.film.view.ui.activity;
 
-import android.support.v4.content.ContextCompat;
+import android.os.Bundle;
+import android.view.View;
 
-import com.tool.util.glide.GlideImageLoader;
-import com.wrj.film.AppContext;
+import com.tool.util.DataUtils;
 import com.wrj.film.R;
 import com.wrj.film.databinding.ActivityFilmDetailBinding;
 import com.wrj.film.model.FilmModel;
@@ -15,6 +15,7 @@ import java.util.List;
 
 public class FilmDetailActivity extends BaseActivity<ActivityFilmDetailBinding, FilmRcyItemViewModel> {
     public static final String FILM_INTENT_KEY = "film_intent_key";
+    private String filmId;
 
     @Override
     protected int getLayoutId() {
@@ -24,9 +25,9 @@ public class FilmDetailActivity extends BaseActivity<ActivityFilmDetailBinding, 
     @Override
     protected void initData() {
         super.initData();
-        String id = getIntent().getExtras().getString(FILM_INTENT_KEY);
+        filmId = getIntent().getExtras().getString(FILM_INTENT_KEY);
         showLoading();
-        FilmModelUtil.getFilmModelFromId(id, new FilmModelUtil.FilmModelCallBack() {
+        FilmModelUtil.getFilmModelFromId(filmId, new FilmModelUtil.FilmModelCallBack() {
             @Override
             public void getModel(List<FilmModel> model) {
                 closeLoading();
@@ -38,6 +39,21 @@ public class FilmDetailActivity extends BaseActivity<ActivityFilmDetailBinding, 
                 viewModel.setPhotoUrl(film.getPhotoUrl());
                 viewModel.setNum(film.getScore());
                 binding.setData(viewModel);
+            }
+        });
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        binding.btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (DataUtils.checkStrNotNull(filmId)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_KEY, filmId);
+                    startActivity(FilmBuyActivity.class, bundle);
+                }
             }
         });
     }

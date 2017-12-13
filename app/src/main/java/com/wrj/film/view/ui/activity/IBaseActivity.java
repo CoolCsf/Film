@@ -7,7 +7,7 @@ import android.os.Bundle;
  */
 
 public interface IBaseActivity {
-    void goActivity(Class act, Bundle bundle);
+    void startActivity(Class act, Bundle bundle);
 
     void startActForResult(Class actClass, Bundle bundle, int requestCode);
 

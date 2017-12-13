@@ -50,6 +50,6 @@ public abstract class BaseFragment<BD extends ViewDataBinding> extends Fragment 
 
     protected void startActivity(Class act, Bundle bundle) {
         if (getActivity() != null)
-            ((IBaseActivity) getActivity()).goActivity(act, bundle);
+            ((IBaseActivity) getActivity()).startActivity(act, bundle);
     }
 }

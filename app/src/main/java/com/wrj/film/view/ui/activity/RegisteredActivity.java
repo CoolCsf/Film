@@ -28,7 +28,7 @@ public class RegisteredActivity extends BaseActivity<ActivityRegisteredBinding, 
             @Override
             public void onClick(View v) {
                 if (checkETNotNull(binding.etUserName, "请输入用户名") && checkETNotNull(binding.etPwd, "请输入密码")
-                        && checkETNotNull(binding.etPwdConfirm, "请输入确认密码") && checkPwdConfirm() && checkETNotNull(binding.etName, "请输入您的名字")) {
+                        && checkETNotNull(binding.etPwdConfirm, "请输入确认密码")) {
                     showLoading();
                     viewModel.setRoot(false);
                     viewModel.signUp(new SaveListener<UserViewModel>() {

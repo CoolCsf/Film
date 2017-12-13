@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.wrj.film.viewmodel.UserViewModel" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,6 +18,84 @@
         <include
             android:id="@+id/titleBar"
             layout="@layout/layout_toolbar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_45">
+
+            <ImageView
+                android:id="@+id/iv_mine_headImg"
+                android:layout_width="@dimen/dp_70"
+                android:layout_height="@dimen/dp_70"
+                android:src="@drawable/avater" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_10"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="账号:"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/tv_style_mid_size" />
+
+                    <TextView
+                        android:id="@+id/tv_userName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:text="@{data.userName}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/tv_style_mid_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ly_mine_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="余额:"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/tv_style_mid_size" />
+
+                    <TextView
+                        android:id="@+id/tv_mine_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:paddingBottom="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_10"
+                        android:text="@{data.balance}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/tv_style_mid_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_order_unPay"

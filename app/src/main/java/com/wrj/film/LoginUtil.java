@@ -20,7 +20,7 @@ public class LoginUtil {
             @Override
             public void done(UserViewModel userViewModel, BmobException e) {
                 if (userViewModel != null) {
-                    activity.goActivity(MainActivity.class, null);
+                    activity.startActivity(MainActivity.class, null);
                 } else {
                     ToastHelp.showToast("登录失败" + e.toString());
                     activity.closeLoading();

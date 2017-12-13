@@ -67,7 +67,7 @@ public abstract class AbsActivity<BD extends ViewDataBinding> extends AppCompatA
     }
 
     @Override
-    public void goActivity(Class act, Bundle bundle) {
+    public void startActivity(Class act, Bundle bundle) {
         Intent intent = new Intent(this, act);
         if (bundle != null)
             intent.putExtras(bundle);

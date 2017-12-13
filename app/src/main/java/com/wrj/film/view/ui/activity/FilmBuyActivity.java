@@ -23,6 +23,8 @@ import java.util.Date;
 
 public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
     public static final String FILM_BUY_INTENT_KEY = "film_buy_intent_key";
+    private BDRVFastAdapter adapter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_film_buy;
@@ -38,14 +40,18 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
     private void initRcy() {
         binding.rvFilmBuy.setLayoutManager(new LinearLayoutManager(this));
         ViewUtil.rcyAddItemDecoration(binding.rvFilmBuy);
-        BDRVFastAdapter adapter = new BDRVFastAdapter<FilmBuyRcyItemViewModel, ItemFilmBuyRcyBinding>(
-                R.layout.item_film_buy_rcy, new ArrayList<FilmBuyRcyItemViewModel>());
+        adapter = new BDRVFastAdapter<FilmBuyRcyItemViewModel, ItemFilmBuyRcyBinding>(
+                R.layout.item_film_buy_rcy, new ArrayList<FilmBuyRcyItemViewModel>(), R.id.btn_buy);
         binding.rvFilmBuy.setAdapter(adapter);
-        adapter.setNewData(getList());
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+
+    }
+
+    @Override
+    protected void initListener() {
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                goActivity(SelectTableActivity.class, null);
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(SelectTableActivity.class, null);
             }
         });
     }
