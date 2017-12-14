@@ -9,6 +9,7 @@ import com.wrj.film.AppContext;
 import com.wrj.film.R;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobPointer;
 
 /**
  * Created by Administrator on 2017/12/11.
@@ -27,6 +28,15 @@ public class FilmModel extends BmobObject {
     private String introduction;
     private String duration;
     private boolean isNowShowing;//是否热映
+    private FilmTime times;
+
+    public FilmTime getTimes() {
+        return times;
+    }
+
+    public void setTimes(FilmTime times) {
+        this.times = times;
+    }
 
     public boolean isNowShowing() {
         return isNowShowing;

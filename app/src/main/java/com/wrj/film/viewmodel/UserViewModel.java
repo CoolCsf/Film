@@ -14,7 +14,7 @@ public class UserViewModel extends BmobUser {
     private String balance;
 
     public String getBalance() {
-        return balance;
+        return (balance.equals("") ? "0" : balance) + "元";
     }
 
     public void setBalance(String balance) {

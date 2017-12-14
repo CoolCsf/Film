@@ -18,6 +18,7 @@ import com.wrj.film.databinding.ItemSortRcyBinding;
 import com.wrj.film.databinding.LayoutSortRcyHeadBinding;
 import com.wrj.film.model.FilmModel;
 import com.wrj.film.model.FilmModelUtil;
+import com.wrj.film.model.FilmTime;
 import com.wrj.film.model.SortTypeEnum;
 import com.wrj.film.view.ui.ViewUtil;
 import com.wrj.film.view.ui.activity.FilmBuyActivity;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobPointer;
 
 /**
  * Created by Administrator on 2017/12/9.
@@ -104,6 +106,7 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
         } else {
             BmobQuery<FilmModel> query = new BmobQuery<>();
             query.addWhereEqualTo("type", type);
+            query.addWhereEqualTo("time",new BmobPointer(new FilmTime()));
             FilmModelUtil.getFilmModelParam(new FilmModelUtil.FilmModelCallBack() {
                 @Override
                 public void getModel(List<FilmModel> model) {
