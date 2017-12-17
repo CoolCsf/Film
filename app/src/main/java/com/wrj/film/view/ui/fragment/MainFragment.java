@@ -78,6 +78,10 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
                     Bundle bundle = new Bundle();
                     bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_KEY,
                             ((FilmPlayRcyItemViewModel) adapter.getData().get(position)).getFilmId());
+                    bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_TYPE_KEY,
+                            ((FilmPlayRcyItemViewModel) adapter.getData().get(position)).getType());
+                    bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_MONEY_KEY,
+                            ((FilmPlayRcyItemViewModel) adapter.getData().get(position)).getMoney());
                     startActivity(FilmBuyActivity.class, bundle);
                 }
             }
@@ -92,6 +96,8 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
                 FilmPlayRcyItemViewModel model = new FilmPlayRcyItemViewModel();
                 model.setPhotoUrl(film.getPhotoUrl());
                 model.setFilmId(film.getObjectId());
+                model.setMoney(film.getMoney());
+                model.setType(film.getType());
                 if (film.isNowShowing()) {
                     showList.add(model);
                 } else {

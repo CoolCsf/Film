@@ -72,14 +72,9 @@
                     <TextView
                         android:id="@+id/tv_duration"
                         style="@style/film_detail_style"
-                        android:text="120分钟"
+                        android:text="@{data.duration}"
                         tools:text="120分钟" />
 
-                    <TextView
-                        android:id="@+id/tv_date"
-                        style="@style/film_detail_style"
-                        android:text="@{data.time}"
-                        tools:text="2017-11-24" />
                 </LinearLayout>
             </LinearLayout>
 

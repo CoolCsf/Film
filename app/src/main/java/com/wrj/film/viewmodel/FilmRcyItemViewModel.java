@@ -16,9 +16,17 @@ public class FilmRcyItemViewModel {
     private String photoUrl;
     private String title;
     private String type;
-    private String time;
     private String num;
     private String detail;
+    private String duration;
+
+    public String getDuration() {
+        return duration + "分钟";
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
 
     public String getDetail() {
         return detail;
@@ -50,14 +58,6 @@ public class FilmRcyItemViewModel {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public String getNum() {

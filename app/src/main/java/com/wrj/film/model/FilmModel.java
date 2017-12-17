@@ -7,9 +7,13 @@ import android.widget.ImageView;
 import com.tool.util.glide.GlideImageLoader;
 import com.wrj.film.AppContext;
 import com.wrj.film.R;
+import com.wrj.film.viewmodel.FilmViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.datatype.BmobPointer;
+import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * Created by Administrator on 2017/12/11.
@@ -19,8 +23,6 @@ import cn.bmob.v3.datatype.BmobPointer;
 
 public class FilmModel extends BmobObject {
     private String title;
-    private String date;
-    private String time;
     private String type;
     private String money;
     private String score;
@@ -28,18 +30,36 @@ public class FilmModel extends BmobObject {
     private String introduction;
     private String duration;
     private boolean isNowShowing;//是否热映
-    private FilmTime times;
+    private BmobRelation dates;
+    private BmobRelation times;
 
-    public FilmTime getTimes() {
+    public BmobRelation getTimes() {
         return times;
     }
 
-    public void setTimes(FilmTime times) {
+    public void setTimes(BmobRelation times) {
         this.times = times;
     }
+    //    private UserViewModel user;
+
+//    public UserViewModel getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(UserViewModel user) {
+//        this.user = user;
+//    }
 
     public boolean isNowShowing() {
         return isNowShowing;
+    }
+
+    public BmobRelation getDates() {
+        return dates;
+    }
+
+    public void setDates(BmobRelation dates) {
+        this.dates = dates;
     }
 
     public void setNowShowing(boolean isNowShowing) {
@@ -52,22 +72,6 @@ public class FilmModel extends BmobObject {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public String getType() {
@@ -123,5 +127,23 @@ public class FilmModel extends BmobObject {
         GlideImageLoader.getInstance().displayImage(AppContext.instance, view,
                 imageId, ContextCompat.getDrawable(AppContext.instance, R.drawable.error_default_big),
                 270, 255);
+    }
+
+    public static List<FilmViewModel> model2viewModel(List<FilmModel> models) {
+        List<FilmViewModel> filmViewModels = new ArrayList<>();
+        for (FilmModel model : models) {
+            FilmViewModel viewModel = new FilmViewModel();
+            viewModel.setDuration(model.getDuration());
+            viewModel.setIntroduction(model.getIntroduction());
+            viewModel.setMoney(model.getMoney());
+            viewModel.setNowShowing(model.isNowShowing());
+            viewModel.setPhotoUrl(model.getPhotoUrl());
+            viewModel.setScore(model.getScore());
+            viewModel.setTitle(model.getTitle());
+            viewModel.setType(model.getType());
+            viewModel.setObjectId(model.getObjectId());
+            filmViewModels.add(viewModel);
+        }
+        return filmViewModels;
     }
 }

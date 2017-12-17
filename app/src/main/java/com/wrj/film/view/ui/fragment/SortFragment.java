@@ -18,25 +18,24 @@ import com.wrj.film.databinding.ItemSortRcyBinding;
 import com.wrj.film.databinding.LayoutSortRcyHeadBinding;
 import com.wrj.film.model.FilmModel;
 import com.wrj.film.model.FilmModelUtil;
-import com.wrj.film.model.FilmTime;
 import com.wrj.film.model.SortTypeEnum;
 import com.wrj.film.view.ui.ViewUtil;
 import com.wrj.film.view.ui.activity.FilmBuyActivity;
 import com.wrj.film.view.ui.activity.FilmDetailActivity;
+import com.wrj.film.viewmodel.FilmViewModel;
 import com.wrj.film.viewmodel.SimpleStringViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobPointer;
 
 /**
  * Created by Administrator on 2017/12/9.
  */
 
 public class SortFragment extends BaseFragment<FragmentSortBinding> {
-    private BDRVFastAdapter<FilmModel, ItemSortRcyBinding> sortAdapter;
+    private BDRVFastAdapter<FilmViewModel, ItemSortRcyBinding> sortAdapter;
     private BDRVFastAdapter<SimpleStringViewModel, ItemSortHeadRcyBinding> headAdapter;
     private String type = SortTypeEnum.ALL.getType();
 
@@ -78,7 +77,7 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putString(FilmDetailActivity.FILM_INTENT_KEY,
-                        ((FilmModel) adapter.getData().get(position)).getObjectId());
+                        ((FilmViewModel) adapter.getData().get(position)).getObjectId());
                 startActivity(FilmDetailActivity.class, bundle);
             }
         });
@@ -88,7 +87,11 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
                 if (view.getId() == R.id.btn_buy) {
                     Bundle bundle = new Bundle();
                     bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_KEY,
-                            ((FilmModel) adapter.getData().get(position)).getObjectId());
+                            ((FilmViewModel) adapter.getData().get(position)).getObjectId());
+                    bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_TYPE_KEY,
+                            ((FilmViewModel) adapter.getData().get(position)).getType());
+                    bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_MONEY_KEY,
+                            ((FilmViewModel) adapter.getData().get(position)).getMoney());
                     startActivity(FilmBuyActivity.class, bundle);
                 }
             }
@@ -106,7 +109,6 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
         } else {
             BmobQuery<FilmModel> query = new BmobQuery<>();
             query.addWhereEqualTo("type", type);
-            query.addWhereEqualTo("time",new BmobPointer(new FilmTime()));
             FilmModelUtil.getFilmModelParam(new FilmModelUtil.FilmModelCallBack() {
                 @Override
                 public void getModel(List<FilmModel> model) {
@@ -118,7 +120,7 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
 
     private void toRcy(List<FilmModel> model) {
         if (CollectionUtils.collectionState(model) == CollectionUtils.COLLECTION_UNEMPTY) {
-            sortAdapter.setNewData(model);
+            sortAdapter.setNewData(FilmModel.model2viewModel(model));
         }
     }
 

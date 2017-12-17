@@ -16,6 +16,8 @@ import java.util.List;
 public class FilmDetailActivity extends BaseActivity<ActivityFilmDetailBinding, FilmRcyItemViewModel> {
     public static final String FILM_INTENT_KEY = "film_intent_key";
     private String filmId;
+    private String filmMoney;
+    private String filmType;
 
     @Override
     protected int getLayoutId() {
@@ -35,9 +37,11 @@ public class FilmDetailActivity extends BaseActivity<ActivityFilmDetailBinding, 
                 viewModel.setDetail(film.getIntroduction());
                 viewModel.setTitle(film.getTitle());
                 viewModel.setType(film.getType());
-                viewModel.setTime(film.getTime());
                 viewModel.setPhotoUrl(film.getPhotoUrl());
                 viewModel.setNum(film.getScore());
+                viewModel.setDuration(film.getDuration());
+                filmMoney = film.getMoney();
+                filmType = film.getType();
                 binding.setData(viewModel);
             }
         });
@@ -52,6 +56,8 @@ public class FilmDetailActivity extends BaseActivity<ActivityFilmDetailBinding, 
                 if (DataUtils.checkStrNotNull(filmId)) {
                     Bundle bundle = new Bundle();
                     bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_KEY, filmId);
+                    bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_MONEY_KEY, filmMoney);
+                    bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_TYPE_KEY, filmType);
                     startActivity(FilmBuyActivity.class, bundle);
                 }
             }

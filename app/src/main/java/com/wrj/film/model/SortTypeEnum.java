@@ -29,9 +29,9 @@ public enum SortTypeEnum {
      */
     SCIENCE(4, "科幻"),
     /**
-     * 恐怖
+     * 惊悚
      */
-    TERROR(5, "恐怖"),
+    TERROR(5, "惊悚"),
     /**
      * 推理
      */

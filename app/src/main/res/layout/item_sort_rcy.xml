@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="com.wrj.film.model.FilmModel" />
+            type="com.wrj.film.viewmodel.FilmViewModel" />
     </data>
 
     <LinearLayout
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
-                android:text="@{data.date}"
+                android:text="@{data.duration}"
                 android:textSize="@dimen/sp_16"
                 tools:text="2017-05-06" />
         </LinearLayout>

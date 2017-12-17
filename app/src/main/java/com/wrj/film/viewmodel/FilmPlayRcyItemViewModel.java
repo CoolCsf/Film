@@ -1,7 +1,6 @@
 package com.wrj.film.viewmodel;
 
 import android.databinding.BindingAdapter;
-import android.support.annotation.IdRes;
 import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
 
@@ -16,6 +15,24 @@ import com.wrj.film.R;
 public class FilmPlayRcyItemViewModel {
     private String photoUrl;
     private String filmId;
+    private String type;
+    private String money;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
+    }
 
     public String getFilmId() {
         return filmId;
