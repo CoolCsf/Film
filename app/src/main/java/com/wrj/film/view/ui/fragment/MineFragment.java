@@ -2,7 +2,9 @@ package com.wrj.film.view.ui.fragment;
 
 import android.view.View;
 
+import com.tool.util.DataUtils;
 import com.tool.util.DialogHelper;
+import com.tool.util.RegulrlyUtils;
 import com.tool.util.ToastHelp;
 import com.wrj.film.R;
 import com.wrj.film.databinding.FragmentMineBinding;
@@ -56,6 +58,44 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                                 }
                             }
                         });
+                    }
+
+                    @Override
+                    public void negative() {
+
+                    }
+                });
+            }
+        });
+        binding.tvMinePhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DialogHelper().showInputNumDialog(getActivity(), "请输入手机号码", new DialogHelper.InputDialogCallBack() {
+                    @Override
+                    public void positive(final String content) {
+                        if (DataUtils.checkStrNotNull(content) && RegulrlyUtils.isCellphone(content)) {
+                            showLoading();
+                            model.setPhone(content);
+                            model.update(new UpdateListener() {
+                                @Override
+                                public void done(BmobException e) {
+                                    closeLoading();
+                                    if (e == null) {
+                                        binding.tvMinePhone.setText(content);
+                                        showToast("设置手机号码成功");
+                                    } else {
+                                        showToast("设置手机号码失败" + e.getMessage());
+                                    }
+                                }
+                            });
+                        } else {
+                            showToast("请输入正确的手机号码");
+                        }
+                    }
+
+                    @Override
+                    public void negative() {
+
                     }
                 });
             }

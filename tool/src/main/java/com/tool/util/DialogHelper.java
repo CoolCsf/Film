@@ -35,6 +35,26 @@ public class DialogHelper {
 
     }
 
+    public void showContentDialog(Context context, String title, String message, final InputDialogCallBack callBack) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        if (DataUtils.checkStrNotNull(title))
+            builder.setTitle(title);
+        builder.setMessage(message)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        callBack.positive("");
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        callBack.negative();
+                    }
+                })
+                .show();
+    }
+
     public void showInputDialog(Context context, String title, final InputDialogCallBack callBack) {
         showInputDialog(context, title, new EditText(context), callBack);
     }
@@ -49,7 +69,12 @@ public class DialogHelper {
                         callBack.positive(editText.getText().toString().trim());
                     }
                 })
-                .setNegativeButton("取消", null)
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        callBack.negative();
+                    }
+                })
                 .show();
     }
 
@@ -61,5 +86,7 @@ public class DialogHelper {
 
     public interface InputDialogCallBack {
         void positive(String content);
+
+        void negative();
     }
 }

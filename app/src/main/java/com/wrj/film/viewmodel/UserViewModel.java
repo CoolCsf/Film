@@ -1,6 +1,8 @@
 package com.wrj.film.viewmodel;
 
 
+import com.tool.util.DataUtils;
+
 import cn.bmob.v3.BmobUser;
 
 /**
@@ -12,9 +14,18 @@ public class UserViewModel extends BmobUser {
     private String pwd;
     private Boolean isRoot;
     private String balance;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getBalance() {
-        return (balance.equals("") ? "0" : balance) + "元";
+        return (DataUtils.checkStrNotNull(balance) ? balance : "0") + "元";
     }
 
     public void setBalance(String balance) {

@@ -101,6 +101,7 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
     }
 
     private void getDataFromBmob(String type) {
+        sortAdapter.setNewData(new ArrayList<FilmViewModel>());
         if (type.equals(SortTypeEnum.ALL.getType())) {
             FilmModelUtil.getFilmModelAll(new FilmModelUtil.FilmModelCallBack() {
                 @Override

@@ -142,9 +142,9 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
                                 return;
                             }
                         }
-                        showToast("查询不到数据");
+                        showToast("该时间无场次");
                     } else {
-                        showToast("查询不到数据");
+                        showToast("该时间无场次");
                     }
                     closeLoading();
                 } else {
@@ -175,7 +175,7 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
                         }
                         mAdapter.setNewData(datas);
                     } else {
-                        showToast("查询不到数据");
+                        showToast("该时间无场次");
                     }
                 } else {
                     showToast("查询失败" + e.getMessage());
