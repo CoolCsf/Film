@@ -58,6 +58,7 @@ public class FilmDetailActivity extends BaseActivity<ActivityFilmDetailBinding, 
                     bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_KEY, filmId);
                     bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_MONEY_KEY, filmMoney);
                     bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_TYPE_KEY, filmType);
+                    bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_FILM_NAME_KEY, viewModel.getTitle());
                     startActivity(FilmBuyActivity.class, bundle);
                 }
             }

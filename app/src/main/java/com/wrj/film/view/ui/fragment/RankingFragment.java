@@ -16,6 +16,7 @@ import com.wrj.film.model.FilmModelUtil;
 import com.wrj.film.view.ui.ViewUtil;
 import com.wrj.film.view.ui.activity.FilmBuyActivity;
 import com.wrj.film.view.ui.activity.FilmDetailActivity;
+import com.wrj.film.viewmodel.FilmPlayRcyItemViewModel;
 import com.wrj.film.viewmodel.FilmViewModel;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding> {
 
     @Override
     protected void initView() {
-        ((CustomTitleBar) binding.titleBar).setTitle("票房排行");
+        ViewUtil.initTitleBar(binding.titleBar,"评分排行");
         binding.rvRanking.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new BDRVFastAdapter(R.layout.item_sort_rcy, new ArrayList<FilmViewModel>(), R.id.btn_buy);
         ViewUtil.rcyAddItemDecoration(binding.rvRanking);
@@ -70,6 +71,8 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding> {
                             ((FilmViewModel) adapter.getData().get(position)).getMoney());
                     bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_TYPE_KEY,
                             ((FilmViewModel) adapter.getData().get(position)).getType());
+                    bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_FILM_NAME_KEY,
+                            ((FilmViewModel) adapter.getData().get(position)).getTitle());
                     startActivity(FilmBuyActivity.class, bundle);
                 }
             }

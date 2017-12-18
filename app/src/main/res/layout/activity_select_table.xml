@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="data"
+            type="com.wrj.film.viewmodel.SelectSeatViewModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,9 +24,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_14"
             android:layout_marginTop="@dimen/dp_12"
+            android:text="@{data.filmName}"
             android:textColor="@color/text_color_important"
             android:textSize="@dimen/sp_16"
-            tools:text="xxx电影城" />
+            tools:text="xxx电影 " />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_14"
+            android:layout_marginTop="@dimen/dp_3"
+            android:text="@{data.content}"
+            android:textSize="@dimen/sp_12"
+            tools:text="今天12月12日 14:20 英语3D " />
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,8 +44,10 @@
             android:layout_marginBottom="@dimen/dp_10"
             android:layout_marginStart="@dimen/dp_14"
             android:layout_marginTop="@dimen/dp_3"
+            android:text="@{data.money}"
+            android:textColor="@color/red_word"
             android:textSize="@dimen/sp_12"
-            tools:text="今天12月12日 14:20 英语3D " />
+            tools:text="28元" />
 
         <include layout="@layout/line_horizontal_match_parent_3px" />
 
@@ -45,11 +64,11 @@
             android:layout_weight="1" />
 
         <Button
+            android:id="@+id/btn_buy"
             style="@style/btn_Long_onBottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/main_color"
             android:text="购票" />
     </LinearLayout>
-
 </layout>

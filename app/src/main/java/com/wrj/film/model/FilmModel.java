@@ -40,15 +40,6 @@ public class FilmModel extends BmobObject {
     public void setTimes(BmobRelation times) {
         this.times = times;
     }
-    //    private UserViewModel user;
-
-//    public UserViewModel getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(UserViewModel user) {
-//        this.user = user;
-//    }
 
     public boolean isNowShowing() {
         return isNowShowing;

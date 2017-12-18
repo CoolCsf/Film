@@ -92,6 +92,8 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
                             ((FilmViewModel) adapter.getData().get(position)).getType());
                     bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_MONEY_KEY,
                             ((FilmViewModel) adapter.getData().get(position)).getMoney());
+                    bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_FILM_NAME_KEY,
+                            ((FilmViewModel) adapter.getData().get(position)).getTitle());
                     startActivity(FilmBuyActivity.class, bundle);
                 }
             }

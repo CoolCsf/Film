@@ -55,8 +55,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, UserViewMo
 
     private void insertDates() {
         final List<BmobObject> dates = new ArrayList<>();
-        dates.add(new FilmDate("2017-12-17"));
-        dates.add(new FilmDate("2017-12-18"));
+        dates.add(new FilmDate("2017-12-19"));
         new BmobBatch().insertBatch(dates).doBatch(new QueryListListener<BatchResult>() {
             @Override
             public void done(List<BatchResult> list, BmobException e) {
@@ -81,8 +80,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, UserViewMo
 
     private void insertTimes() {
         final List<BmobObject> times = new ArrayList<>();
-        times.add(new FilmTime("20:00"));
-        times.add(new FilmTime("19:00"));
+        FilmTime time = new FilmTime("13:00");
+        List<String> seats = new ArrayList<String>();
+        seats.add("07-08");
+        seats.add("09-08");
+        time.setSelectedSeats(seats);
+        times.add(time);
         new BmobBatch().insertBatch(times).doBatch(new QueryListListener<BatchResult>() {
             @Override
             public void done(List<BatchResult> list, BmobException e) {

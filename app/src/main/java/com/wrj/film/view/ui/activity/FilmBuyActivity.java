@@ -1,12 +1,12 @@
 package com.wrj.film.view.ui.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.tool.util.CollectionUtils;
-import com.tool.util.ToastHelp;
 import com.wrj.film.R;
 import com.wrj.film.adapter.BDRVFastAdapter;
 import com.wrj.film.databinding.ActivityFilmBuyBinding;
@@ -35,10 +35,13 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
     public static final String FILM_BUY_INTENT_KEY = "film_buy_intent_key";
     public static final String FILM_BUY_INTENT_TYPE_KEY = "film_buy_intent_type_key";
     public static final String FILM_BUY_INTENT_MONEY_KEY = "film_buy_intent_money_key";
-    private BDRVFastAdapter<FilmBuyRcyItemViewModel, ItemFilmBuyRcyBinding> adapter;
+    public static final String FILM_BUY_INTENT_FILM_NAME_KEY = "film_buy_intent_film_name_key";
+    private BDRVFastAdapter<FilmBuyRcyItemViewModel, ItemFilmBuyRcyBinding> mAdapter;
     private String filmId;
     private String filmType;
+    private String filmName;
     private String filmMoney;
+    private String date;
 
     @Override
     protected int getLayoutId() {
@@ -55,17 +58,23 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
     private void initRcy() {
         binding.rvFilmBuy.setLayoutManager(new LinearLayoutManager(this));
         ViewUtil.rcyAddItemDecoration(binding.rvFilmBuy);
-        adapter = new BDRVFastAdapter<>(
+        mAdapter = new BDRVFastAdapter<>(
                 R.layout.item_film_buy_rcy, new ArrayList<FilmBuyRcyItemViewModel>(), R.id.btn_buy);
-        binding.rvFilmBuy.setAdapter(adapter);
+        binding.rvFilmBuy.setAdapter(mAdapter);
     }
 
     @Override
     protected void initListener() {
-        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(SelectTableActivity.class, null);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(SelectTableActivity.FILM_SELECT_SEAT_INTENT_TIME_KEY, mAdapter.getData().get(position).getFilmTime());
+                bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_DATE_KEY, date);
+                bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_TYPE_KEY, filmType);
+                bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_FILM_NAME_KEY, filmName);
+                bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_MONEY_KEY, filmMoney);
+                startActivity(SelectTableActivity.class, bundle);
             }
         });
     }
@@ -83,7 +92,7 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getText() != null) {
-                    adapter.setNewData(new ArrayList<FilmBuyRcyItemViewModel>());
+                    mAdapter.setNewData(new ArrayList<FilmBuyRcyItemViewModel>());
                     queryData(tab.getText().toString().split("天")[1]);
                 }
             }
@@ -111,10 +120,12 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
         filmId = getIntent().getExtras().getString(FILM_BUY_INTENT_KEY);
         filmMoney = getIntent().getExtras().getString(FILM_BUY_INTENT_MONEY_KEY);
         filmType = getIntent().getExtras().getString(FILM_BUY_INTENT_TYPE_KEY);
+        filmName = getIntent().getExtras().getString(FILM_BUY_INTENT_FILM_NAME_KEY);
         queryData(getNowDate(Calendar.getInstance()));
     }
 
     private void queryData(final String date) {
+        this.date = date;
         showLoading();
         BmobQuery<FilmDate> query = new BmobQuery<>();
         final FilmModel filmModel = new FilmModel();
@@ -142,29 +153,6 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
                 }
             }
         });
-//        BmobQuery<FilmModel> query = new BmobQuery<>();
-//        query.addWhereEqualTo("objectId", filmId);
-//        query.addWhereRelatedTo("date",new BmobPointer())
-//        query.findObjects(new FindListener<FilmModel>() {
-//            @Override
-//            public void done(List<FilmModel> list, BmobException e) {
-//                if (e == null) {
-//                    if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
-//                        for (FilmModel model : list) {
-////                            viewModel.setType(model.getType());
-////                            viewModel.setMoney(model.getMoney());
-////                            for (FilmTime time : model.getTimes()) {
-////                                FilmBuyRcyItemViewModel viewModel = new FilmBuyRcyItemViewModel();
-////                                viewModel.setTime(time.getTime());
-////                            }
-//                        }
-//                    }
-////                    adapter.setNewData(list);
-//                } else {
-//                    ToastHelp.showToast("查询失败:" + e.getMessage());
-//                }
-//            }
-//        });
     }
 
     private void queryTimes(FilmModel filmModel) {
@@ -182,9 +170,10 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
                             viewModel.setTime(time.getTime());
                             viewModel.setMoney(filmMoney);
                             viewModel.setType(filmType);
+                            viewModel.setFilmTime(time);
                             datas.add(viewModel);
                         }
-                        adapter.setNewData(datas);
+                        mAdapter.setNewData(datas);
                     } else {
                         showToast("查询不到数据");
                     }

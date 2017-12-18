@@ -82,6 +82,8 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
                             ((FilmPlayRcyItemViewModel) adapter.getData().get(position)).getType());
                     bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_MONEY_KEY,
                             ((FilmPlayRcyItemViewModel) adapter.getData().get(position)).getMoney());
+                    bundle.putString(FilmBuyActivity.FILM_BUY_INTENT_FILM_NAME_KEY,
+                            ((FilmPlayRcyItemViewModel) adapter.getData().get(position)).getFilmName());
                     startActivity(FilmBuyActivity.class, bundle);
                 }
             }
@@ -98,6 +100,7 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
                 model.setFilmId(film.getObjectId());
                 model.setMoney(film.getMoney());
                 model.setType(film.getType());
+                model.setFilmName(film.getTitle());
                 if (film.isNowShowing()) {
                     showList.add(model);
                 } else {

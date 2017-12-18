@@ -17,6 +17,15 @@ public class FilmPlayRcyItemViewModel {
     private String filmId;
     private String type;
     private String money;
+    private String filmName;
+
+    public String getFilmName() {
+        return filmName;
+    }
+
+    public void setFilmName(String filmName) {
+        this.filmName = filmName;
+    }
 
     public String getType() {
         return type;
