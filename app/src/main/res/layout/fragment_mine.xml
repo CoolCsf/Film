@@ -27,18 +27,18 @@
 
             <ImageView
                 android:id="@+id/iv_mine_headImg"
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="@dimen/dp_100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/avater" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dp_10"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:padding="@dimen/dp_5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -63,6 +63,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:padding="@dimen/dp_5"
                     android:id="@+id/ly_mine_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -81,8 +82,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_5"
-                        android:paddingBottom="@dimen/dp_10"
-                        android:paddingTop="@dimen/dp_10"
                         android:text="@{data.balance}"
                         android:textColor="@color/white"
                         android:textSize="@dimen/tv_style_mid_size" />
@@ -90,6 +89,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:padding="@dimen/dp_5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -107,8 +107,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_5"
-                        android:paddingBottom="@dimen/dp_10"
-                        android:paddingTop="@dimen/dp_10"
                         android:text="@{data.phone}"
                         android:textColor="@color/white"
                         android:textSize="@dimen/tv_style_mid_size" />

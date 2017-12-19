@@ -37,8 +37,8 @@ dependencies {
 //    //recyclerViewAdapter
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28'
 //    implementation rootProject.ext.libs.supportGridlayout
-//    //eventbus
-//    implementation 'org.greenrobot:eventbus:3.0.0'
+    //eventbus
+    api 'org.greenrobot:eventbus:3.0.0'
     api rootProject.ext.libs.supportDesign
 //    //MPAndroidChart
 //    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'

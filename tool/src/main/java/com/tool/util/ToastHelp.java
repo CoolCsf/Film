@@ -11,12 +11,16 @@ import android.widget.Toast;
 public class ToastHelp {
     @SuppressLint("StaticFieldLeak")
     private static Application content;
+    private static long time = 0;
 
     public static void init(Application con) {
         content = con;
     }
 
     public static void showToast(String text) {
-        Toast.makeText(content, text, Toast.LENGTH_SHORT).show();
+        if (time == 0 || System.currentTimeMillis() - time >= 1000 * 2) {//2秒内只能弹一次
+            Toast.makeText(content, text, Toast.LENGTH_SHORT).show();
+            time = System.currentTimeMillis();
+        }
     }
 }

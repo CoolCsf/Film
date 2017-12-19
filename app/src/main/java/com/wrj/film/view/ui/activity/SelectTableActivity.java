@@ -13,10 +13,14 @@ import com.wrj.film.databinding.ActivitySelectTableBinding;
 import com.wrj.film.model.FilmTime;
 import com.wrj.film.model.OrderModel;
 import com.wrj.film.model.OrderTypeEnum;
+import com.wrj.film.model.eventbus.UpdateOrderEvent;
 import com.wrj.film.view.ui.ViewUtil;
 import com.wrj.film.viewmodel.SelectSeatViewModel;
 import com.wrj.film.viewmodel.UserViewModel;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +71,7 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
     private void toBuy() {
         if (DataUtils.checkStrNotNull(BmobUser.getCurrentUser(UserViewModel.class).getPhone())) {
             UserViewModel user = BmobUser.getCurrentUser(UserViewModel.class);
-            final int balance = Integer.valueOf(user.getBalance().replace("元", "").trim());
+            final float balance = Float.valueOf(user.getBalance().replace("元", "").trim());
             if (balance < Float.valueOf(filmMoney)) {
                 showToast("账户余额不足");
                 return;
@@ -75,14 +79,12 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
             new DialogHelper().showContentDialog(this, "", "确认购票？", new DialogHelper.InputDialogCallBack() {
                 @Override
                 public void positive(String content) {
+                    showLoading();
                     getOrderModel(OrderTypeEnum.getState(1)).save(new SaveListener<String>() {
                         @Override
                         public void done(String s, BmobException e) {
                             if (e == null) {
-                                showToast("购票成功，请前往已完成订单查看");
-                                updateFilmTime();
-                                updateUserBalance(String.valueOf(Float.valueOf(filmMoney) - balance));
-                                finish();
+                                updateOrder(balance, "购票成功，请前往已完成订单查看");
                             } else {
                                 showToast("购票失败" + e.getMessage());
                             }
@@ -92,14 +94,12 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
 
                 @Override
                 public void negative() {
+                    showLoading();
                     getOrderModel(OrderTypeEnum.getState(2)).save(new SaveListener<String>() {
                         @Override
                         public void done(String s, BmobException e) {
                             if (e == null) {
-                                showToast("生成待支付订单成功，请前往待支付订单查看");
-                                updateFilmTime();
-                                updateUserBalance(String.valueOf(Float.valueOf(filmMoney) - balance));
-                                finish();
+                                updateOrder(balance, "生成待支付订单成功，请前往待支付订单查看");
                             } else {
                                 showToast("生成待支付订单失败" + e.getMessage());
                             }
@@ -112,15 +112,24 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
         }
     }
 
+    private void updateOrder(float balance, String toast) {
+        updateFilmTime();
+        updateUserBalance(new DecimalFormat("##0.0").format(balance - Float.valueOf(filmMoney)));
+        showToast(toast);
+        finish();
+    }
+
     private void updateUserBalance(String balance) {
         UserViewModel user = BmobUser.getCurrentUser(UserViewModel.class);
         user.setBalance(balance);
         user.update(new UpdateListener() {
             @Override
             public void done(BmobException e) {
+                closeLoading();
                 if (e != null) {
                     Log.e(TAG, "更新余额失败" + e.getMessage());
                 } else {
+                    EventBus.getDefault().post(new UpdateOrderEvent());
                     Log.e(TAG, "更新余额成功");
                 }
             }

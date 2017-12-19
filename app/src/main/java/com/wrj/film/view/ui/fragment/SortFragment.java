@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.tool.util.CollectionUtils;
+import com.tool.util.ToastHelp;
 import com.wrj.film.R;
 import com.wrj.film.adapter.BDRVFastAdapter;
 import com.wrj.film.databinding.FragmentSortBinding;
@@ -101,6 +102,7 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
     }
 
     private void getDataFromBmob(String type) {
+        showLoading();
         sortAdapter.setNewData(new ArrayList<FilmViewModel>());
         if (type.equals(SortTypeEnum.ALL.getType())) {
             FilmModelUtil.getFilmModelAll(new FilmModelUtil.FilmModelCallBack() {
@@ -122,8 +124,11 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
     }
 
     private void toRcy(List<FilmModel> model) {
+        closeLoading();
         if (CollectionUtils.collectionState(model) == CollectionUtils.COLLECTION_UNEMPTY) {
             sortAdapter.setNewData(FilmModel.model2viewModel(model));
+        } else {
+            ToastHelp.showToast("暂无该类别的电影");
         }
     }
 

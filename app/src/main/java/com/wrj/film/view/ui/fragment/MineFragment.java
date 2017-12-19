@@ -1,5 +1,7 @@
 package com.wrj.film.view.ui.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.tool.util.DataUtils;
@@ -8,8 +10,13 @@ import com.tool.util.RegulrlyUtils;
 import com.tool.util.ToastHelp;
 import com.wrj.film.R;
 import com.wrj.film.databinding.FragmentMineBinding;
+import com.wrj.film.model.eventbus.UpdateOrderEvent;
 import com.wrj.film.view.ui.activity.LoginActivity;
 import com.wrj.film.viewmodel.UserViewModel;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -23,6 +30,23 @@ import static com.tool.util.ToastHelp.showToast;
 
 public class MineFragment extends BaseFragment<FragmentMineBinding> {
     private UserViewModel model;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void helloEventBus(UpdateOrderEvent message) {
+        initData();
+    }
 
     @Override
     protected void initData() {
@@ -44,7 +68,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                     @Override
                     public void positive(final String content) {
                         showLoading();
-                        final int total = Integer.valueOf(model.getBalance().replace("元", "").trim()) + Integer.valueOf(content.trim());
+                        final float total = Float.valueOf(model.getBalance().replace("元", "").trim()) + Float.valueOf(content.trim());
                         model.setBalance(String.valueOf(total));
                         model.update(new UpdateListener() {
                             @Override

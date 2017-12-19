@@ -1,6 +1,7 @@
 package com.wrj.film.view.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -14,8 +15,13 @@ import com.wrj.film.databinding.ItemFilmBuyRcyBinding;
 import com.wrj.film.model.FilmDate;
 import com.wrj.film.model.FilmModel;
 import com.wrj.film.model.FilmTime;
+import com.wrj.film.model.eventbus.UpdateOrderEvent;
 import com.wrj.film.view.ui.ViewUtil;
 import com.wrj.film.viewmodel.FilmBuyRcyItemViewModel;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,6 +48,23 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
     private String filmName;
     private String filmMoney;
     private String date;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void helloEventBus(UpdateOrderEvent message) {
+        initData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     protected int getLayoutId() {
