@@ -124,6 +124,24 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                 });
             }
         });
+        binding.tvOrderFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        binding.tvOrderPayed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        binding.tvOrderUnPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
