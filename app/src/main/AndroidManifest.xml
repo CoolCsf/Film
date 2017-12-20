@@ -18,10 +18,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.ui.activity.RegisteredActivity" />
-         <activity android:name=".view.ui.activity.MainActivity"/>
+        <activity android:name=".view.ui.activity.MainActivity" />
         <activity android:name=".view.ui.activity.FilmDetailActivity" />
         <activity android:name=".view.ui.activity.FilmBuyActivity" />
-        <activity android:name=".view.ui.activity.SelectTableActivity"/>
+        <activity android:name=".view.ui.activity.SelectTableActivity" />
+        <activity android:name=".view.ui.activity.OrderConfimActivity"></activity>
     </application>
 
 </manifest>
