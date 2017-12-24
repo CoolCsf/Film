@@ -5,13 +5,15 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.tool.util.DataUtils;
-import com.tool.util.DialogHelper;
+import com.wrj.film.view.widget.DialogHelper;
 import com.tool.util.RegulrlyUtils;
 import com.tool.util.ToastHelp;
 import com.wrj.film.R;
 import com.wrj.film.databinding.FragmentMineBinding;
+import com.wrj.film.model.OrderTypeEnum;
 import com.wrj.film.model.eventbus.UpdateOrderEvent;
 import com.wrj.film.view.ui.activity.LoginActivity;
+import com.wrj.film.view.ui.activity.OrderListActivity;
 import com.wrj.film.viewmodel.UserViewModel;
 
 import org.greenrobot.eventbus.EventBus;
@@ -47,7 +49,6 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
     public void helloEventBus(UpdateOrderEvent message) {
         initData();
     }
-
     @Override
     protected void initData() {
         model = BmobUser.getCurrentUser(UserViewModel.class);
@@ -127,18 +128,25 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
         binding.tvOrderFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Bundle bundle = new Bundle();
+                bundle.putString(OrderListActivity.ORDER_STATUS_KEY, OrderTypeEnum.getState(0));
+                startActivity(OrderListActivity.class, bundle);
             }
         });
         binding.tvOrderPayed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Bundle bundle = new Bundle();
+                bundle.putString(OrderListActivity.ORDER_STATUS_KEY, OrderTypeEnum.getState(1));
+                startActivity(OrderListActivity.class, bundle);
             }
         });
         binding.tvOrderUnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(OrderListActivity.ORDER_STATUS_KEY, OrderTypeEnum.getState(2));
+                startActivity(OrderListActivity.class, bundle);
 
             }
         });

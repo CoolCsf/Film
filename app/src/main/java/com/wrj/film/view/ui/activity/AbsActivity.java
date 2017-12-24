@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.tool.util.DialogHelper;
+import com.jaeger.library.StatusBarUtil;
+import com.wrj.film.view.widget.DialogHelper;
 import com.tool.util.ToastHelp;
 import com.wrj.film.AppContext;
+import com.wrj.film.R;
 
 /**
  * Created by Administrator on 2017/11/13.
@@ -25,10 +27,15 @@ public abstract class AbsActivity<BD extends ViewDataBinding> extends AppCompatA
         super.onCreate(savedInstanceState);
         AppContext.instance.addActivities(this);
         binding = DataBindingUtil.setContentView(this, getLayoutId());
+        setStatusBar();
         beforeInitView();
         initView();
         initListener();
         initData();
+    }
+
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.main_color));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.tool.util;
+package com.wrj.film.view.widget;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,7 +7,10 @@ import android.content.DialogInterface;
 import android.text.InputType;
 import android.widget.EditText;
 
-import com.tool.R;
+import com.tool.util.DataUtils;
+import com.wrj.film.R;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/1.
@@ -20,7 +23,7 @@ public class DialogHelper {
         if (dialog != null && dialog.isShowing())
             return;
         if (dialog == null) {
-            dialog = new Dialog(context);
+            dialog = new Dialog(context, R.style.customDialog);
             dialog.setContentView(R.layout.layout_loading);
         }
         dialog.show();
@@ -53,6 +56,19 @@ public class DialogHelper {
                     }
                 })
                 .show();
+    }
+
+    public void showListDialog(Context context, String title, final String[] messageId, final InputDialogCallBack callBack) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        if (DataUtils.checkStrNotNull(title))
+            builder.setTitle(title);
+        builder.setSingleChoiceItems(messageId, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                callBack.positive(messageId[which]);
+                dialog.dismiss();
+            }
+        }).show();
     }
 
     public void showInputDialog(Context context, String title, final InputDialogCallBack callBack) {

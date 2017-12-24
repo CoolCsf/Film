@@ -32,6 +32,15 @@ public class FilmModel extends BmobObject {
     private boolean isNowShowing;//是否热映
     private BmobRelation dates;
     private BmobRelation times;
+    private boolean isBanner;
+
+    public boolean isBanner() {
+        return isBanner;
+    }
+
+    public void setBanner(boolean banner) {
+        isBanner = banner;
+    }
 
     public BmobRelation getTimes() {
         return times;

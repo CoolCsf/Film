@@ -2,6 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="data"
+            type="com.wrj.film.viewmodel.OrderDetailViewModel" />
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -12,7 +19,9 @@
             android:background="@color/main_background_color"
             android:orientation="vertical">
 
-            <include layout="@layout/layout_toolbar" />
+            <include
+                android:id="@+id/titleBar"
+                layout="@layout/layout_toolbar" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -24,14 +33,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{data.filmName}"
                     android:textColor="@color/text_color_important"
-                    android:textSize="@dimen/sp_20"
+                    android:textSize="@dimen/sp_18"
                     tools:text="芳华" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
+                    android:text="@{data.time}"
                     android:textColor="@color/red_word"
                     tools:text="2017-10-15 21:05 " />
 
@@ -39,14 +50,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:text="广州大学华软软件学院礼堂一"
+                    android:text="@{data.cinema}"
                     android:textColor="@color/text_color_important"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/sp_16"
+                    tools:text="广州大学华软软件学院礼堂一" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
+                    android:text="@{data.seats}"
                     android:textColor="@color/text_color_important"
                     android:textSize="@dimen/sp_16"
                     tools:text="10排8座" />
@@ -67,9 +80,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="票价"
                         android:textColor="@color/text_color_common"
-                        android:textSize="@dimen/sp_20"
-                        tools:text="票价" />
+                        android:textSize="@dimen/sp_18" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -84,6 +97,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{data.money}"
                         tools:text="￥38元" />
                 </LinearLayout>
 
@@ -101,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:text="活动和优惠券"
                     android:textColor="@color/text_color_important"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -129,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:text="退票和改签须知"
                     android:textColor="@color/text_color_important"
-                    android:textSize="@dimen/sp_20" />
+                    android:textSize="@dimen/sp_18" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -168,8 +182,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{data.phone}"
                     android:textColor="@color/text_color_important"
-                    android:textSize="@dimen/sp_20"
+                    android:textSize="@dimen/sp_18"
                     tools:text="手机号    18125844869" />
 
                 <TextView
@@ -225,6 +240,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{data.money}"
                     android:textColor="@color/red_word"
                     android:textSize="@dimen/sp_18"
                     tools:text="38元" />
@@ -236,6 +252,7 @@
                 android:background="@color/white">
 
                 <Button
+                    android:id="@+id/btn_pay"
                     style="@style/btn_Long_onBottom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

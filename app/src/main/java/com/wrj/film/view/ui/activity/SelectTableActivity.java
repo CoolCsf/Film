@@ -6,10 +6,11 @@ import android.view.View;
 import com.qfdqc.views.seattable.SeatTable;
 import com.tool.util.CollectionUtils;
 import com.tool.util.DataUtils;
-import com.tool.util.DialogHelper;
+import com.wrj.film.view.widget.DialogHelper;
 import com.tool.util.ToastHelp;
 import com.wrj.film.R;
 import com.wrj.film.databinding.ActivitySelectTableBinding;
+import com.wrj.film.model.FilmModel;
 import com.wrj.film.model.FilmTime;
 import com.wrj.film.model.OrderModel;
 import com.wrj.film.model.OrderTypeEnum;
@@ -34,6 +35,7 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
     public static final String FILM_SELECT_SEAT_INTENT_DATE_KEY = "film_select_seat_intent_date_key";
     public static final String FILM_SELECT_SEAT_INTENT_TIME_KEY = "film_select_seat_intent_time_key";
     public static final String FILM_SELECT_SEAT_INTENT_TYPE_KEY = "film_select_seat_intent_type_key";
+    public static final String FILM_SELECT_SEAT_INTENT_ID_KEY = "film_select_seat_intent_id_key";
     public static final String FILM_SELECT_SEAT_INTENT_MONEY_KEY = "film_select_seat_intent_money_key";
     private String filmName;
     private FilmTime filmTime;
@@ -42,6 +44,7 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
     private String filmMoney;
     private List<String> checks;
     private List<String> checked = new ArrayList<>();
+    private String filmId;
 
     @Override
     protected int getLayoutId() {
@@ -165,6 +168,9 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
         model.setTime(filmTime.getTime());
         model.setUser(BmobUser.getCurrentUser(UserViewModel.class));
         model.setOrderStatus(status);
+        FilmModel filmModel = new FilmModel();
+        filmModel.setObjectId(filmId);
+        model.setModel(filmModel);
         return model;
     }
 
@@ -175,6 +181,7 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
         filmTime = (FilmTime) getIntent().getExtras().getSerializable(FILM_SELECT_SEAT_INTENT_TIME_KEY);
         filmDate = getIntent().getExtras().getString(FILM_SELECT_SEAT_INTENT_DATE_KEY);
         filmType = getIntent().getExtras().getString(FILM_SELECT_SEAT_INTENT_TYPE_KEY);
+        filmId = getIntent().getExtras().getString(FILM_SELECT_SEAT_INTENT_ID_KEY);
         filmMoney = getIntent().getExtras().getString(FILM_SELECT_SEAT_INTENT_MONEY_KEY);
         viewModel.setContent(filmDate, filmTime.getTime(), filmType);
         viewModel.setFilmName(filmName);

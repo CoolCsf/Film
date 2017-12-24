@@ -12,9 +12,9 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.jaeger.library.StatusBarUtil;
 import com.tool.util.CollectionUtils;
 import com.tool.util.ScreenUtils;
-import com.tool.util.ToastHelp;
 import com.tool.util.glide.GlideImageLoader;
 import com.wrj.film.AppContext;
 import com.wrj.film.R;
@@ -29,10 +29,6 @@ import com.wrj.film.viewmodel.FilmPlayRcyItemViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by Administrator on 2017/12/6.
@@ -94,6 +90,7 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
         if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
             List<FilmPlayRcyItemViewModel> showList = new ArrayList<>();
             List<FilmPlayRcyItemViewModel> unShowList = new ArrayList<>();
+            List<String> banners = new ArrayList<>();
             for (FilmModel film : list) {
                 FilmPlayRcyItemViewModel model = new FilmPlayRcyItemViewModel();
                 model.setPhotoUrl(film.getPhotoUrl());
@@ -101,12 +98,15 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
                 model.setMoney(film.getMoney());
                 model.setType(film.getType());
                 model.setFilmName(film.getTitle());
+                if (film.isBanner())
+                    banners.add(film.getPhotoUrl());
                 if (film.isNowShowing()) {
                     showList.add(model);
                 } else {
                     unShowList.add(model);
                 }
             }
+            initBananer(banners);
             showAdapter.setNewData(showList);
             unShowAdapter.setNewData(unShowList);
         }
@@ -123,7 +123,6 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
         showAdapter = new BDRVFastAdapter<>
                 (R.layout.item_play_rcy, new ArrayList<FilmPlayRcyItemViewModel>(), R.id.btn_buy);
         binding.rvHotPlay.setAdapter(showAdapter);
-        initBananer();
     }
 
     private void setRcyParam(RecyclerView rcy) {
@@ -133,12 +132,8 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
         rcy.setNestedScrollingEnabled(false);
     }
 
-    private void initBananer() {
-        List<String> listsImg = new ArrayList<>();
-        listsImg.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=770928468,2499305594&fm=27&gp=0.jpg");
-        listsImg.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=770928468,2499305594&fm=27&gp=0.jpg");
-        int height = (ScreenUtils.getScreenHeight(getActivity()) - ScreenUtils.getStatusHeight(getActivity())) / 4;//高度为去除状态栏后的屏幕的1/4
-        binding.convenientBannerRecommend.getLayoutParams().height = height;
+    private void initBananer(List<String> listsImg) {
+        binding.convenientBannerRecommend.getLayoutParams().height = ScreenUtils.getScreenHeight(getActivity()) / 3;//高度为屏幕的1/4
         binding.convenientBannerRecommend.getLayoutParams().width = ScreenUtils.getScreenWidth(getActivity());
         binding.convenientBannerRecommend.requestLayout();
         binding.convenientBannerRecommend.setPages(new CBViewHolderCreator() {
@@ -171,6 +166,13 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
                     imageView,
                     data,
                     ContextCompat.getDrawable(AppContext.instance, R.drawable.home_banner_default));
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden) {
+            StatusBarUtil.setTranslucentForImageViewInFragment(getActivity(), null);
         }
     }
 

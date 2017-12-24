@@ -67,7 +67,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, UserViewMo
                             date.setObjectId(list.get(i).getObjectId());
                             datesAll.add(date);
                         }
-                        insertDates();
+                        insertFilmModel();
                     }
                 } else {
                     closeLoading();

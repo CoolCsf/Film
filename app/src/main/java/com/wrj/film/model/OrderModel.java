@@ -19,6 +19,15 @@ public class OrderModel extends BmobObject {
     private String time;
     private String money;
     private String orderStatus;
+    private FilmModel model;
+
+    public FilmModel getModel() {
+        return model;
+    }
+
+    public void setModel(FilmModel model) {
+        this.model = model;
+    }
 
     public String getOrderStatus() {
         return orderStatus;

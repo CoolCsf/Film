@@ -1,12 +1,15 @@
 package com.wrj.film.view.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.jaeger.library.StatusBarUtil;
 import com.tool.util.CollectionUtils;
 import com.tool.util.widget.CustomTitleBar;
+import com.wrj.film.AppContext;
 import com.wrj.film.R;
 import com.wrj.film.adapter.BDRVFastAdapter;
 import com.wrj.film.databinding.FragmentRankingBinding;
@@ -33,7 +36,7 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding> {
     @Override
     protected void initData() {
         BmobQuery<FilmModel> query = new BmobQuery<>();
-        query.order("score");
+        query.order("-score");
         FilmModelUtil.getFilmModelParam(new FilmModelUtil.FilmModelCallBack() {
             @Override
             public void getModel(List<FilmModel> model) {
@@ -46,7 +49,7 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding> {
 
     @Override
     protected void initView() {
-        ViewUtil.initTitleBar(binding.titleBar,"评分排行");
+        ViewUtil.initTitleBar(binding.titleBar, "评分排行");
         binding.rvRanking.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new BDRVFastAdapter(R.layout.item_sort_rcy, new ArrayList<FilmViewModel>(), R.id.btn_buy);
         ViewUtil.rcyAddItemDecoration(binding.rvRanking);
@@ -78,6 +81,7 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding> {
             }
         });
     }
+
 
     @Override
     protected int getLayoutId() {

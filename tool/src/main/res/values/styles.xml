@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#44c660</item> <!--主题色，绿色-->
+        <item name="colorPrimary">@color/main_color</item> <!--主题色，绿色-->
         <item name="colorPrimaryDark">#06A022</item> <!--深蓝色-->
     </style>
     <!-- EditText 颜色 theme. -->

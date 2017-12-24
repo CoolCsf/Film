@@ -10,9 +10,9 @@ public enum OrderTypeEnum {
      */
     COMPLETE(0, "已完成"),
     /**
-     * 未完成
+     * 已支付
      */
-    UNDONE(1, "未完成"),
+    UNDONE(1, "已支付"),
     /**
      * 待支付
      */

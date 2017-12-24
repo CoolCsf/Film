@@ -17,47 +17,13 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <FrameLayout
+                <com.bigkoo.convenientbanner.ConvenientBanner
+                    android:id="@+id/convenientBanner_recommend"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="@dimen/dp_250"
+                    app:canLoop="true"
+                    tools:background="@color/gray" />
 
-                    <com.bigkoo.convenientbanner.ConvenientBanner
-                        android:id="@+id/convenientBanner_recommend"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_160"
-                        app:canLoop="true"
-                        tools:background="@color/gray" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/transparent"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp_10"
-                        android:paddingEnd="@dimen/dp_30"
-                        android:paddingStart="@dimen/dp_30">
-
-                        <TextView
-                            android:id="@+id/et_search"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/shape_stroke_fillet_gray"
-                            android:hint="请搜索"
-                            android:paddingBottom="@dimen/dp_5"
-                            android:paddingStart="@dimen/dp_20"
-                            android:paddingTop="@dimen/dp_5" />
-
-                        <TextView
-                            android:id="@+id/tv_search"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dp_10"
-                            android:text="搜索"
-                            android:textColor="@color/white" />
-                    </LinearLayout>
-
-                </FrameLayout>
 
                 <TextView
                     android:layout_width="match_parent"

@@ -1,8 +1,11 @@
 package com.wrj.film.view.ui.activity;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 
+import com.jaeger.library.StatusBarUtil;
+import com.tool.util.ScreenUtils;
 import com.tool.util.ToastHelp;
 import com.wrj.film.AppContext;
 import com.wrj.film.R;
@@ -64,5 +67,10 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> {
     @Override
     protected void initData() {
 
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
     }
 }

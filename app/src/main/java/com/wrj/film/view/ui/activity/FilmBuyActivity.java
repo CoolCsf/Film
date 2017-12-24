@@ -97,6 +97,7 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
                 bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_TYPE_KEY, filmType);
                 bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_FILM_NAME_KEY, filmName);
                 bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_MONEY_KEY, filmMoney);
+                bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_ID_KEY, filmId);
                 startActivity(SelectTableActivity.class, bundle);
             }
         });

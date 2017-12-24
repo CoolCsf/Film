@@ -22,7 +22,10 @@
         <activity android:name=".view.ui.activity.FilmDetailActivity" />
         <activity android:name=".view.ui.activity.FilmBuyActivity" />
         <activity android:name=".view.ui.activity.SelectTableActivity" />
-        <activity android:name=".view.ui.activity.OrderConfimActivity"></activity>
+        <activity android:name=".view.ui.activity.OrderConfirmActivity" />
+        <activity android:name=".view.ui.activity.OrderDetailActivity" />
+        <activity android:name=".view.ui.activity.OrderListActivity" />
+        <activity android:name=".view.ui.activity.RootMainActivity"></activity>
     </application>
 
 </manifest>

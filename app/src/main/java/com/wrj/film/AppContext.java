@@ -5,6 +5,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.tool.util.ToastHelp;
+import com.tool.util.gallerfinal.GalleryFinalInit;
 
 import java.util.Stack;
 
@@ -23,6 +24,7 @@ public class AppContext extends Application {
         super.onCreate();
         instance = this;
         ToastHelp.init(this);
+        GalleryFinalInit.getInstance(instance).init();//初始化图片选择器
         //第一：默认初始化
         Bmob.initialize(this, "55eae73640d3428a4c15a344ad50daa3");
     }
