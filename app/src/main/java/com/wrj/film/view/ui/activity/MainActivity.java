@@ -54,7 +54,7 @@ public class MainActivity extends AbsActivity<ActivityMainBinding> {
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getAction() == KeyEvent.ACTION_DOWN) {
             if (System.currentTimeMillis() - time > 2000) {
-                ToastHelp.showToast("再按一次推出");
+                ToastHelp.showToast("再按一次退出");
                 time = System.currentTimeMillis();
             } else {
                 AppContext.instance.exitApp();

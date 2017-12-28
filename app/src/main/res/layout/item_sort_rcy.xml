@@ -10,14 +10,14 @@
             type="com.wrj.film.viewmodel.FilmViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:padding="@dimen/dp_10">
 
         <ImageView
+            android:id="@+id/iv_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/error_default_big"
@@ -25,8 +25,10 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_marginStart="@dimen/dp_10"
+            android:layout_toRightOf="@+id/iv_photo"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -52,13 +54,17 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="@{data.duration}"
                 android:textSize="@dimen/sp_16"
-                tools:text="2017-05-06" />
+                tools:text="120" />
         </LinearLayout>
 
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
             android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -83,5 +89,5 @@
                 android:layout_marginBottom="@dimen/dp_10"
                 android:text="购票" />
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

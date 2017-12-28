@@ -64,6 +64,8 @@ public class RootMainActivity extends BaseActivity<ActivityRootMainBinding, Film
     protected void initData() {
         super.initData();
         binding.setData(viewModel);
+        timesAll = new ArrayList<>();
+        datesAll = new ArrayList<>();
     }
 
     @Override
@@ -238,7 +240,6 @@ public class RootMainActivity extends BaseActivity<ActivityRootMainBinding, Film
             public void done(List<BatchResult> list, BmobException e) {
                 if (e == null) {
                     if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
-                        datesAll = new ArrayList<>();
                         for (int i = 0; i < list.size(); i++) {
                             FilmDate date = (FilmDate) dates.get(i);
                             date.setObjectId(list.get(i).getObjectId());
@@ -266,7 +267,6 @@ public class RootMainActivity extends BaseActivity<ActivityRootMainBinding, Film
             public void done(List<BatchResult> list, BmobException e) {
                 if (e == null) {
                     if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
-                        timesAll = new ArrayList<>();
                         for (int i = 0; i < list.size(); i++) {
                             FilmTime time = (FilmTime) times.get(i);
                             time.setObjectId(list.get(i).getObjectId());
@@ -326,7 +326,7 @@ public class RootMainActivity extends BaseActivity<ActivityRootMainBinding, Film
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getAction() == KeyEvent.ACTION_DOWN) {
             if (System.currentTimeMillis() - time > 2000) {
-                ToastHelp.showToast("再按一次推出");
+                ToastHelp.showToast("再按一次退出");
                 time = System.currentTimeMillis();
             } else {
                 AppContext.instance.exitApp();
