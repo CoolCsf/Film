@@ -17,13 +17,14 @@ public enum OrderTypeEnum {
      * 待支付
      */
     TO_BE_PAID(2, "待支付");
-    private int index;
-    private String type;
+    public int index;
+    public String type;
 
     OrderTypeEnum(int status, String state) {
         this.type = state;
         this.index = status;
     }
+
 
     public static String getState(int index) {
         String s;

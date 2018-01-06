@@ -289,7 +289,7 @@ public class RootMainActivity extends BaseActivity<ActivityRootMainBinding, Film
             FilmModel filmModel = new FilmModel();
             filmModel.setType(viewModel.getType());
             filmModel.setTitle(viewModel.getTitle());
-            filmModel.setScore("0");
+            filmModel.setNumber(0);
             filmModel.setPhotoUrl(viewModel.getPhotoUrl());
             filmModel.setNowShowing(viewModel.isNowShowing());
             filmModel.setMoney(viewModel.getMoney());

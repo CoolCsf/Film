@@ -1,6 +1,7 @@
 package com.wrj.film.view.ui.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -16,11 +17,17 @@ import com.wrj.film.databinding.FragmentRankingBinding;
 import com.wrj.film.databinding.ItemSortHeadRcyBinding;
 import com.wrj.film.model.FilmModel;
 import com.wrj.film.model.FilmModelUtil;
+import com.wrj.film.model.eventbus.UpdateFilmNumber;
+import com.wrj.film.model.eventbus.UpdateOrderEvent;
 import com.wrj.film.view.ui.ViewUtil;
 import com.wrj.film.view.ui.activity.FilmBuyActivity;
 import com.wrj.film.view.ui.activity.FilmDetailActivity;
 import com.wrj.film.viewmodel.FilmPlayRcyItemViewModel;
 import com.wrj.film.viewmodel.FilmViewModel;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +41,24 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding> {
     private BDRVFastAdapter<FilmViewModel, ItemSortHeadRcyBinding> adapter;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void helloEventBus(UpdateFilmNumber message) {
+        initData();
+    }
+    @Override
     protected void initData() {
         BmobQuery<FilmModel> query = new BmobQuery<>();
-        query.order("-score");
+        query.order("-number");
         FilmModelUtil.getFilmModelParam(new FilmModelUtil.FilmModelCallBack() {
             @Override
             public void getModel(List<FilmModel> model) {
@@ -49,7 +71,7 @@ public class RankingFragment extends BaseFragment<FragmentRankingBinding> {
 
     @Override
     protected void initView() {
-        ViewUtil.initTitleBar(binding.titleBar, "评分排行");
+        ViewUtil.initTitleBar(binding.titleBar, "票房排行");
         binding.rvRanking.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new BDRVFastAdapter(R.layout.item_sort_rcy, new ArrayList<FilmViewModel>(), R.id.btn_buy);
         ViewUtil.rcyAddItemDecoration(binding.rvRanking);

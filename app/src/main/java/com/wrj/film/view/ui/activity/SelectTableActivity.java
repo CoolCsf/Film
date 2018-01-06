@@ -6,7 +6,6 @@ import android.view.View;
 import com.qfdqc.views.seattable.SeatTable;
 import com.tool.util.CollectionUtils;
 import com.tool.util.DataUtils;
-import com.wrj.film.view.widget.DialogHelper;
 import com.tool.util.ToastHelp;
 import com.wrj.film.R;
 import com.wrj.film.databinding.ActivitySelectTableBinding;
@@ -14,8 +13,10 @@ import com.wrj.film.model.FilmModel;
 import com.wrj.film.model.FilmTime;
 import com.wrj.film.model.OrderModel;
 import com.wrj.film.model.OrderTypeEnum;
+import com.wrj.film.model.eventbus.UpdateFilmNumber;
 import com.wrj.film.model.eventbus.UpdateOrderEvent;
 import com.wrj.film.view.ui.ViewUtil;
+import com.wrj.film.view.widget.DialogHelper;
 import com.wrj.film.viewmodel.SelectSeatViewModel;
 import com.wrj.film.viewmodel.UserViewModel;
 
@@ -87,6 +88,11 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
                         @Override
                         public void done(String s, BmobException e) {
                             if (e == null) {
+                                final FilmModel model = new FilmModel();
+                                model.setObjectId(filmId);
+                                model.increment("number");
+                                model.update();
+                                EventBus.getDefault().post(new UpdateFilmNumber());
                                 updateOrder(balance, "购票成功，请前往已完成订单查看");
                             } else {
                                 showToast("购票失败" + e.getMessage());

@@ -3,17 +3,15 @@ package com.wrj.film.view.ui.fragment;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.jaeger.library.StatusBarUtil;
 import com.tool.util.CollectionUtils;
 import com.tool.util.ToastHelp;
-import com.wrj.film.AppContext;
 import com.wrj.film.R;
 import com.wrj.film.adapter.BDRVFastAdapter;
 import com.wrj.film.databinding.FragmentSortBinding;
@@ -23,11 +21,16 @@ import com.wrj.film.databinding.LayoutSortRcyHeadBinding;
 import com.wrj.film.model.FilmModel;
 import com.wrj.film.model.FilmModelUtil;
 import com.wrj.film.model.SortTypeEnum;
+import com.wrj.film.model.eventbus.UpdateFilmNumber;
 import com.wrj.film.view.ui.ViewUtil;
 import com.wrj.film.view.ui.activity.FilmBuyActivity;
 import com.wrj.film.view.ui.activity.FilmDetailActivity;
 import com.wrj.film.viewmodel.FilmViewModel;
 import com.wrj.film.viewmodel.SimpleStringViewModel;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +45,23 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
     private BDRVFastAdapter<FilmViewModel, ItemSortRcyBinding> sortAdapter;
     private BDRVFastAdapter<SimpleStringViewModel, ItemSortHeadRcyBinding> headAdapter;
     private String type = SortTypeEnum.ALL.getType();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void helloEventBus(UpdateFilmNumber message) {
+        initData();
+    }
 
     @Override
     protected void initData() {
@@ -156,6 +176,7 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
         rcy.setAdapter(adapter);
         return adapter;
     }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_sort;

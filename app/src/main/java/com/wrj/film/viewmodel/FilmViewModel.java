@@ -8,7 +8,7 @@ public class FilmViewModel {
     private String title;
     private String type;
     private String money;
-    private String score;
+    private String number;
     private String photoUrl;
     private String introduction;
     private String duration;
@@ -47,12 +47,12 @@ public class FilmViewModel {
         this.money = money;
     }
 
-    public String getScore() {
-        return score;
+    public String getNumber() {
+        return "票房：" + number;
     }
 
-    public void setScore(String score) {
-        this.score = score;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getPhotoUrl() {

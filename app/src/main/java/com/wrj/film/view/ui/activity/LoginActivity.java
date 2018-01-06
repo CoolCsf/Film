@@ -114,7 +114,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, UserViewMo
             FilmModel filmModel = new FilmModel();
             filmModel.setType("惊悚");
             filmModel.setTitle("孤胆英雄");
-            filmModel.setScore("8.0");
+            filmModel.setNumber(1);
             filmModel.setPhotoUrl("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1557179855,74992354&fm=27&gp=0.jpg");
             filmModel.setNowShowing(true);
             filmModel.setMoney("28.9");

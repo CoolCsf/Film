@@ -38,7 +38,7 @@ public class FilmDetailActivity extends BaseActivity<ActivityFilmDetailBinding, 
                 viewModel.setTitle(film.getTitle());
                 viewModel.setType(film.getType());
                 viewModel.setPhotoUrl(film.getPhotoUrl());
-                viewModel.setNum(film.getScore());
+                viewModel.setNum(film.getNumber() + "");
                 viewModel.setDuration(film.getDuration());
                 filmMoney = film.getMoney();
                 filmType = film.getType();

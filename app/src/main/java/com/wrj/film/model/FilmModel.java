@@ -25,7 +25,7 @@ public class FilmModel extends BmobObject {
     private String title;
     private String type;
     private String money;
-    private String score;
+    private Integer number = 0;
     private String photoUrl;
     private String introduction;
     private String duration;
@@ -90,12 +90,12 @@ public class FilmModel extends BmobObject {
         this.money = money;
     }
 
-    public String getScore() {
-        return score;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setScore(String score) {
-        this.score = score;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public String getPhotoUrl() {
@@ -138,7 +138,7 @@ public class FilmModel extends BmobObject {
             viewModel.setMoney(model.getMoney());
             viewModel.setNowShowing(model.isNowShowing());
             viewModel.setPhotoUrl(model.getPhotoUrl());
-            viewModel.setScore(model.getScore());
+            viewModel.setNumber(model.getNumber() == 0 ? "0" : String.valueOf(model.getNumber()));
             viewModel.setTitle(model.getTitle());
             viewModel.setType(model.getType());
             viewModel.setObjectId(model.getObjectId());

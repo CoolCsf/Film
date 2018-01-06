@@ -62,7 +62,7 @@
                         android:id="@+id/tv_score"
                         style="@style/film_detail_style"
                         android:text="@{data.num}"
-                        tools:text="评分" />
+                        tools:text="票房" />
 
                     <TextView
                         android:id="@+id/tv_type"

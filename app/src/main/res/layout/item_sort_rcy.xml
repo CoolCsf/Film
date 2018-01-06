@@ -71,10 +71,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@{data.score}"
+                android:text="@{data.number}"
                 android:textColor="@color/red_word"
-                android:textSize="@dimen/sp_20"
-                tools:text="8.3分" />
+                android:textSize="@dimen/sp_16"
+                tools:text="票房：50" />
 
             <TextView
                 android:layout_width="wrap_content"

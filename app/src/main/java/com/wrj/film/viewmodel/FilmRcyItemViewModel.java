@@ -61,7 +61,7 @@ public class FilmRcyItemViewModel {
     }
 
     public String getNum() {
-        return num;
+        return "票房：" + num;
     }
 
     public void setNum(String num) {
