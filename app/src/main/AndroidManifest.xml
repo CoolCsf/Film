@@ -25,6 +25,7 @@
         <activity android:name=".view.ui.activity.OrderConfirmActivity" />
         <activity android:name=".view.ui.activity.OrderDetailActivity" />
         <activity android:name=".view.ui.activity.OrderListActivity" />
+        <activity android:name=".view.ui.activity.RootAddFilmActivity" />
         <activity android:name=".view.ui.activity.RootMainActivity"></activity>
     </application>
 
