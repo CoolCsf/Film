@@ -3,6 +3,7 @@ package com.wrj.film.view.ui.activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -10,13 +11,16 @@ import android.widget.TimePicker;
 import com.tool.util.CollectionUtils;
 import com.tool.util.DataUtils;
 import com.tool.util.DateUtils;
+import com.tool.util.ToastHelp;
 import com.tool.util.gallerfinal.GalleryFinalUtil;
 import com.tool.util.glide.GlideImageLoader;
 import com.tool.util.widget.CustomTitleBar;
+import com.wrj.film.AppContext;
 import com.wrj.film.R;
 import com.wrj.film.databinding.ActivityRootAddFilmBinding;
 import com.wrj.film.model.FilmDate;
 import com.wrj.film.model.FilmModel;
+import com.wrj.film.model.FilmModelUtil;
 import com.wrj.film.model.FilmTime;
 import com.wrj.film.model.SortTypeEnum;
 import com.wrj.film.view.ui.ViewUtil;
@@ -29,21 +33,33 @@ import java.util.List;
 
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.b.V;
 import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
 
-public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding, FilmAddViewModel> {
+public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBinding, FilmAddViewModel> {
     private String[] types;
     private String photoPath;
     private List<FilmTime> timesAll;
     private List<FilmDate> datesAll;
+    public static final String KEY_FILM_ID = "key_view_id";
+    private boolean timeCloseLoading = false;
+    private boolean dateCloseLoading = false;
+    private boolean filmModelCloseLoading = false;
+    private boolean isUpdateTime = false;
+    private boolean isUpdateDate = false;
+    private String id = "";
 
     @Override
     protected int getLayoutId() {
@@ -52,8 +68,8 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
 
     @Override
     protected void initView() {
-        ViewUtil.initTitleBar(binding.titleBar, "添加电影");
-        ((CustomTitleBar) binding.titleBar).setRightTitle("添加");
+        ViewUtil.initTitleBar(binding.titleBar, "编辑电影");
+        ((CustomTitleBar) binding.titleBar).setRightTitle("完成");
     }
 
     @Override
@@ -62,6 +78,90 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
         binding.setData(viewModel);
         timesAll = new ArrayList<>();
         datesAll = new ArrayList<>();
+        id = getIntent().getExtras().getString(KEY_FILM_ID);
+        showLoading();
+        queryFilm(id);
+        queryFilmDate(id);
+        queryFilmTime(id);
+    }
+
+    private void queryFilmTime(String filmId) {
+        BmobQuery<FilmTime> query = new BmobQuery<>();
+        final FilmModel filmModel = new FilmModel();
+        filmModel.setObjectId(filmId);
+        query.addWhereRelatedTo("times", new BmobPointer(filmModel));
+        query.findObjects(new FindListener<FilmTime>() {
+            @Override
+            public void done(List<FilmTime> list, BmobException e) {
+                timeCloseLoading = true;
+                if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
+                    String times = "";
+                    for (FilmTime time : list) {
+                        timesAll.add(time);
+                        if (DataUtils.checkStrNotNull(times))
+                            times = times + "、" + time.getTime();
+                        else
+                            times = time.getTime();
+                    }
+                    viewModel.setTimes(times);
+                    isUpdateTime = true;
+                }
+                checkCanCloseLoading();
+            }
+        });
+    }
+
+    private void checkCanCloseLoading() {
+        if (filmModelCloseLoading && timeCloseLoading && dateCloseLoading) {
+            closeLoading();
+        }
+    }
+
+    private void queryFilmDate(String filmId) {
+        BmobQuery<FilmDate> query = new BmobQuery<>();
+        final FilmModel filmModel = new FilmModel();
+        filmModel.setObjectId(filmId);
+        query.addWhereRelatedTo("dates", new BmobPointer(filmModel));
+        query.findObjects(new FindListener<FilmDate>() {
+            @Override
+            public void done(List<FilmDate> list, BmobException e) {
+                dateCloseLoading = true;
+                if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
+                    String dates = "";
+                    for (FilmDate date : list) {
+                        datesAll.add(date);
+                        if (DataUtils.checkStrNotNull(dates))
+                            dates = dates + "、" + date.getDate();
+                        else
+                            dates = date.getDate();
+                    }
+                    viewModel.setDates(dates);
+                    isUpdateDate = true;
+                }
+                checkCanCloseLoading();
+            }
+        });
+    }
+
+    private void queryFilm(String filmId) {
+        FilmModelUtil.getFilmModelFromId(filmId, new FilmModelUtil.FilmModelCallBack() {
+            @Override
+            public void getModel(List<FilmModel> models) {
+                filmModelCloseLoading = true;
+                if (CollectionUtils.collectionState(models) == CollectionUtils.COLLECTION_UNEMPTY) {
+                    FilmModel model = models.get(0);
+                    viewModel.setType(model.getType());
+                    viewModel.setPhotoUrl(model.getPhotoUrl());
+                    viewModel.setBanner(model.isBanner());
+                    viewModel.setDuration(model.getDuration());
+                    viewModel.setIntroduction(model.getIntroduction());
+                    viewModel.setMoney(model.getMoney());
+                    viewModel.setNowShowing(model.isNowShowing());
+                    viewModel.setTitle(model.getTitle());
+                }
+                checkCanCloseLoading();
+            }
+        });
     }
 
     @Override
@@ -83,7 +183,7 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
                         types[i] = ts.get(i);
                     }
                 }
-                new DialogHelper().showListDialog(RootAddFilmActivity.this, "请选择电影类型", types, new DialogHelper.InputDialogCallBack() {
+                new DialogHelper().showListDialog(RootUpdateFilmActivity.this, "请选择电影类型", types, new DialogHelper.InputDialogCallBack() {
                     @Override
                     public void positive(String content) {
                         viewModel.setType(content);
@@ -114,17 +214,14 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
         });
         binding.ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                new GalleryFinalUtil(RootAddFilmActivity.this,
+            public void onClick(final View v) {
+                new GalleryFinalUtil(RootUpdateFilmActivity.this,
                         new GalleryFinal.OnHanlderResultCallback() {
                             @Override
                             public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
                                 if (resultList != null && resultList.size() > 0) {
                                     photoPath = resultList.get(0).getPhotoPath();
-                                    GlideImageLoader.getInstance().displayImage(RootAddFilmActivity.this,
-                                            binding.ivPhoto, "file://" + photoPath,
-                                            getResources().getDrawable(R.drawable.error_default),
-                                            84, 84);
+                                    viewModel.setPhotoUrl("file://" + photoPath);
                                 }
                             }
 
@@ -142,7 +239,12 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
             datesAll.clear();
             timesAll.clear();
             showLoading();
-            uploadFile();
+            if (viewModel.getPhotoUrl().contains("file"))
+                uploadFile();
+            else {
+                insertTimes();
+                insertDates();
+            }
         }
     }
 
@@ -157,8 +259,8 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
                     insertDates();
                 } else {
                     closeLoading();
-                    Log.e(TAG, "上次图片失败" + e.getMessage());
-                    showToast("上次图片失败" + e.getMessage());
+                    Log.e(TAG, "上传图片失败" + e.getMessage());
+                    showToast("上传图片失败" + e.getMessage());
                 }
             }
         });
@@ -193,7 +295,7 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
             showToast("请输入电影简介");
             return false;
         }
-        if (!DataUtils.checkStrNotNull(photoPath)) {
+        if (!DataUtils.checkStrNotNull(viewModel.getPhotoUrl())) {
             showToast("请选择电影海报");
             return false;
         }
@@ -204,6 +306,10 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
         TimePickerDialog pickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                if (isUpdateTime) {
+                    viewModel.setTimes("");
+                    isUpdateTime = false;
+                }
                 viewModel.setTimes(hourOfDay + ":" + minute);
             }
         }, 0, 0, true);
@@ -214,6 +320,10 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
         DatePickerDialog pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                if (isUpdateDate) {
+                    viewModel.setDates("");
+                    isUpdateDate = false;
+                }
                 viewModel.setDates(year + "-" + (month + 1) + "-" + dayOfMonth);
             }
         }, Integer.valueOf(DateUtils.getNowYear()), 0, 1);
@@ -236,6 +346,7 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
             public void done(List<BatchResult> list, BmobException e) {
                 if (e == null) {
                     if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
+                        datesAll.clear();
                         for (int i = 0; i < list.size(); i++) {
                             FilmDate date = (FilmDate) dates.get(i);
                             date.setObjectId(list.get(i).getObjectId());
@@ -262,6 +373,7 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
             @Override
             public void done(List<BatchResult> list, BmobException e) {
                 if (e == null) {
+                    timesAll.clear();
                     if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
                         for (int i = 0; i < list.size(); i++) {
                             FilmTime time = (FilmTime) times.get(i);
@@ -302,15 +414,16 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
             }
             filmModel.setTimes(r_times);
             filmModel.setDates(r_dates);
-            filmModel.save(new SaveListener<String>() {
+            filmModel.setObjectId(id);
+            filmModel.update(new UpdateListener() {
                 @Override
-                public void done(String s, BmobException e) {
+                public void done(BmobException e) {
                     closeLoading();
                     if (e == null) {
-                        showToast("添加电影成功");
+                        showToast("编辑电影成功");
                     } else {
                         Log.e(TAG, e.getMessage());
-                        showToast("添加电影失败" + e.getMessage());
+                        showToast("编辑电影失败" + e.getMessage());
                     }
                 }
             });

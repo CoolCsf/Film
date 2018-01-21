@@ -14,7 +14,6 @@ public class FilmAddViewModel extends BaseObservable {
     private String title;
     private String type;
     private String money;
-    private String score;
     private String introduction;
     private String duration;
     private boolean isNowShowing;//是否热映
@@ -30,15 +29,18 @@ public class FilmAddViewModel extends BaseObservable {
     }
 
     public void setDateSize(int dateSize) {
-        this.dateSize += dateSize;
+        if (dateSize == 0) this.dateSize = 0;
+        else
+            this.dateSize += dateSize;
     }
 
     public int getTimeSize() {
         return timeSize;
     }
 
-    public void setTimeSize(int timeSize) {
-        this.timeSize += timeSize;
+    private void setTimeSize(int timeSize) {
+        if (timeSize == 0) this.timeSize = 0;
+        else this.timeSize += timeSize;
     }
 
     @Bindable
@@ -57,12 +59,17 @@ public class FilmAddViewModel extends BaseObservable {
     }
 
     public void setDates(String dates) {
-        if (DataUtils.checkStrNotNull(this.dates)) {
-            this.dates = this.dates + "、" + dates;
-        } else
+        if (DataUtils.checkStrNotNull(dates)) {
+            if (DataUtils.checkStrNotNull(this.dates)) {
+                this.dates = this.dates + "、" + dates;
+            } else
+                this.dates = dates;
+            setDateSize(1);
+            notifyPropertyChanged(BR.dates);
+        } else {
             this.dates = dates;
-        setDateSize(1);
-        notifyPropertyChanged(BR.dates);
+            setDateSize(0);
+        }
     }
 
     @Bindable
@@ -71,20 +78,27 @@ public class FilmAddViewModel extends BaseObservable {
     }
 
     public void setTimes(String times) {
-        if (DataUtils.checkStrNotNull(this.times)) {
-            this.times = this.times + "、" + times;
-        } else
+        if (DataUtils.checkStrNotNull(times)) {
+            if (DataUtils.checkStrNotNull(this.times)) {
+                this.times = this.times + "、" + times;
+            } else
+                this.times = times;
+            setTimeSize(1);
+            notifyPropertyChanged(BR.times);
+        } else {
             this.times = times;
-        setTimeSize(1);
-        notifyPropertyChanged(BR.times);
+            setTimeSize(0);
+        }
     }
 
+    @Bindable
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+        notifyPropertyChanged(BR.title);
     }
 
     @Bindable
@@ -97,51 +111,53 @@ public class FilmAddViewModel extends BaseObservable {
         notifyPropertyChanged(BR.type);
     }
 
+    @Bindable
     public String getMoney() {
         return money;
     }
 
     public void setMoney(String money) {
         this.money = money;
+        notifyPropertyChanged(BR.money);
     }
 
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
-
+    @Bindable
     public String getIntroduction() {
         return introduction;
     }
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
+        notifyPropertyChanged(BR.introduction);
     }
 
+    @Bindable
     public String getDuration() {
         return duration;
     }
 
     public void setDuration(String duration) {
         this.duration = duration;
+        notifyPropertyChanged(BR.duration);
     }
 
+    @Bindable
     public boolean isNowShowing() {
         return isNowShowing;
     }
 
     public void setNowShowing(boolean nowShowing) {
         isNowShowing = nowShowing;
+        notifyPropertyChanged(BR.nowShowing);
     }
 
+    @Bindable
     public boolean isBanner() {
         return isBanner;
     }
 
     public void setBanner(boolean banner) {
         isBanner = banner;
+        notifyPropertyChanged(BR.banner);
     }
 }

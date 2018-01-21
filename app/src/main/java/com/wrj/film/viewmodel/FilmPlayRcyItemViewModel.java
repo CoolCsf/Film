@@ -59,10 +59,10 @@ public class FilmPlayRcyItemViewModel {
         this.photoUrl = photoUrl;
     }
 
-    @BindingAdapter("image")
-    public static void image(ImageView view, String imageId) {
-        GlideImageLoader.getInstance().displayImage(AppContext.instance, view,
-                imageId, ContextCompat.getDrawable(AppContext.instance, R.drawable.error_default),
-                180, 170);
-    }
+//    @BindingAdapter("image")
+//    public static void image(ImageView view, String imageId) {
+//        GlideImageLoader.getInstance().displayImage(AppContext.instance, view,
+//                imageId, ContextCompat.getDrawable(AppContext.instance, R.drawable.error_default),
+//                180, 170);
+//    }
 }

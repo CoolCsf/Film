@@ -12,7 +12,7 @@ import cn.bmob.v3.BmobUser;
 public class UserViewModel extends BmobUser {
     private String userName;
     private String pwd;
-    private Boolean isRoot;
+    private Boolean isRoot = false;
     private String balance;
     private String phone;
 

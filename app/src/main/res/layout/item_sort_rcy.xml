@@ -5,10 +5,17 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="data"
             type="com.wrj.film.viewmodel.FilmViewModel" />
+
+        <variable
+            name="user"
+            type="com.wrj.film.viewmodel.UserViewModel" />
     </data>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -62,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_gravity="center"
+            android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/dp_10"
             android:gravity="center"
             android:orientation="vertical">
@@ -87,7 +94,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/dp_10"
-                android:text="购票" />
+                android:text="购票"
+                android:visibility="@{user.isRoot()?View.GONE:View.VISIBLE}" />
         </LinearLayout>
     </RelativeLayout>
 </layout>

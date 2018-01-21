@@ -3,7 +3,7 @@ package com.wrj.film;
 import com.tool.util.ToastHelp;
 import com.wrj.film.view.ui.activity.AbsActivity;
 import com.wrj.film.view.ui.activity.MainActivity;
-import com.wrj.film.view.ui.activity.RootAddFilmActivity;
+import com.wrj.film.view.ui.activity.RootMainActivity;
 import com.wrj.film.viewmodel.UserViewModel;
 
 import cn.bmob.v3.BmobUser;
@@ -24,7 +24,7 @@ public class LoginUtil {
                     if (!userViewModel.isRoot())
                         activity.startActivity(MainActivity.class, null);
                     else
-                        activity.startActivity(RootAddFilmActivity.class, null);
+                        activity.startActivity(RootMainActivity.class, null);
                 } else {
                     ToastHelp.showToast("登录失败" + e.toString());
                     activity.closeLoading();
