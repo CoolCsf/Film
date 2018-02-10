@@ -27,8 +27,7 @@ public class RegisteredActivity extends BaseActivity<ActivityRegisteredBinding, 
         binding.btnRegist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkETNotNull(binding.etUserName, "请输入用户名") && checkETNotNull(binding.etPwd, "请输入密码")
-                        && checkETNotNull(binding.etPwdConfirm, "请输入确认密码")) {
+                if (checkParamNull() && checkPwdConfirm() && checkParamLength()) {
                     showLoading();
                     viewModel.setRoot(false);
                     viewModel.signUp(new SaveListener<UserViewModel>() {
@@ -49,6 +48,24 @@ public class RegisteredActivity extends BaseActivity<ActivityRegisteredBinding, 
         });
     }
 
+    private boolean checkParamLength() {
+        if (binding.etUserName.length() < 6 || binding.etUserName.length() > 10) {
+            showToast("用户名长度请在6~10之间");
+            return false;
+        }
+        if (binding.etPwd.length() < 6 || binding.etPwd.length() > 10 ||
+                binding.etPwdConfirm.length() < 6 || binding.etPwdConfirm.length() > 10) {
+            showToast("密码请在6~10之间");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkParamNull() {
+        return checkETNotNull(binding.etUserName, "请输入用户名") && checkETNotNull(binding.etPwd, "请输入密码")
+                && checkETNotNull(binding.etPwdConfirm, "请输入确认密码");
+    }
+
     private boolean checkETNotNull(EditText editText, String errorMsg) {
         if (DataUtils.checkStrNotNull(editText.getText().toString())) return true;
         ToastHelp.showToast(errorMsg);
@@ -56,7 +73,12 @@ public class RegisteredActivity extends BaseActivity<ActivityRegisteredBinding, 
     }
 
     private boolean checkPwdConfirm() {
-        return binding.etPwd.getText().toString().trim().equals(binding.etPwdConfirm.getText().toString().trim());
+        if (binding.etPwd.getText().toString().trim().equals(binding.etPwdConfirm.getText().toString().trim()))
+            return true;
+        else {
+            showToast("密码请保持一致");
+            return false;
+        }
     }
 
     @Override

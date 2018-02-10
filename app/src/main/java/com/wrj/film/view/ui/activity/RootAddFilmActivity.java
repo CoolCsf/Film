@@ -125,6 +125,7 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
                                             binding.ivPhoto, "file://" + photoPath,
                                             getResources().getDrawable(R.drawable.error_default),
                                             84, 84);
+                                    uploadFile();
                                 }
                             }
 
@@ -139,10 +140,13 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
 
     private void addFilm() {
         if (checkFilmParam()) {
+            if (!DataUtils.checkStrNotNull(viewModel.getPhotoUrl())) {
+                showToast("图片尚未上传成功，请稍后重试");
+                return;
+            }
             datesAll.clear();
             timesAll.clear();
             showLoading();
-            uploadFile();
         }
     }
 
@@ -156,7 +160,7 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
                     insertTimes();
                     insertDates();
                 } else {
-                    closeLoading();
+                    viewModel.setPhotoUrl("");
                     Log.e(TAG, "上次图片失败" + e.getMessage());
                     showToast("上次图片失败" + e.getMessage());
                 }

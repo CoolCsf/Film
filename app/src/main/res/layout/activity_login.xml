@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -28,9 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_30"
+            android:addTextChangedListener="@{login.userNameWatcher}"
             android:hint="账号"
             android:inputType="textPersonName"
-            android:maxLines="1"
+            android:maxLength="10"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:lines="1"
             android:text="@={login.userName}"
             android:textSize="@dimen/sp_15" />
 
@@ -39,9 +43,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_20"
+            android:addTextChangedListener="@{login.pwdWatcher}"
             android:hint="密码"
             android:inputType="textPassword"
-            android:maxLines="1"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:maxLength="10"
+            android:lines="1"
             android:text="@={login.pwd}"
             android:textSize="@dimen/sp_15" />
 
@@ -60,6 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_35"
             android:background="@color/btn_next_green"
+            android:enabled="@{login.canLogin}"
             android:text="@string/login"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp_18" />
