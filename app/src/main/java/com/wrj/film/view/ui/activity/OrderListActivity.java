@@ -117,6 +117,7 @@ public class OrderListActivity extends AbsActivity<ActivityOrderListBinding> {
         });
     }
 
+
     @Override
     protected void initView() {
         ViewUtil.initTitleBar(binding.titleBar, "订单列表");

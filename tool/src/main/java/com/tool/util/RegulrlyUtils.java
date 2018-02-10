@@ -6,7 +6,7 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * 文件描述：正则表达式工具类
- * Created by sf.chen on 2017/2/27.
+ * Created by Administrator on 2017/2/27.
  */
 public class RegulrlyUtils {
     private final static String USERNAME_REG = "^[a-zA-Z0-9]{6,16}$";

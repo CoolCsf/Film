@@ -16,7 +16,7 @@ import com.wrj.film.R;
 
 /**
  * 文件描述：自定义etdiText，带删除按钮
- * Created by sf.chen on 2017/2/27.
+ * Created by Administrator on 2017/2/27.
  */
 public class EditTextWithDel extends android.support.v7.widget.AppCompatEditText implements
         View.OnFocusChangeListener, TextWatcher {

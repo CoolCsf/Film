@@ -107,6 +107,11 @@ public class RootMainActivity extends AbsActivity<ActivityRootMainBinding> {
 
     @Override
     protected void initData() {
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         showLoading();
         BmobQuery<FilmModel> query = new BmobQuery<>();
         query.order("-number");

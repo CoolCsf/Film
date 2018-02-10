@@ -15,7 +15,7 @@ import com.tool.R;
 
 /**
  * 文件描述：封装ToolBar导航栏
- * Created by sf.chen on 2017/3/7.
+ * Created by Administrator on 2017/3/7.
  */
 public class CustomTitleBar extends LinearLayout {
 

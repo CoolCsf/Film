@@ -3,7 +3,6 @@ package com.wrj.film.view.ui.activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -11,11 +10,8 @@ import android.widget.TimePicker;
 import com.tool.util.CollectionUtils;
 import com.tool.util.DataUtils;
 import com.tool.util.DateUtils;
-import com.tool.util.ToastHelp;
 import com.tool.util.gallerfinal.GalleryFinalUtil;
-import com.tool.util.glide.GlideImageLoader;
 import com.tool.util.widget.CustomTitleBar;
-import com.wrj.film.AppContext;
 import com.wrj.film.R;
 import com.wrj.film.databinding.ActivityRootAddFilmBinding;
 import com.wrj.film.model.FilmDate;
@@ -29,12 +25,16 @@ import com.wrj.film.viewmodel.FilmAddViewModel;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.b.V;
 import cn.bmob.v3.datatype.BatchResult;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobPointer;
@@ -42,14 +42,12 @@ import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListListener;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
 
 public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBinding, FilmAddViewModel> {
-    private String[] types;
     private String photoPath;
     private List<FilmTime> timesAll;
     private List<FilmDate> datesAll;
@@ -60,6 +58,8 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
     private boolean isUpdateTime = false;
     private boolean isUpdateDate = false;
     private String id = "";
+    private int year = Integer.valueOf(DateUtils.getNowYear()), mMonth = 0, day = 1;
+    private boolean isRefreshDate = false;
 
     @Override
     protected int getLayoutId() {
@@ -135,7 +135,7 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
                         else
                             dates = date.getDate();
                     }
-                    viewModel.setDates(dates);
+                    viewModel.setDates(dates, false);
                     isUpdateDate = true;
                 }
                 checkCanCloseLoading();
@@ -175,15 +175,9 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
         binding.tvType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (types == null) {
-                    List<String> ts = SortTypeEnum.getAllType();
-                    ts.remove(0);//移除掉“全部”
-                    types = new String[ts.size()];
-                    for (int i = 0; i < ts.size(); i++) {
-                        types[i] = ts.get(i);
-                    }
-                }
-                new DialogHelper().showListDialog(RootUpdateFilmActivity.this, "请选择电影类型", types, new DialogHelper.InputDialogCallBack() {
+                List<String> ts = new ArrayList<>(SortTypeEnum.getAllType());
+                ts.remove(0);//移除掉“全部”
+                new DialogHelper().showListDialog(RootUpdateFilmActivity.this, "请选择电影类型", viewModel.getType(), ts, new DialogHelper.InputDialogCallBack() {
                     @Override
                     public void positive(String content) {
                         viewModel.setType(content);
@@ -222,6 +216,7 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
                                 if (resultList != null && resultList.size() > 0) {
                                     photoPath = resultList.get(0).getPhotoPath();
                                     viewModel.setPhotoUrl("file://" + photoPath);
+                                    uploadFile();
                                 }
                             }
 
@@ -236,17 +231,18 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
 
     private void addFilm() {
         if (checkFilmParam()) {
+            if (viewModel.getPhotoUrl().contains("file")) {
+                showToast("图片尚未上传成功，请稍后重试");
+                return;
+            }
             datesAll.clear();
             timesAll.clear();
             showLoading();
-            if (viewModel.getPhotoUrl().contains("file"))
-                uploadFile();
-            else {
-                insertTimes();
-                insertDates();
-            }
+            insertTimes();
+            insertDates();
         }
     }
+
 
     private void uploadFile() {
         final BmobFile bmobFile = new BmobFile(new File(photoPath));
@@ -255,8 +251,8 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
             public void done(BmobException e) {
                 if (e == null) {
                     viewModel.setPhotoUrl(bmobFile.getFileUrl());
-                    insertTimes();
-                    insertDates();
+//                    insertTimes();
+//                    insertDates();
                 } else {
                     closeLoading();
                     Log.e(TAG, "上传图片失败" + e.getMessage());
@@ -266,9 +262,17 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
         });
     }
 
+    public boolean checkSpecialChar(String str) throws PatternSyntaxException {
+        // 清除掉所有特殊字符
+        String regEx = ".*[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？\\\\]+.*";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(str);
+        return m.matches();
+    }
+
     private boolean checkFilmParam() {
-        if (!DataUtils.checkStrNotNull(viewModel.getTitle())) {
-            showToast("请输入电影名称");
+        if (checkSpecialChar(viewModel.getTitle())) {
+            showToast("电影名称不允许包含特殊字符");
             return false;
         }
         if (!DataUtils.checkStrNotNull(viewModel.getType())) {
@@ -303,6 +307,8 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
     }
 
     private void onTimePicker() {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(System.currentTimeMillis()));
         TimePickerDialog pickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -312,21 +318,27 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
                 }
                 viewModel.setTimes(hourOfDay + ":" + minute);
             }
-        }, 0, 0, true);
+        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
         pickerDialog.show();
     }
 
     public void onMonthDayPicker() {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(System.currentTimeMillis()));
         DatePickerDialog pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 if (isUpdateDate) {
-                    viewModel.setDates("");
+                    viewModel.setDates("", false);
                     isUpdateDate = false;
                 }
-                viewModel.setDates(year + "-" + (month + 1) + "-" + dayOfMonth);
+                if (month < calendar.get(Calendar.MONTH) || dayOfMonth <= calendar.get(Calendar.DAY_OF_MONTH)) {
+                    showToast("请选择大于今天的日期");
+                    return;
+                }
+                viewModel.setDates(year + "-" + (month + 1) + "-" + dayOfMonth, isRefreshDate);
             }
-        }, Integer.valueOf(DateUtils.getNowYear()), 0, 1);
+        }, year, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
         pickerDialog.show();
     }
 
@@ -341,7 +353,7 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
             FilmDate time = new FilmDate(d);
             dates.add(time);
         }
-        new BmobBatch().insertBatch(dates).doBatch(new QueryListListener<BatchResult>() {
+        new BmobBatch().updateBatch(dates).doBatch(new QueryListListener<BatchResult>() {
             @Override
             public void done(List<BatchResult> list, BmobException e) {
                 if (e == null) {
@@ -369,7 +381,7 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
             FilmTime time = new FilmTime(t);
             times.add(time);
         }
-        new BmobBatch().insertBatch(times).doBatch(new QueryListListener<BatchResult>() {
+        new BmobBatch().updateBatch(times).doBatch(new QueryListListener<BatchResult>() {
             @Override
             public void done(List<BatchResult> list, BmobException e) {
                 if (e == null) {

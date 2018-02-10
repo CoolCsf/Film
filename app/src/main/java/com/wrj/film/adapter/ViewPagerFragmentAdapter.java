@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 
 /**
- * Created by csf on 2017/6/24.
+ * Created by Administrator on 2017/6/24.
  * 文件描述
  */
 

@@ -49,6 +49,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
     public void helloEventBus(UpdateOrderEvent message) {
         initData();
     }
+
     @Override
     protected void initData() {
         model = BmobUser.getCurrentUser(UserViewModel.class);
@@ -65,11 +66,12 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
         binding.tvMineBalance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                new DialogHelper().showInputNumDialog(getActivity(), "请输入充值金额", new DialogHelper.InputDialogCallBack() {
+                new DialogHelper().showInputNumDialog(getActivity(), "请输入充值金额(只允许充值整数)", new DialogHelper.InputDialogCallBack() {
                     @Override
                     public void positive(final String content) {
                         showLoading();
                         final float total = Float.valueOf(model.getBalance().replace("元", "").trim()) + Float.valueOf(content.trim());
+                        final String laseBalance = model.getBalance();
                         model.setBalance(String.valueOf(total));
                         model.update(new UpdateListener() {
                             @Override
@@ -79,6 +81,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                                     binding.tvMineBalance.setText(String.valueOf(total) + "元");
                                     showToast("充值成功");
                                 } else {
+                                    model.setBalance(laseBalance);
                                     showToast("充值失败" + e.getMessage());
                                 }
                             }
@@ -95,7 +98,7 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
         binding.tvMinePhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DialogHelper().showInputNumDialog(getActivity(), "请输入手机号码", new DialogHelper.InputDialogCallBack() {
+                new DialogHelper().showInputPhoneDialog(getActivity(), "请输入手机号码", new DialogHelper.InputDialogCallBack() {
                     @Override
                     public void positive(final String content) {
                         if (DataUtils.checkStrNotNull(content) && RegulrlyUtils.isCellphone(content)) {

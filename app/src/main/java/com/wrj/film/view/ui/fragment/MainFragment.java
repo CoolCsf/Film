@@ -20,7 +20,8 @@ import com.wrj.film.AppContext;
 import com.wrj.film.R;
 import com.wrj.film.adapter.BDRVFastAdapter;
 import com.wrj.film.databinding.FragmentMainBinding;
-import com.wrj.film.databinding.ItemPlayRcyBinding;
+import com.wrj.film.databinding.ItemShowRcyBinding;
+import com.wrj.film.databinding.ItemUnshowRcyBinding;
 import com.wrj.film.model.FilmModel;
 import com.wrj.film.model.FilmModelUtil;
 import com.wrj.film.view.ui.activity.FilmBuyActivity;
@@ -35,8 +36,8 @@ import java.util.List;
  */
 
 public class MainFragment extends BaseFragment<FragmentMainBinding> {
-    private BDRVFastAdapter<FilmPlayRcyItemViewModel, ItemPlayRcyBinding> unShowAdapter;
-    private BDRVFastAdapter<FilmPlayRcyItemViewModel, ItemPlayRcyBinding> showAdapter;
+    private BDRVFastAdapter<FilmPlayRcyItemViewModel, ItemUnshowRcyBinding> unShowAdapter;
+    private BDRVFastAdapter<FilmPlayRcyItemViewModel, ItemShowRcyBinding> showAdapter;
 
     @Override
     protected void initData() {
@@ -118,10 +119,10 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
         setRcyParam(binding.rvHotPlay);
         setRcyParam(binding.rvToBePlay);
         unShowAdapter = new BDRVFastAdapter<>
-                (R.layout.item_play_rcy, new ArrayList<FilmPlayRcyItemViewModel>(), R.id.btn_buy);
+                (R.layout.item_unshow_rcy, new ArrayList<FilmPlayRcyItemViewModel>(), R.id.btn_buy);
         binding.rvToBePlay.setAdapter(unShowAdapter);
         showAdapter = new BDRVFastAdapter<>
-                (R.layout.item_play_rcy, new ArrayList<FilmPlayRcyItemViewModel>(), R.id.btn_buy);
+                (R.layout.item_show_rcy, new ArrayList<FilmPlayRcyItemViewModel>(), R.id.btn_buy);
         binding.rvHotPlay.setAdapter(showAdapter);
     }
 

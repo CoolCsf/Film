@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.widget.EditText;
 
@@ -58,11 +59,19 @@ public class DialogHelper {
                 .show();
     }
 
-    public void showListDialog(Context context, String title, final String[] messageId, final InputDialogCallBack callBack) {
+    public void showListDialog(Context context, String title, String checkedItem, final List<String> messages, final InputDialogCallBack callBack) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         if (DataUtils.checkStrNotNull(title))
             builder.setTitle(title);
-        builder.setSingleChoiceItems(messageId, 0, new DialogInterface.OnClickListener() {
+        final String[] messageId = new String[messages.size()];
+        int checkedItemPosition = 0;
+        for (int i = 0; i < messages.size(); i++) {
+            messageId[i] = messages.get(i);
+            if (checkedItem.equals(messages.get(i))) {
+                checkedItemPosition = i;
+            }
+        }
+        builder.setSingleChoiceItems(messageId, checkedItemPosition, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 callBack.positive(messageId[which]);
@@ -82,7 +91,10 @@ public class DialogHelper {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        callBack.positive(editText.getText().toString().trim());
+                        if (DataUtils.checkStrNotNull(editText.getText().toString().trim()))
+                            callBack.positive(editText.getText().toString().trim());
+                        else
+                            dialog.dismiss();
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -98,6 +110,16 @@ public class DialogHelper {
         EditText editText = new EditText(context);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         showInputDialog(context, title, editText, callBack);
+        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(5)});
+        editText.setSingleLine();
+    }
+
+    public void showInputPhoneDialog(Context context, String title, final InputDialogCallBack callBack) {
+        EditText editText = new EditText(context);
+        editText.setInputType(InputType.TYPE_CLASS_PHONE);
+        showInputDialog(context, title, editText, callBack);
+        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+        editText.setSingleLine();
     }
 
     public interface InputDialogCallBack {

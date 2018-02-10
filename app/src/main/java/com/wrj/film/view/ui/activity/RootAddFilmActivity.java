@@ -25,7 +25,12 @@ import com.wrj.film.viewmodel.FilmAddViewModel;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
@@ -40,7 +45,6 @@ import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
 
 public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding, FilmAddViewModel> {
-    private String[] types;
     private String photoPath;
     private List<FilmTime> timesAll;
     private List<FilmDate> datesAll;
@@ -75,15 +79,9 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
         binding.tvType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (types == null) {
-                    List<String> ts = SortTypeEnum.getAllType();
-                    ts.remove(0);//移除掉“全部”
-                    types = new String[ts.size()];
-                    for (int i = 0; i < ts.size(); i++) {
-                        types[i] = ts.get(i);
-                    }
-                }
-                new DialogHelper().showListDialog(RootAddFilmActivity.this, "请选择电影类型", types, new DialogHelper.InputDialogCallBack() {
+                List<String> ts = SortTypeEnum.getAllType();
+                ts.remove(0);//移除掉“全部”
+                new DialogHelper().showListDialog(RootAddFilmActivity.this, "请选择电影类型", viewModel.getType(), ts, new DialogHelper.InputDialogCallBack() {
                     @Override
                     public void positive(String content) {
                         viewModel.setType(content);
@@ -147,6 +145,12 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
             datesAll.clear();
             timesAll.clear();
             showLoading();
+            if (viewModel.getPhotoUrl().contains("file"))
+                uploadFile();
+            else {
+                insertTimes();
+                insertDates();
+            }
         }
     }
 
@@ -157,8 +161,6 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
             public void done(BmobException e) {
                 if (e == null) {
                     viewModel.setPhotoUrl(bmobFile.getFileUrl());
-                    insertTimes();
-                    insertDates();
                 } else {
                     viewModel.setPhotoUrl("");
                     Log.e(TAG, "上次图片失败" + e.getMessage());
@@ -168,7 +170,19 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
         });
     }
 
+    public  boolean checkSpecialChar(String str) throws PatternSyntaxException {
+        // 清除掉所有特殊字符
+        String regEx = ".*[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？\\\\]+.*";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(str);
+        return m.matches();
+    }
+
     private boolean checkFilmParam() {
+        if (checkSpecialChar(viewModel.getTitle())) {
+            showToast("电影名称不允许包含特殊字符");
+            return false;
+        }
         if (!DataUtils.checkStrNotNull(viewModel.getTitle())) {
             showToast("请输入电影名称");
             return false;
@@ -205,22 +219,30 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
     }
 
     private void onTimePicker() {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(System.currentTimeMillis()));
         TimePickerDialog pickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 viewModel.setTimes(hourOfDay + ":" + minute);
             }
-        }, 0, 0, true);
+        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
         pickerDialog.show();
     }
 
     public void onMonthDayPicker() {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(System.currentTimeMillis()));
         DatePickerDialog pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                viewModel.setDates(year + "-" + (month + 1) + "-" + dayOfMonth);
+                if (month < calendar.get(Calendar.MONTH) || dayOfMonth <= calendar.get(Calendar.DAY_OF_MONTH)) {
+                    showToast("请选择大于今天的日期");
+                    return;
+                }
+                viewModel.setDates(year + "-" + (month + 1) + "-" + dayOfMonth, false);
             }
-        }, Integer.valueOf(DateUtils.getNowYear()), 0, 1);
+        }, Integer.valueOf(DateUtils.getNowYear()), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
         pickerDialog.show();
     }
 

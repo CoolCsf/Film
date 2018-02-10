@@ -42,7 +42,8 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
     private FilmTime filmTime;
     private String filmDate;
     private String filmType;
-    private String filmMoney;
+    private String filmMoney = "0.0";
+    private float totalFilmMoney = 0.0f;
     private List<String> checks;
     private List<String> checked = new ArrayList<>();
     private String filmId;
@@ -67,7 +68,11 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
             public void onClick(View v) {
                 //1..查询是否有未完成的订单且时间在15分钟之内
                 //2..如果没有，则进入购买，插入订单
-                toBuy();
+                if (checked.size() <= 0) {
+                    showToast("请选择座位");
+                } else {
+                    toBuy();
+                }
             }
         });
     }
@@ -76,7 +81,8 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
         if (DataUtils.checkStrNotNull(BmobUser.getCurrentUser(UserViewModel.class).getPhone())) {
             UserViewModel user = BmobUser.getCurrentUser(UserViewModel.class);
             final float balance = Float.valueOf(user.getBalance().replace("元", "").trim());
-            if (balance < Float.valueOf(filmMoney)) {
+            totalFilmMoney = Float.valueOf(filmMoney) * checked.size();
+            if (balance < totalFilmMoney) {
                 showToast("账户余额不足");
                 return;
             }
@@ -90,11 +96,12 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
                             if (e == null) {
                                 final FilmModel model = new FilmModel();
                                 model.setObjectId(filmId);
-                                model.increment("number");
+                                model.increment("number", checked.size());
                                 model.update();
                                 EventBus.getDefault().post(new UpdateFilmNumber());
-                                updateOrder(balance, "购票成功，请前往已完成订单查看");
+                                updateOrder(new DecimalFormat("##0.0").format(balance - totalFilmMoney), "购票成功，请前往已完成订单查看");
                             } else {
+                                closeLoading();
                                 showToast("购票失败" + e.getMessage());
                             }
                         }
@@ -108,8 +115,9 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
                         @Override
                         public void done(String s, BmobException e) {
                             if (e == null) {
-                                updateOrder(balance, "生成待支付订单成功，请前往待支付订单查看");
+                                updateOrder(String.valueOf(balance), "生成待支付订单成功，请前往待支付订单查看");
                             } else {
+                                closeLoading();
                                 showToast("生成待支付订单失败" + e.getMessage());
                             }
                         }
@@ -121,9 +129,9 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
         }
     }
 
-    private void updateOrder(float balance, String toast) {
+    private void updateOrder(String balance, String toast) {
         updateFilmTime();
-        updateUserBalance(new DecimalFormat("##0.0").format(balance - Float.valueOf(filmMoney)));
+        updateUserBalance(balance);
         showToast(toast);
         finish();
     }
@@ -134,8 +142,8 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
         user.update(new UpdateListener() {
             @Override
             public void done(BmobException e) {
-                closeLoading();
                 if (e != null) {
+                    closeLoading();
                     Log.e(TAG, "更新余额失败" + e.getMessage());
                 } else {
                     EventBus.getDefault().post(new UpdateOrderEvent());
@@ -158,6 +166,7 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
                     Log.e(TAG, "更新场次座位失败" + e.getMessage());
                     showToast("更新场次座位失败" + e.getMessage());
                 } else {
+                    closeLoading();
                     Log.e(TAG, "更新场次座位成功");
                 }
             }
@@ -169,7 +178,7 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
         model.setCinema("广州大学华软软件学院礼堂一");
         model.setDate(filmDate);
         model.setFilmName(filmName);
-        model.setMoney(filmMoney);
+        model.setMoney(totalFilmMoney + "");
         model.setSeats(checked);
         model.setTime(filmTime.getTime());
         model.setUser(BmobUser.getCurrentUser(UserViewModel.class));

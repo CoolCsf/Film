@@ -23,8 +23,9 @@ public class FilmModelUtil {
         query.findObjects(new FindListener<FilmModel>() {
             @Override
             public void done(List<FilmModel> list, BmobException e) {
-                callBack.getModel(list);
-                if (e != null) {
+                if (e == null)
+                    callBack.getModel(list);
+                else {
                     ToastHelp.showToast(e.getMessage());
                     e.printStackTrace();
                 }

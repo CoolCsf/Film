@@ -1,7 +1,7 @@
 package com.wrj.film.viewmodel;
 
 /**
- * Created by Ervin on 2017/12/18.
+ * Created by Administrator on 2017/12/18.
  */
 
 public class SelectSeatViewModel {

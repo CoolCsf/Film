@@ -58,9 +58,9 @@ public class FilmAddViewModel extends BaseObservable {
         return dates;
     }
 
-    public void setDates(String dates) {
+    public void setDates(String dates, boolean refresh) {
         if (DataUtils.checkStrNotNull(dates)) {
-            if (DataUtils.checkStrNotNull(this.dates)) {
+            if (!refresh && DataUtils.checkStrNotNull(this.dates)) {
                 this.dates = this.dates + "、" + dates;
             } else
                 this.dates = dates;
