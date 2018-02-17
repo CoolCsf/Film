@@ -26,6 +26,7 @@ public class DialogHelper {
         if (dialog == null) {
             dialog = new Dialog(context, R.style.customDialog);
             dialog.setContentView(R.layout.layout_loading);
+            dialog.setCanceledOnTouchOutside(false);
         }
         dialog.show();
     }
@@ -67,7 +68,7 @@ public class DialogHelper {
         int checkedItemPosition = 0;
         for (int i = 0; i < messages.size(); i++) {
             messageId[i] = messages.get(i);
-            if (checkedItem.equals(messages.get(i))) {
+            if (DataUtils.checkStrNotNull(checkedItem) && checkedItem.equals(messages.get(i))) {
                 checkedItemPosition = i;
             }
         }

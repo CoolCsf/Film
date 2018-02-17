@@ -57,9 +57,11 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
     private boolean filmModelCloseLoading = false;
     private boolean isUpdateTime = false;
     private boolean isUpdateDate = false;
-    private String id = "";
-    private int year = Integer.valueOf(DateUtils.getNowYear()), mMonth = 0, day = 1;
+    private String filmId = "";
+    private int year = Integer.valueOf(DateUtils.getNowYear());
     private boolean isRefreshDate = false;
+    private List<FilmDate> oldDates = new ArrayList<>();
+    private List<FilmTime> oldTimes = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -78,11 +80,11 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
         binding.setData(viewModel);
         timesAll = new ArrayList<>();
         datesAll = new ArrayList<>();
-        id = getIntent().getExtras().getString(KEY_FILM_ID);
+        filmId = getIntent().getExtras().getString(KEY_FILM_ID);
         showLoading();
-        queryFilm(id);
-        queryFilmDate(id);
-        queryFilmTime(id);
+        queryFilm(filmId);
+        queryFilmDate(filmId);
+        queryFilmTime(filmId);
     }
 
     private void queryFilmTime(String filmId) {
@@ -96,6 +98,7 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
                 timeCloseLoading = true;
                 if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
                     String times = "";
+                    oldTimes = list;
                     for (FilmTime time : list) {
                         timesAll.add(time);
                         if (DataUtils.checkStrNotNull(times))
@@ -104,7 +107,6 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
                             times = time.getTime();
                     }
                     viewModel.setTimes(times);
-                    isUpdateTime = true;
                 }
                 checkCanCloseLoading();
             }
@@ -128,6 +130,7 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
                 dateCloseLoading = true;
                 if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
                     String dates = "";
+                    oldDates = list;
                     for (FilmDate date : list) {
                         datesAll.add(date);
                         if (DataUtils.checkStrNotNull(dates))
@@ -136,7 +139,6 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
                             dates = date.getDate();
                     }
                     viewModel.setDates(dates, false);
-                    isUpdateDate = true;
                 }
                 checkCanCloseLoading();
             }
@@ -312,10 +314,10 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
         TimePickerDialog pickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                if (isUpdateTime) {
+                if (CollectionUtils.collectionState(oldTimes) == CollectionUtils.COLLECTION_UNEMPTY && !isUpdateTime) {
                     viewModel.setTimes("");
-                    isUpdateTime = false;
                 }
+                isUpdateTime = true;
                 viewModel.setTimes(hourOfDay + ":" + minute);
             }
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
@@ -328,17 +330,18 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
         DatePickerDialog pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                if (isUpdateDate) {
+                if (CollectionUtils.collectionState(oldDates) == CollectionUtils.COLLECTION_UNEMPTY && !isUpdateDate) {
                     viewModel.setDates("", false);
-                    isUpdateDate = false;
                 }
-                if (month < calendar.get(Calendar.MONTH) || dayOfMonth <= calendar.get(Calendar.DAY_OF_MONTH)) {
+                isUpdateDate = true;
+                if (month < calendar.get(Calendar.MONTH) ||
+                        (month == calendar.get(Calendar.MONTH) && dayOfMonth <= calendar.get(Calendar.DAY_OF_MONTH))) {
                     showToast("请选择大于今天的日期");
                     return;
                 }
                 viewModel.setDates(year + "-" + (month + 1) + "-" + dayOfMonth, isRefreshDate);
             }
-        }, year, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        }, year, calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         pickerDialog.show();
     }
 
@@ -353,18 +356,24 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
             FilmDate time = new FilmDate(d);
             dates.add(time);
         }
-        new BmobBatch().updateBatch(dates).doBatch(new QueryListListener<BatchResult>() {
+        new BmobBatch().insertBatch(dates).doBatch(new QueryListListener<BatchResult>() {
             @Override
             public void done(List<BatchResult> list, BmobException e) {
                 if (e == null) {
                     if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
                         datesAll.clear();
                         for (int i = 0; i < list.size(); i++) {
-                            FilmDate date = (FilmDate) dates.get(i);
-                            date.setObjectId(list.get(i).getObjectId());
-                            datesAll.add(date);
+                            BatchResult result = list.get(i);
+                            if (result.isSuccess()) {
+                                FilmDate date = (FilmDate) dates.get(i);
+                                date.setObjectId(list.get(i).getObjectId());
+                                datesAll.add(date);
+                            } else {
+                                BmobException ex = result.getError();
+                                Log.e("updateBatch失败", ex.getMessage());
+                            }
                         }
-                        insertFilmModel();
+                        updateFilmContent();
                     }
                 } else {
                     closeLoading();
@@ -381,18 +390,24 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
             FilmTime time = new FilmTime(t);
             times.add(time);
         }
-        new BmobBatch().updateBatch(times).doBatch(new QueryListListener<BatchResult>() {
+        new BmobBatch().insertBatch(times).doBatch(new QueryListListener<BatchResult>() {
             @Override
             public void done(List<BatchResult> list, BmobException e) {
                 if (e == null) {
-                    timesAll.clear();
                     if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY) {
+                        timesAll.clear();
                         for (int i = 0; i < list.size(); i++) {
-                            FilmTime time = (FilmTime) times.get(i);
-                            time.setObjectId(list.get(i).getObjectId());
-                            timesAll.add(time);
+                            BatchResult result = list.get(i);
+                            if (result.isSuccess()) {
+                                FilmTime time = (FilmTime) times.get(i);
+                                time.setObjectId(list.get(i).getObjectId());
+                                timesAll.add(time);
+                            } else {
+                                BmobException ex = result.getError();
+                                Log.e("updateBatch失败", ex.getMessage());
+                            }
                         }
-                        insertFilmModel();
+                        updateFilmContent();
                     }
                 } else {
                     closeLoading();
@@ -403,7 +418,41 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
         });
     }
 
-    private void insertFilmModel() {
+    private void updateFilmContent() {
+        if (isUpdateTime || isUpdateDate) {
+            FilmModel filmModel = new FilmModel();
+            if (isUpdateTime) {
+                BmobRelation relation = new BmobRelation();
+                for (FilmTime filmTime : oldTimes) {
+                    relation.remove(filmTime);
+                }
+                filmModel.setTimes(relation);
+            }
+            if (isUpdateDate) {
+                BmobRelation relation = new BmobRelation();
+                for (FilmDate filmDate : oldDates) {
+                    relation.remove(filmDate);
+                }
+                filmModel.setDates(relation);
+            }
+            filmModel.setObjectId(filmId);
+            filmModel.update(new UpdateListener() {
+                @Override
+                public void done(BmobException e) {
+                    if (e == null) {
+                        updateFilm();
+                    } else {
+                        closeLoading();
+                        Log.e(TAG, e.getMessage());
+                        showToast("编辑电影失败" + e.getMessage());
+                    }
+                }
+            });
+        } else
+            updateFilm();
+    }
+
+    private void updateFilm() {
         if (CollectionUtils.collectionState(timesAll) == CollectionUtils.COLLECTION_UNEMPTY
                 && CollectionUtils.collectionState(datesAll) == CollectionUtils.COLLECTION_UNEMPTY) {
             FilmModel filmModel = new FilmModel();
@@ -416,23 +465,28 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
             filmModel.setIntroduction(viewModel.getIntroduction());
             filmModel.setDuration(viewModel.getDuration());
             filmModel.setBanner(viewModel.isBanner());
-            BmobRelation r_dates = new BmobRelation();
-            BmobRelation r_times = new BmobRelation();
-            for (FilmTime time : timesAll) {
-                r_times.add(time);
+            if (isUpdateTime) {
+                BmobRelation r_times = new BmobRelation();
+                for (FilmTime time : timesAll) {
+                    r_times.add(time);
+                }
+                filmModel.setTimes(r_times);
             }
-            for (FilmDate date : datesAll) {
-                r_dates.add(date);
+            if (isUpdateDate) {
+                BmobRelation r_dates = new BmobRelation();
+                for (FilmDate date : datesAll) {
+                    r_dates.add(date);
+                }
+                filmModel.setDates(r_dates);
             }
-            filmModel.setTimes(r_times);
-            filmModel.setDates(r_dates);
-            filmModel.setObjectId(id);
+            filmModel.setObjectId(filmId);
             filmModel.update(new UpdateListener() {
                 @Override
                 public void done(BmobException e) {
                     closeLoading();
                     if (e == null) {
                         showToast("编辑电影成功");
+                        finish();
                     } else {
                         Log.e(TAG, e.getMessage());
                         showToast("编辑电影失败" + e.getMessage());
@@ -441,4 +495,5 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
             });
         }
     }
+
 }

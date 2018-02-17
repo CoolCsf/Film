@@ -54,7 +54,6 @@ public abstract class AbsActivity<BD extends ViewDataBinding> extends AppCompatA
     @Override
     protected void onStop() {
         super.onStop();
-        closeLoading();
     }
 
     @Override

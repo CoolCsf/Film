@@ -79,7 +79,7 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
         binding.tvType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<String> ts = SortTypeEnum.getAllType();
+                List<String> ts = new ArrayList<>(SortTypeEnum.getAllType());
                 ts.remove(0);//移除掉“全部”
                 new DialogHelper().showListDialog(RootAddFilmActivity.this, "请选择电影类型", viewModel.getType(), ts, new DialogHelper.InputDialogCallBack() {
                     @Override
@@ -236,13 +236,14 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
         DatePickerDialog pickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                if (month < calendar.get(Calendar.MONTH) || dayOfMonth <= calendar.get(Calendar.DAY_OF_MONTH)) {
+                if (month < calendar.get(Calendar.MONTH) ||
+                        (month == calendar.get(Calendar.MONTH) && dayOfMonth <= calendar.get(Calendar.DAY_OF_MONTH))) {
                     showToast("请选择大于今天的日期");
                     return;
                 }
                 viewModel.setDates(year + "-" + (month + 1) + "-" + dayOfMonth, false);
             }
-        }, Integer.valueOf(DateUtils.getNowYear()), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        }, Integer.valueOf(DateUtils.getNowYear()), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         pickerDialog.show();
     }
 
@@ -334,6 +335,7 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
                     closeLoading();
                     if (e == null) {
                         showToast("添加电影成功");
+                        finish();
                     } else {
                         Log.e(TAG, e.getMessage());
                         showToast("添加电影失败" + e.getMessage());
