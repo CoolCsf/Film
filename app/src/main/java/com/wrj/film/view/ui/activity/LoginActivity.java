@@ -2,6 +2,7 @@ package com.wrj.film.view.ui.activity;
 
 import android.view.View;
 
+import com.jaeger.library.StatusBarUtil;
 import com.wrj.film.LoginUtil;
 import com.wrj.film.R;
 import com.wrj.film.databinding.ActivityLoginBinding;
@@ -60,5 +61,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, UserViewMo
         UserViewModel model = new UserViewModel();
         binding.setLogin(model);
         return model;
+    }
+
+    @Override
+    protected void setStatusBar() {
+        StatusBarUtil.setTranslucentForImageViewInFragment(this, null);
     }
 }

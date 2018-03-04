@@ -106,11 +106,11 @@ public class OrderListActivity extends AbsActivity<ActivityOrderListBinding> {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (mAdapter.getData().get(position).getStatus().equals(OrderTypeEnum.getState(2))) {//待支付
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(OrderConfirmActivity.ORDER_KEY, mAdapter.getData().get(position).getModel());
+                    bundle.putString(OrderConfirmActivity.ORDER_KEY, mAdapter.getData().get(position).getModel().getObjectId());
                     startActivity(OrderConfirmActivity.class, bundle);
                 } else {
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(OrderDetailActivity.ORDER_KEY, mAdapter.getData().get(position).getModel());
+                    bundle.putString(OrderDetailActivity.ORDER_KEY, mAdapter.getData().get(position).getModel().getObjectId());
                     startActivity(OrderDetailActivity.class, bundle);
                 }
             }

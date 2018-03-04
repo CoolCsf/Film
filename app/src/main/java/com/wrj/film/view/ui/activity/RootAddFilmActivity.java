@@ -11,7 +11,6 @@ import com.tool.util.CollectionUtils;
 import com.tool.util.DataUtils;
 import com.tool.util.DateUtils;
 import com.tool.util.gallerfinal.GalleryFinalUtil;
-import com.tool.util.glide.GlideImageLoader;
 import com.tool.util.widget.CustomTitleBar;
 import com.wrj.film.R;
 import com.wrj.film.databinding.ActivityRootAddFilmBinding;
@@ -28,9 +27,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 import cn.bmob.v3.BmobBatch;
 import cn.bmob.v3.BmobObject;
@@ -119,10 +115,7 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
                             public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
                                 if (resultList != null && resultList.size() > 0) {
                                     photoPath = resultList.get(0).getPhotoPath();
-                                    GlideImageLoader.getInstance().displayImage(RootAddFilmActivity.this,
-                                            binding.ivPhoto, "file://" + photoPath,
-                                            getResources().getDrawable(R.drawable.error_default),
-                                            84, 84);
+                                    viewModel.setPhotoUrl("file://" + photoPath);
                                     uploadFile();
                                 }
                             }
@@ -137,7 +130,7 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
     }
 
     private void addFilm() {
-        if (checkFilmParam()) {
+        if (viewModel.checkFilmParam()) {
             if (!DataUtils.checkStrNotNull(viewModel.getPhotoUrl())) {
                 showToast("图片尚未上传成功，请稍后重试");
                 return;
@@ -170,53 +163,6 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
         });
     }
 
-    public  boolean checkSpecialChar(String str) throws PatternSyntaxException {
-        // 清除掉所有特殊字符
-        String regEx = ".*[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？\\\\]+.*";
-        Pattern p = Pattern.compile(regEx);
-        Matcher m = p.matcher(str);
-        return m.matches();
-    }
-
-    private boolean checkFilmParam() {
-        if (checkSpecialChar(viewModel.getTitle())) {
-            showToast("电影名称不允许包含特殊字符");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getTitle())) {
-            showToast("请输入电影名称");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getType())) {
-            showToast("请选择电影类型");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getDuration())) {
-            showToast("请输入电影时长");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getMoney())) {
-            showToast("请输入票价");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getDates())) {
-            showToast("请选择上映日期");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getTimes())) {
-            showToast("请输入上映时间");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getIntroduction())) {
-            showToast("请输入电影简介");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(photoPath)) {
-            showToast("请选择电影海报");
-            return false;
-        }
-        return true;
-    }
 
     private void onTimePicker() {
         final Calendar calendar = Calendar.getInstance();

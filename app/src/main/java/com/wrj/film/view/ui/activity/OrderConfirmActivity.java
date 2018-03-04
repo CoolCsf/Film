@@ -3,22 +3,26 @@ package com.wrj.film.view.ui.activity;
 import android.util.Log;
 import android.view.View;
 
-import com.wrj.film.view.widget.DialogHelper;
+import com.tool.util.CollectionUtils;
 import com.wrj.film.R;
 import com.wrj.film.databinding.ActivityOrderConfimBinding;
 import com.wrj.film.model.OrderModel;
 import com.wrj.film.model.OrderTypeEnum;
 import com.wrj.film.model.eventbus.UpdateOrderEvent;
 import com.wrj.film.view.ui.ViewUtil;
+import com.wrj.film.view.widget.DialogHelper;
 import com.wrj.film.viewmodel.OrderDetailViewModel;
 import com.wrj.film.viewmodel.UserViewModel;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class OrderConfirmActivity extends BaseActivity<ActivityOrderConfimBinding, OrderDetailViewModel> {
@@ -92,18 +96,34 @@ public class OrderConfirmActivity extends BaseActivity<ActivityOrderConfimBindin
     @Override
     protected void initData() {
         super.initData();
-        model = (OrderModel) getIntent().getExtras().getSerializable(ORDER_KEY);
-        if (model != null) {
-            viewModel.setCinema(model.getCinema());
-            viewModel.setFilmName(model.getFilmName());
-            viewModel.setSeats(model.getSeats());
-            money = Float.valueOf(model.getMoney()) * model.getSeats().size();
-            viewModel.setMoney(money + "");
-            UserViewModel user = BmobUser.getCurrentUser(UserViewModel.class);
-            viewModel.setPhone(user.getPhone());
-            viewModel.setTime(model.getDate() + " " + model.getTime());
-        }
-        binding.setData(viewModel);
+        String orderId = getIntent().getExtras().getString(ORDER_KEY);
+        showLoading();
+        BmobQuery<OrderModel> query = new BmobQuery<>();
+        query.addWhereEqualTo("objectId", orderId);
+        query.include("model");
+        query.findObjects(new FindListener<OrderModel>() {
+
+            @Override
+            public void done(List<OrderModel> list, BmobException e) {
+                closeLoading();
+                if (e == null) {
+                    if (CollectionUtils.collectionState(list) == CollectionUtils.COLLECTION_UNEMPTY && list.get(0) != null) {
+                        model = list.get(0);
+                        viewModel.setCinema(model.getCinema());
+                        viewModel.setFilmName(model.getFilmName());
+                        viewModel.setSeats(model.getSeats());
+                        money = Float.valueOf(model.getMoney());
+                        viewModel.setMoney(money + "");
+                        UserViewModel user = BmobUser.getCurrentUser(UserViewModel.class);
+                        viewModel.setPhone(user.getPhone());
+                        viewModel.setTime(model.getDate() + " " + model.getTime());
+                    }
+                    binding.setData(viewModel);
+                } else {
+                    showToast("查找订单失败" + e.getMessage());
+                }
+            }
+        });
     }
 
     @Override

@@ -4,7 +4,12 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.tool.util.DataUtils;
+import com.tool.util.ToastHelp;
 import com.wrj.film.BR;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Created by Administrator on 2017/12/24.
@@ -159,5 +164,56 @@ public class FilmAddViewModel extends BaseObservable {
     public void setBanner(boolean banner) {
         isBanner = banner;
         notifyPropertyChanged(BR.banner);
+    }
+
+    public boolean checkFilmParam() {
+        if (checkSpecialChar(title)) {
+            ToastHelp.showToast("电影名称不允许包含特殊字符");
+            return false;
+        }
+        if (!DataUtils.checkStrNotNull(title)) {
+            ToastHelp.showToast("请输入电影名称");
+            return false;
+        }
+        if (!DataUtils.checkStrNotNull(type)) {
+            ToastHelp.showToast("请选择电影类型");
+            return false;
+        }
+        if (!DataUtils.checkStrNotNull(duration)) {
+            ToastHelp.showToast("请输入电影时长");
+            return false;
+        }
+        if (!DataUtils.checkStrNotNull(money)) {
+            ToastHelp.showToast("请输入票价");
+            return false;
+        }
+        if (!DataUtils.checkStrNotNull(dates)) {
+            ToastHelp.showToast("请选择上映日期");
+            return false;
+        }
+        if (!DataUtils.checkStrNotNull(times)) {
+            ToastHelp.showToast("请输入上映时间");
+            return false;
+        }
+        if (!DataUtils.checkStrNotNull(introduction)) {
+            ToastHelp.showToast("请输入电影简介");
+            return false;
+        }
+        if (!DataUtils.checkStrNotNull(photoUrl)) {
+            ToastHelp.showToast("请选择电影海报");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkSpecialChar(String str) throws PatternSyntaxException {
+        // 清除掉所有特殊字符
+        if (DataUtils.checkStrNotNull(str)) {
+            String regEx = ".*[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？\\\\]+.*";
+            Pattern p = Pattern.compile(regEx);
+            Matcher m = p.matcher(str);
+            return m.matches();
+        }
+        return false;
     }
 }

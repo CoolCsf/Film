@@ -232,7 +232,7 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
     }
 
     private void addFilm() {
-        if (checkFilmParam()) {
+        if (viewModel.checkFilmParam()) {
             if (viewModel.getPhotoUrl().contains("file")) {
                 showToast("图片尚未上传成功，请稍后重试");
                 return;
@@ -262,50 +262,6 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
                 }
             }
         });
-    }
-
-    public boolean checkSpecialChar(String str) throws PatternSyntaxException {
-        // 清除掉所有特殊字符
-        String regEx = ".*[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？\\\\]+.*";
-        Pattern p = Pattern.compile(regEx);
-        Matcher m = p.matcher(str);
-        return m.matches();
-    }
-
-    private boolean checkFilmParam() {
-        if (checkSpecialChar(viewModel.getTitle())) {
-            showToast("电影名称不允许包含特殊字符");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getType())) {
-            showToast("请选择电影类型");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getDuration())) {
-            showToast("请输入电影时长");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getMoney())) {
-            showToast("请输入票价");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getDates())) {
-            showToast("请选择上映日期");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getTimes())) {
-            showToast("请输入上映时间");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getIntroduction())) {
-            showToast("请输入电影简介");
-            return false;
-        }
-        if (!DataUtils.checkStrNotNull(viewModel.getPhotoUrl())) {
-            showToast("请选择电影海报");
-            return false;
-        }
-        return true;
     }
 
     private void onTimePicker() {
