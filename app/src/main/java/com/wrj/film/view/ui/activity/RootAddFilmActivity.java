@@ -170,7 +170,13 @@ public class RootAddFilmActivity extends BaseActivity<ActivityRootAddFilmBinding
         TimePickerDialog pickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                viewModel.setTimes(hourOfDay + ":" + minute);
+                String strHour = hourOfDay + "";
+                String strMinute = minute + "";
+                if (hourOfDay < 10)
+                    strHour = "0" + strHour;
+                if (minute < 10)
+                    strMinute = "0" + strMinute;
+                viewModel.setTimes(strHour + ":" + strMinute);
             }
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
         pickerDialog.show();

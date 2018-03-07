@@ -62,7 +62,7 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
     private boolean isRefreshDate = false;
     private List<FilmDate> oldDates = new ArrayList<>();
     private List<FilmTime> oldTimes = new ArrayList<>();
-
+    private FilmModel filmModel;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_root_add_film;
@@ -151,15 +151,15 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
             public void getModel(List<FilmModel> models) {
                 filmModelCloseLoading = true;
                 if (CollectionUtils.collectionState(models) == CollectionUtils.COLLECTION_UNEMPTY) {
-                    FilmModel model = models.get(0);
-                    viewModel.setType(model.getType());
-                    viewModel.setPhotoUrl(model.getPhotoUrl());
-                    viewModel.setBanner(model.isBanner());
-                    viewModel.setDuration(model.getDuration());
-                    viewModel.setIntroduction(model.getIntroduction());
-                    viewModel.setMoney(model.getMoney());
-                    viewModel.setNowShowing(model.isNowShowing());
-                    viewModel.setTitle(model.getTitle());
+                    filmModel = models.get(0);
+                    viewModel.setType(filmModel.getType());
+                    viewModel.setPhotoUrl(filmModel.getPhotoUrl());
+                    viewModel.setBanner(filmModel.isBanner());
+                    viewModel.setDuration(filmModel.getDuration());
+                    viewModel.setIntroduction(filmModel.getIntroduction());
+                    viewModel.setMoney(filmModel.getMoney());
+                    viewModel.setNowShowing(filmModel.isNowShowing());
+                    viewModel.setTitle(filmModel.getTitle());
                 }
                 checkCanCloseLoading();
             }
@@ -274,7 +274,13 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
                     viewModel.setTimes("");
                 }
                 isUpdateTime = true;
-                viewModel.setTimes(hourOfDay + ":" + minute);
+                String strHour = hourOfDay + "";
+                String strMinute = minute + "";
+                if (hourOfDay < 10)
+                    strHour = "0" + strHour;
+                if (minute < 10)
+                    strMinute = "0" + strMinute;
+                viewModel.setTimes(strHour + ":" + strMinute);
             }
         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
         pickerDialog.show();
@@ -411,10 +417,8 @@ public class RootUpdateFilmActivity extends BaseActivity<ActivityRootAddFilmBind
     private void updateFilm() {
         if (CollectionUtils.collectionState(timesAll) == CollectionUtils.COLLECTION_UNEMPTY
                 && CollectionUtils.collectionState(datesAll) == CollectionUtils.COLLECTION_UNEMPTY) {
-            FilmModel filmModel = new FilmModel();
             filmModel.setType(viewModel.getType());
             filmModel.setTitle(viewModel.getTitle());
-            filmModel.setNumber(0);
             filmModel.setPhotoUrl(viewModel.getPhotoUrl());
             filmModel.setNowShowing(viewModel.isNowShowing());
             filmModel.setMoney(viewModel.getMoney());

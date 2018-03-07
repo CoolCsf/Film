@@ -45,6 +45,7 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
     private BDRVFastAdapter<FilmViewModel, ItemSortRcyBinding> sortAdapter;
     private BDRVFastAdapter<SimpleStringViewModel, ItemSortHeadRcyBinding> headAdapter;
     private String type = SortTypeEnum.ALL.getType();
+    private int selectPosition = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +66,8 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
 
     @Override
     protected void initData() {
+        headAdapter.getData().get(selectPosition).setCheck(true);
+        headAdapter.notifyItemChanged(selectPosition);
         getDataFromBmob(SortTypeEnum.ALL.getType());
     }
 
@@ -89,10 +92,15 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
         headAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                String selet = ((SimpleStringViewModel) adapter.getData().get(position)).getText();
-                if (selet.equals(type))
+                headAdapter.getData().get(selectPosition).setCheck(false);
+                headAdapter.notifyItemChanged(selectPosition);
+                selectPosition = position;
+                headAdapter.getData().get(position).setCheck(true);
+                headAdapter.notifyItemChanged(position);
+                String select = ((SimpleStringViewModel) adapter.getData().get(position)).getText();
+                if (select.equals(type))
                     return;
-                type = selet;
+                type = select;
                 getDataFromBmob(type);
             }
         });
@@ -174,6 +182,7 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
         BDRVFastAdapter<VM, BD> adapter = new
                 BDRVFastAdapter<>(resId, new ArrayList<VM>(), id);
         rcy.setAdapter(adapter);
+
         return adapter;
     }
 

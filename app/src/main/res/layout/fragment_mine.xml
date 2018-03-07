@@ -27,9 +27,9 @@
 
             <ImageView
                 android:id="@+id/iv_mine_headImg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/avater" />
+                android:layout_width="@dimen/dp_100"
+                android:layout_height="@dimen/dp_100"
+                android:src="@drawable/logo" />
 
             <LinearLayout
                 android:layout_width="match_parent"

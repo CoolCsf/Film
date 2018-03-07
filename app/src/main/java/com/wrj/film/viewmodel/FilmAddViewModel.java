@@ -66,6 +66,10 @@ public class FilmAddViewModel extends BaseObservable {
     public void setDates(String dates, boolean refresh) {
         if (DataUtils.checkStrNotNull(dates)) {
             if (!refresh && DataUtils.checkStrNotNull(this.dates)) {
+                if (this.dates.contains(dates)) {
+                    ToastHelp.showToast("请勿重复添加相同的日期");
+                    return;
+                }
                 this.dates = this.dates + "、" + dates;
             } else
                 this.dates = dates;
@@ -85,6 +89,10 @@ public class FilmAddViewModel extends BaseObservable {
     public void setTimes(String times) {
         if (DataUtils.checkStrNotNull(times)) {
             if (DataUtils.checkStrNotNull(this.times)) {
+                if (this.times.contains(times)) {
+                    ToastHelp.showToast("请勿重复添加相同的时间");
+                    return;
+                }
                 this.times = this.times + "、" + times;
             } else
                 this.times = times;

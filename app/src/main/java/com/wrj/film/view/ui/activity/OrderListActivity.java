@@ -67,6 +67,7 @@ public class OrderListActivity extends AbsActivity<ActivityOrderListBinding> {
         showLoading();
         BmobQuery<OrderModel> query = new BmobQuery<>();
         query.addWhereEqualTo("orderStatus", status);
+        query.order("-createdAt");
         query.addWhereEqualTo("user", new BmobPointer(BmobUser.getCurrentUser(UserViewModel.class)));
         query.include("model");
         query.findObjects(new FindListener<OrderModel>() {
@@ -81,9 +82,9 @@ public class OrderListActivity extends AbsActivity<ActivityOrderListBinding> {
                             viewModel.setCinema(model.getCinema());
                             viewModel.setFilmName(model.getFilmName());
                             viewModel.setFilmPhoto(model.getModel().getPhotoUrl());
-                            viewModel.setMoney((Float.valueOf(model.getMoney()) * model.getSeats().size()) + "");
+                            viewModel.setMoney(model.getMoney());
                             viewModel.setSeats(model.getSeats());
-                            viewModel.setTime(model.getDate() + model.getTime());
+                            viewModel.setTime(model.getDate() +" "+ model.getTime());
                             viewModel.setStatus(model.getOrderStatus());
                             viewModel.setModel(model);
                             models.add(viewModel);

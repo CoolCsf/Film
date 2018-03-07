@@ -26,7 +26,7 @@ public class AppContext extends Application {
         ToastHelp.init(this);
         GalleryFinalInit.getInstance(instance).init();//初始化图片选择器
         //第一：默认初始化
-        Bmob.initialize(this, "55eae73640d3428a4c15a344ad50daa3");
+        Bmob.initialize(this, "dae581d33da7c783f488caf9628dfe8c");
     }
 
     //完全关闭app

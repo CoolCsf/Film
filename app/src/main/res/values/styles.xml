@@ -19,4 +19,18 @@
         <item name="android:layout_height">1px</item>
         <item name="android:background">@color/tv_line_color</item>
     </style>
+    <!--<Button
+            android:background="@drawable/shape_stroke_bg_green"
+            android:id="@+id/btn_buy"
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:layout_height="@dimen/dp_40"
+            android:text="购票" />-->
+    <style name="buy_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/dp_40</item>
+        <item name="android:background">@drawable/shape_stroke_bg_green</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:text">购票</item>
+    </style>
 </resources>

@@ -20,8 +20,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 import static com.tool.util.ToastHelp.showToast;
@@ -103,16 +107,21 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                     public void positive(final String content) {
                         if (DataUtils.checkStrNotNull(content) && RegulrlyUtils.isCellphone(content)) {
                             showLoading();
-                            model.setPhone(content);
-                            model.update(new UpdateListener() {
+                            BmobQuery<UserViewModel> query = new BmobQuery<>();
+                            query.addWhereEqualTo("phone", content);
+                            query.findObjects(new FindListener<UserViewModel>() {
                                 @Override
-                                public void done(BmobException e) {
-                                    closeLoading();
+                                public void done(List<UserViewModel> list, BmobException e) {
                                     if (e == null) {
-                                        binding.tvMinePhone.setText(content);
-                                        showToast("设置手机号码成功");
+                                        if (list.size() == 0) {
+                                            setPhone(content);
+                                        } else {
+                                            showToast("该号码已存在");
+                                            closeLoading();
+                                        }
                                     } else {
-                                        showToast("设置手机号码失败" + e.getMessage());
+                                        showToast("查找手机失败" + e.getMessage());
+                                        closeLoading();
                                     }
                                 }
                             });
@@ -151,6 +160,22 @@ public class MineFragment extends BaseFragment<FragmentMineBinding> {
                 bundle.putString(OrderListActivity.ORDER_STATUS_KEY, OrderTypeEnum.getState(2));
                 startActivity(OrderListActivity.class, bundle);
 
+            }
+        });
+    }
+
+    private void setPhone(final String content) {
+        model.setPhone(content);
+        model.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                closeLoading();
+                if (e == null) {
+                    binding.tvMinePhone.setText(content);
+                    showToast("设置手机号码成功");
+                } else {
+                    showToast("设置手机号码失败" + e.getMessage());
+                }
             }
         });
     }

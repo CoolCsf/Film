@@ -57,7 +57,7 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
     protected void initView() {
         ViewUtil.initTitleBar(binding.titleBar, "请选择场次");
         binding.seatView.setScreenName("超级豪华厅荧幕");//设置屏幕名称
-        binding.seatView.setMaxSelected(3);//设置最多选中
+        binding.seatView.setMaxSelected(5);//设置最多选中
         binding.seatView.setData(10, 15);
     }
 
@@ -221,8 +221,8 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
                 }
                 return false;
             }
-
             @Override
+
             public void checked(int row, int column) {
                 checked.add(row + "-" + column);
                 ToastHelp.showToast("选择了第" + row + "排 ,第" + column + "座");

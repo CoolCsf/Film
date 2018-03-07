@@ -51,10 +51,9 @@
 
         <Button
             android:id="@+id/btn_buy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/buy_button"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/dp_25"
-            android:text="购票" />
+            android:layout_marginStart="@dimen/dp_25" />
+
     </RelativeLayout>
 </layout>

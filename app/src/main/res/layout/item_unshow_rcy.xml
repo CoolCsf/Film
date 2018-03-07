@@ -25,9 +25,10 @@
             tool:src="@drawable/error_default" />
 
         <Button
+            android:layout_marginTop="@dimen/dp_5"
             android:id="@+id/btn_buy"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="wrap_content"
+            style="@style/buy_button"
             android:text="预购" />
+
     </LinearLayout>
 </layout>

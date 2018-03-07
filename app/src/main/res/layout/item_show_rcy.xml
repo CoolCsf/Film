@@ -26,8 +26,7 @@
 
         <Button
             android:id="@+id/btn_buy"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="wrap_content"
-            android:text="购票" />
+            style="@style/buy_button"
+            android:layout_marginTop="@dimen/dp_5" />
     </LinearLayout>
 </layout>

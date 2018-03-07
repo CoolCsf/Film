@@ -73,7 +73,7 @@
                 style="@style/btn_Long_onBottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/main_color"
+                android:background="@drawable/shape_btn_radius8_bg_green"
                 android:text="购票" />
         </LinearLayout>
     </ScrollView>
