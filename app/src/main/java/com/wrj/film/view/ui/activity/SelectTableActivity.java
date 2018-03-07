@@ -86,7 +86,7 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
                 showToast("账户余额不足");
                 return;
             }
-            new DialogHelper().showContentDialog(this, "", "确认购票？", new DialogHelper.InputDialogCallBack() {
+            new DialogHelper().showContentDialog(this, "", "确认购票？总价：" + totalFilmMoney + "元", new DialogHelper.InputDialogCallBack() {
                 @Override
                 public void positive(String content) {
                     showLoading();
@@ -221,6 +221,7 @@ public class SelectTableActivity extends BaseActivity<ActivitySelectTableBinding
                 }
                 return false;
             }
+
             @Override
 
             public void checked(int row, int column) {
