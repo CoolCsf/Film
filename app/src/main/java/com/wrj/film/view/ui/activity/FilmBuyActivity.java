@@ -115,10 +115,10 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
             Long time = System.currentTimeMillis();
             if ((time + 1000 * 60 * 15) > startDate.getTime()) {
                 showToast("开场15分钟内不可购买");
-                return false;{
-                    return true;
-                }
-            } else
+                return false;
+            } else {
+                return true;
+            }
         } catch (ParseException e) {
             e.printStackTrace();
             return false;
