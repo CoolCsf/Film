@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.tool.util.CollectionUtils;
+import com.tool.util.DataUtils;
 import com.wrj.film.R;
 import com.wrj.film.adapter.BDRVFastAdapter;
 import com.wrj.film.databinding.ActivityFilmBuyBinding;
@@ -23,6 +24,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -91,16 +94,35 @@ public class FilmBuyActivity extends AbsActivity<ActivityFilmBuyBinding> {
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(SelectTableActivity.FILM_SELECT_SEAT_INTENT_TIME_KEY, mAdapter.getData().get(position).getFilmTime());
-                bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_DATE_KEY, date);
-                bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_TYPE_KEY, filmType);
-                bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_FILM_NAME_KEY, filmName);
-                bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_MONEY_KEY, filmMoney);
-                bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_ID_KEY, filmId);
-                startActivity(SelectTableActivity.class, bundle);
+                if (checkCanBuy(position)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(SelectTableActivity.FILM_SELECT_SEAT_INTENT_TIME_KEY, mAdapter.getData().get(position).getFilmTime());
+                    bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_DATE_KEY, date);
+                    bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_TYPE_KEY, filmType);
+                    bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_FILM_NAME_KEY, filmName);
+                    bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_MONEY_KEY, filmMoney);
+                    bundle.putString(SelectTableActivity.FILM_SELECT_SEAT_INTENT_ID_KEY, filmId);
+                    startActivity(SelectTableActivity.class, bundle);
+                }
             }
         });
+    }
+
+    private boolean checkCanBuy(int position) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        try {
+            Date startDate = dateFormat.parse(date + " " + mAdapter.getData().get(position).getTime());
+            Long time = System.currentTimeMillis();
+            if ((time + 1000 * 60 * 15) > startDate.getTime()) {
+                showToast("开场15分钟内不可购买");
+                return false;{
+                    return true;
+                }
+            } else
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private void initTab() {

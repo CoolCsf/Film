@@ -44,14 +44,14 @@ public class FilmSearchActivity extends AbsActivity<ActivityFilmSearchBinding> {
     protected void initView() {
         ViewUtil.initTitleBar(binding.titleBar, "电影搜索");
         headBinding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.layout_search_head, null, false);
-        mAdapter = initRcyParam(binding.rvSearch, R.layout.item_sort_rcy, new LinearLayoutManager(this));
+        mAdapter = initRcyParam(binding.rvSearch, R.layout.item_sort_rcy, new LinearLayoutManager(this), R.id.btn_buy);
         mAdapter.addHeaderView(headBinding.getRoot());
     }
 
-    private <VM, BD extends ViewDataBinding> BDRVFastAdapter<VM, BD> initRcyParam(RecyclerView rcy, int resId, RecyclerView.LayoutManager manager) {
+    private <VM, BD extends ViewDataBinding> BDRVFastAdapter<VM, BD> initRcyParam(RecyclerView rcy, int resId, RecyclerView.LayoutManager manager, int id) {
         rcy.setLayoutManager(manager);
         BDRVFastAdapter<VM, BD> adapter = new
-                BDRVFastAdapter<>(resId, new ArrayList<VM>());
+                BDRVFastAdapter<>(resId, new ArrayList<VM>(), id);
         rcy.setAdapter(adapter);
         return adapter;
     }
