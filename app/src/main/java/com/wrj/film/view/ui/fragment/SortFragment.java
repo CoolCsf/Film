@@ -12,6 +12,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.tool.util.CollectionUtils;
 import com.tool.util.ToastHelp;
+import com.tool.util.widget.CustomTitleBar;
 import com.wrj.film.R;
 import com.wrj.film.adapter.BDRVFastAdapter;
 import com.wrj.film.databinding.FragmentSortBinding;
@@ -25,6 +26,7 @@ import com.wrj.film.model.eventbus.UpdateFilmNumber;
 import com.wrj.film.view.ui.ViewUtil;
 import com.wrj.film.view.ui.activity.FilmBuyActivity;
 import com.wrj.film.view.ui.activity.FilmDetailActivity;
+import com.wrj.film.view.ui.activity.FilmSearchActivity;
 import com.wrj.film.viewmodel.FilmViewModel;
 import com.wrj.film.viewmodel.SimpleStringViewModel;
 
@@ -75,6 +77,7 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
     protected void initView() {
         super.initView();
         ViewUtil.initTitleBar(binding.titleBar, "分类");
+        ((CustomTitleBar) binding.titleBar).setRightTitle("搜索");
         initRcy();
     }
 
@@ -130,6 +133,12 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
                 }
             }
         });
+        ((CustomTitleBar) binding.titleBar).setRightTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(FilmSearchActivity.class, null);
+            }
+        });
     }
 
     private void getDataFromBmob(String type) {
@@ -159,6 +168,8 @@ public class SortFragment extends BaseFragment<FragmentSortBinding> {
         if (CollectionUtils.collectionState(model) == CollectionUtils.COLLECTION_UNEMPTY) {
             sortAdapter.setNewData(FilmModel.model2viewModel(model));
         } else {
+            sortAdapter.getData().clear();
+            sortAdapter.notifyDataSetChanged();
             ToastHelp.showToast("暂无该类别的电影");
         }
     }
