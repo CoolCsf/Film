@@ -43,11 +43,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Desction:
- * Author:pengjianbo
- * Date:15/10/10 下午5:46
- */
+
 public abstract class PhotoBaseActivity extends Activity implements EasyPermissions.PermissionCallbacks {
 
     protected static String mPhotoTargetFolder;

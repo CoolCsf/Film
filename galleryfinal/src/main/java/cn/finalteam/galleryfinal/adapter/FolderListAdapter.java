@@ -34,8 +34,6 @@ import java.util.List;
 
 /**
  * Desction:
- * Author:pengjianbo
- * Date:15/10/10 下午5:09
  */
 public class FolderListAdapter extends ViewHolderAdapter<FolderListAdapter.FolderViewHolder, PhotoFolderInfo> {
 

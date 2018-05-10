@@ -22,8 +22,6 @@ import java.io.Serializable;
 
 /**
  * Desction:图片信息
- * Author:pengjianbo
- * Date:15/7/30 上午11:23
  */
 public class PhotoInfo implements Serializable {
 

@@ -24,11 +24,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * Desction:
- * Author:pengjianbo
- * Date:15/12/2 上午10:45
- */
+
 public class FunctionConfig implements Cloneable{
 
     protected boolean mutiSelect;

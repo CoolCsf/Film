@@ -33,8 +33,6 @@ import cn.finalteam.toolsfinal.io.FileUtils;
 
 /**
  * Desction:
- * Author:pengjianbo
- * Date:15/12/2 上午11:05
  */
 public class GalleryFinal {
     static final int TAKE_REQUEST_CODE = 1001;

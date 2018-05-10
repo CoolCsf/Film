@@ -17,9 +17,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
-/**
- * Created by Administrator on 2016/9/26.
- */
+
 public class GlideImageLoader implements cn.finalteam.galleryfinal.ImageLoader{
     private static GlideImageLoader instance;
 

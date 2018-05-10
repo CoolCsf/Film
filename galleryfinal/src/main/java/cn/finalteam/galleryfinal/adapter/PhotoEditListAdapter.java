@@ -31,8 +31,6 @@ import java.util.List;
 
 /**
  * Desction:
- * Author:pengjianbo
- * Date:15/11/30 下午2:26
  */
 public class PhotoEditListAdapter extends ViewHolderAdapter<PhotoEditListAdapter.ViewHolder, PhotoInfo> {
 

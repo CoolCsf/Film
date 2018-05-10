@@ -50,11 +50,7 @@ import cn.finalteam.toolsfinal.DeviceUtils;
 import cn.finalteam.toolsfinal.StringUtils;
 import cn.finalteam.toolsfinal.io.FilenameUtils;
 
-/**
- * Desction:图片选择器
- * Author:pengjianbo
- * Date:15/10/10 下午3:54
- */
+
 public class PhotoSelectActivity extends PhotoBaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
 
     private final int HANLDER_TAKE_PHOTO_EVENT = 1000;

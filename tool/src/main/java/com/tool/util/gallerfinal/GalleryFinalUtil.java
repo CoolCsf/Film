@@ -17,8 +17,6 @@ import cn.finalteam.galleryfinal.ThemeConfig;
 /**
  * 图库工具控制，控制图库，配置的图片个数，以及是否裁剪等
  *
- * @author ldr
- *         created at 2016/5/26 17:19
  */
 public class GalleryFinalUtil {
 

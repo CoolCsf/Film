@@ -39,11 +39,7 @@ import android.util.AttributeSet;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import cn.finalteam.galleryfinal.R;
-/**
- * Desction:
- * Author:pengjianbo
- * Date:15/10/12 下午3:01
- */
+
 public class FloatingActionButton extends ImageButton {
 
     int mColorNormal;

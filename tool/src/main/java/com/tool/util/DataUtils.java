@@ -12,7 +12,6 @@ import java.util.Date;
 
 /**
  * 文件描述：数据工具类
- * Created by Administrator on 2017/2/24.
  */
 public class DataUtils {
     //判断数据是否为null

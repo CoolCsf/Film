@@ -25,8 +25,6 @@ import java.util.Random;
 
 /**
  * Desction:
- * Author:pengjianbo
- * Date:15/12/7 下午7:32
  */
 public class Utils {
 

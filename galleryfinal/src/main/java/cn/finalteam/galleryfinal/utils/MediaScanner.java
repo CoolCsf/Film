@@ -20,11 +20,7 @@ import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 
-/**
- * Desction:相册扫描
- * Author:pengjianbo
- * Date:15/7/31 下午11:27
- */
+
 public class MediaScanner {
 
     private MediaScannerConnection mediaScanConn = null;

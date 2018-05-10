@@ -14,11 +14,7 @@ import cn.finalteam.galleryfinal.model.PhotoInfo;
 import cn.finalteam.galleryfinal.widget.zoonview.PhotoView;
 import cn.finalteam.toolsfinal.DeviceUtils;
 
-/**
- * Desction:
- * Author:pengjianbo
- * Date:2015/12/29 0029 15:53
- */
+
 public class PhotoPreviewAdapter extends ViewHolderRecyclingPagerAdapter<PhotoPreviewAdapter.PreviewViewHolder, PhotoInfo> {
 
     private Activity mActivity;

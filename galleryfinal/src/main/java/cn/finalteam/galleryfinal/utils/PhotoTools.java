@@ -31,8 +31,7 @@ import java.util.Map;
 
 /**
  * Desction:
- * Author:pengjianbo
- * Date:15/10/10 下午4:26
+ *
  */
 public class PhotoTools {
 

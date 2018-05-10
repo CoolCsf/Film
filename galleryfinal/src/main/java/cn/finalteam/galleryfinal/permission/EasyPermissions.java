@@ -32,11 +32,7 @@ import java.util.List;
 
 import cn.finalteam.galleryfinal.utils.ILogger;
 
-/**
- * Desction:Utility to request and check System permissions for apps targeting Android M (API >= 23).
- * Author:pengjianbo
- * Date:16/1/24 下午11:31
- */
+
 public class EasyPermissions {
 
     private static final String TAG = "EasyPermissions";

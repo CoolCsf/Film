@@ -23,8 +23,6 @@ import java.lang.annotation.Target;
 
 /**
  * Desction:
- * Author:pengjianbo
- * Date:16/1/24 下午11:30
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

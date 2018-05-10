@@ -21,9 +21,6 @@ import java.io.InputStream;
 
 /**
  * JNI图片压缩工具类
- *
- * @author XiaoSai
- * @version V1.0.0
  */
 public class ImageFactory {
 
@@ -62,7 +59,6 @@ public class ImageFactory {
 
     /**
      * 将图片在线程中压缩并转成Base64字符串
-     * dengfeng add at 20170304
      *
      * @param filePath 文件路径
      * @return base64 string
@@ -269,7 +265,6 @@ public class ImageFactory {
 
     /**
      * 将图片转成Base64字符串
-     * dengfeng add at 20170304
      *
      * @param file 文件
      * @return

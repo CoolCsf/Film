@@ -57,8 +57,6 @@ import cn.finalteam.toolsfinal.io.FilenameUtils;
 
 /**
  * Desction:图片裁剪
- * Author:pengjianbo
- * Date:15/10/10 下午5:40
  */
 public class PhotoEditActivity extends CropImageActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 

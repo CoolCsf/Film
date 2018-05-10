@@ -15,8 +15,6 @@ import cn.finalteam.galleryfinal.widget.GFViewPager;
 
 /**
  * Desction:
- * Author:pengjianbo
- * Date:2015/12/29 0029 14:43
  */
 public class PhotoPreviewActivity extends PhotoBaseActivity implements ViewPager.OnPageChangeListener{
 

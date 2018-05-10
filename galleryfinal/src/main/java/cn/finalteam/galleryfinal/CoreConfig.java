@@ -22,11 +22,7 @@ import android.widget.AbsListView;
 
 import java.io.File;
 
-/**
- * Desction:
- * Author:pengjianbo
- * Date:15/12/27 下午1:41
- */
+
 public class CoreConfig {
     private Context context;
     private ImageLoader imageLoader;

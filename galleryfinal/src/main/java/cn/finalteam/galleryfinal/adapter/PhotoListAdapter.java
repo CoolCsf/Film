@@ -31,11 +31,7 @@ import cn.finalteam.toolsfinal.adapter.ViewHolderAdapter;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Desction:
- * Author:pengjianbo
- * Date:15/10/10 下午4:59
- */
+
 public class PhotoListAdapter extends ViewHolderAdapter<PhotoListAdapter.PhotoViewHolder, PhotoInfo> {
 
     private List<PhotoInfo> mSelectList;

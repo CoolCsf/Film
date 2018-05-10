@@ -2,9 +2,6 @@ package com.tool.util;
 
 import java.util.Collection;
 
-/**
- * Created by Administrator on 2017/2/22.
- */
 public class CollectionUtils {
     public final static int COLLECTION_NULL = 0;
     public final static int COLLECTION_SIZE_0 = 1;

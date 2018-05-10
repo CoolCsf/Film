@@ -9,11 +9,6 @@ import android.text.style.ForegroundColorSpan;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author 宁松柏
- * @time 2017/6/7 0007  8:38
- * @desc ${TODD}
- */
 public class StringUtil {
 
     /**
